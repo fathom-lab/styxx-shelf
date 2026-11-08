@@ -1,0 +1,22 @@
+{
+ "copied_at": "2026-11-08T20:47:07.657Z",
+ "copied_from": "https://fathom-lab.github.io/styxx/ledger/ (byte-identical local worktree copy at wt/exhibit/ledger, branch exhibit)",
+ "why": "the shelf runs ITS OWN copy of the verifier over the fetched ledger; the row's published verifier is fetched, hashed and compared, and a difference is reported as drift, not as a failure",
+ "files": {
+  "tools/verify.js": {
+   "sha256": "6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46",
+   "bytes": 13872,
+   "published_as": "verify.js"
+  },
+  "tools/check_ledger.cjs": {
+   "sha256": "85c76195a194b5901bcf3f99f0aee19584925f9a1b44ae385b2057b0649e6503",
+   "bytes": 4122,
+   "published_as": "check_ledger.cjs"
+  },
+  "tools/run_vectors.cjs": {
+   "sha256": "3c27307c06eae86270caf1c1a3a57f49f84efec98faa32e9d23987c9e662926f",
+   "bytes": 4640,
+   "published_as": "vectors/run_vectors.cjs"
+  }
+ }
+}

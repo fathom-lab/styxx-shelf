@@ -1,0 +1,3484 @@
+{
+ "schema": "styxx-shelf/report/v0",
+ "shelf_version": "0.1.0",
+ "node": "v24.13.0",
+ "ran_on": {
+  "where": "not the action (a local run)",
+  "host_platform": "win32 10.0.26300"
+ },
+ "row": "darkflobi",
+ "base": "https://fathom-lab.github.io/styxx/ledger/",
+ "date": "2026-11-08",
+ "run_started_at": "2026-11-08T21:27:15Z",
+ "explorers": [
+  "https://blockstream.info/api",
+  "https://mempool.space/api"
+ ],
+ "ots_checked": true,
+ "pending_max_days": 7,
+ "pinned_tools": {
+  "tools/verify.js": {
+   "sha256": "6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46",
+   "bytes": 13872,
+   "published_as": "verify.js"
+  },
+  "tools/check_ledger.cjs": {
+   "sha256": "85c76195a194b5901bcf3f99f0aee19584925f9a1b44ae385b2057b0649e6503",
+   "bytes": 4122,
+   "published_as": "check_ledger.cjs"
+  },
+  "tools/run_vectors.cjs": {
+   "sha256": "3c27307c06eae86270caf1c1a3a57f49f84efec98faa32e9d23987c9e662926f",
+   "bytes": 4640,
+   "published_as": "vectors/run_vectors.cjs"
+  }
+ },
+ "fetched": {
+  "ledger.jsonl": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/ledger.jsonl",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:15 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "W/\"6af0e8b6-12d101\"",
+   "bytes": 1233153,
+   "sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "withheld.json": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/withheld.json",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:15 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "W/\"6af0e8b6-6f1\"",
+   "bytes": 1777,
+   "sha256": "096e3123c16e10bfcf8853ba82c6bc1bd75bdb935c34674d9ceba829b6c60f59",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "verify.js": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/verify.js",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "W/\"6af0e8b6-3630\"",
+   "bytes": 13872,
+   "sha256": "6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "check_ledger.cjs": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/check_ledger.cjs",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-101a\"",
+   "bytes": 4122,
+   "sha256": "85c76195a194b5901bcf3f99f0aee19584925f9a1b44ae385b2057b0649e6503",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "vectors/vectors.json": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/vectors/vectors.json",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "W/\"6af0e8b6-165d\"",
+   "bytes": 5725,
+   "sha256": "be43667f1662e822fd31d5941e6166fdd7ce145de72b6dfea9b32bbb4ae69d4b",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "vectors/base.jsonl": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/vectors/base.jsonl",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "W/\"6af0e8b6-2f69c\"",
+   "bytes": 194204,
+   "sha256": "8029fce0bed73a52067d2e7e3552555d45c81d837187a93b6dd20d48ad8861f1",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "anchors/index.json": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/index.json",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "W/\"6af0e8b6-3505\"",
+   "bytes": 13573,
+   "sha256": "e36bd72935d6bba08c710483c0fcd6769c77511ea70fac7cfc3713f82a4258a8",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "SNAPSHOTS.jsonl": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/SNAPSHOTS.jsonl",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "W/\"6af0e8b6-1629\"",
+   "bytes": 5673,
+   "sha256": "3b0afeb58d11107f9e14f4289a08c6d0774a5d19fedacd8f48c0997c3e9b7c19",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "STATS.json": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/STATS.json",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "W/\"6af0e8b6-1657\"",
+   "bytes": 5719,
+   "sha256": "d3c783a23715e8b82030c164016dae615b6ae5ec130ebd6ab5b51c0a8b1fefca",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "anchors/2026-10-24.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-24.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-63\"",
+   "bytes": 99,
+   "sha256": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+   "fetched_at": "2026-11-08T21:27:15Z"
+  },
+  "anchors/2026-10-24.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-24.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-1378\"",
+   "bytes": 4984,
+   "sha256": "51c56be2582c6f4d4afb01642b8244be1b90b3708b12a133d36304a87a64c512",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-10-25.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-25.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "b3749f8326c18041a8838ef2ca811c1cbf14885fccaf9b9f43d0f3eb4dd876e5",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-10-25.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-25.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-130f\"",
+   "bytes": 4879,
+   "sha256": "d0c879a3be1e4d005f6d83f44c381b1b8f9636a2685c95f2b533c5376362701b",
+   "fetched_at": "2026-11-08T21:27:17Z"
+  },
+  "anchors/2026-10-26.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-26.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-10-26.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-26.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-13be\"",
+   "bytes": 5054,
+   "sha256": "fd9a0358352b74f172fe1aafde74f8c9dc01c8708b57c2dc46bdf2cf0fde0239",
+   "fetched_at": "2026-11-08T21:27:17Z"
+  },
+  "anchors/2026-10-27.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-27.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-10-27.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-27.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-12ec\"",
+   "bytes": 4844,
+   "sha256": "7adad32ca9b4500c76ec893651f9f63e0e87102f77a04aa309bb3a55ddaa3e47",
+   "fetched_at": "2026-11-08T21:27:17Z"
+  },
+  "anchors/2026-10-28.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-28.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-10-28.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-28.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-12a6\"",
+   "bytes": 4774,
+   "sha256": "4ec38c0432a61c764bb158903e2eee9b488e2cae688595485ca2b50c17d0b4e2",
+   "fetched_at": "2026-11-08T21:27:17Z"
+  },
+  "anchors/2026-10-29.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-29.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-10-29.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-29.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-130f\"",
+   "bytes": 4879,
+   "sha256": "a02040496e887ae06388b1d05b919736e4fc6740bf367b89e584cc5d9a5aa7b8",
+   "fetched_at": "2026-11-08T21:27:17Z"
+  },
+  "anchors/2026-10-30.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-30.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-10-30.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-30.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-130f\"",
+   "bytes": 4879,
+   "sha256": "03c78096f37941367bcfb93920541546dab7600d711a3899c61f474d86a626cf",
+   "fetched_at": "2026-11-08T21:27:17Z"
+  },
+  "anchors/2026-10-31.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-31.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-10-31.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-31.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-12ec\"",
+   "bytes": 4844,
+   "sha256": "1d2c9e2a19fc84fa9bd0a381deda6cf769789e26a316678d38bf961ad3287480",
+   "fetched_at": "2026-11-08T21:27:17Z"
+  },
+  "anchors/2026-11-01.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-01.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-11-01.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-01.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-139b\"",
+   "bytes": 5019,
+   "sha256": "92507db1582b63154ff3ecb564cdf672318297f50837296d10f316e385fc4e2a",
+   "fetched_at": "2026-11-08T21:27:17Z"
+  },
+  "anchors/2026-11-02.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-02.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-11-02.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-02.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-130f\"",
+   "bytes": 4879,
+   "sha256": "55614a3fba2914b729a1beb40a8bc7b4e90b15f5ad700e19302c797672275ce1",
+   "fetched_at": "2026-11-08T21:27:18Z"
+  },
+  "anchors/2026-11-03.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-03.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-11-03.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-03.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-12c9\"",
+   "bytes": 4809,
+   "sha256": "cd036ea2a08150259c1c5f783ed90fed730ffbc9424bdf40dc3b26ea364407d8",
+   "fetched_at": "2026-11-08T21:27:18Z"
+  },
+  "anchors/2026-11-04.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-04.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-11-04.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-04.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-12ea\"",
+   "bytes": 4842,
+   "sha256": "b06612332d4598481609b61a7303af3079612692d738df1809e4b49d57da95f9",
+   "fetched_at": "2026-11-08T21:27:18Z"
+  },
+  "anchors/2026-11-05.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-05.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-11-05.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-05.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:19 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-130f\"",
+   "bytes": 4879,
+   "sha256": "9f0796c82bfb44ebfbc3a4e4df8f9d61f28d1d7960489e632a5fe9c7a9a5085a",
+   "fetched_at": "2026-11-08T21:27:19Z"
+  },
+  "anchors/2026-11-07.txt": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-07.txt",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:16 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-64\"",
+   "bytes": 100,
+   "sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+   "fetched_at": "2026-11-08T21:27:16Z"
+  },
+  "anchors/2026-11-07.txt.ots": {
+   "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-07.txt.ots",
+   "status": 200,
+   "ok": true,
+   "http_date": "Sun, 08 Nov 2026 21:27:20 GMT",
+   "last_modified": "Sun, 08 Nov 2026 21:25:10 GMT",
+   "etag": "\"6af0e8b6-139e\"",
+   "bytes": 5022,
+   "sha256": "28cfb2cd340a3fcdbcdf65638deab831e26d844c3a90094a14a08cd305038ad2",
+   "fetched_at": "2026-11-08T21:27:20Z"
+  }
+ },
+ "commands": [
+  "curl -sS -o ledger.jsonl --create-dirs https://fathom-lab.github.io/styxx/ledger/ledger.jsonl",
+  "curl -sS -o withheld.json --create-dirs https://fathom-lab.github.io/styxx/ledger/withheld.json",
+  "curl -sS -o verify.js --create-dirs https://fathom-lab.github.io/styxx/ledger/verify.js",
+  "curl -sS -o check_ledger.cjs --create-dirs https://fathom-lab.github.io/styxx/ledger/check_ledger.cjs",
+  "curl -sS -o vectors/vectors.json --create-dirs https://fathom-lab.github.io/styxx/ledger/vectors/vectors.json",
+  "curl -sS -o vectors/base.jsonl --create-dirs https://fathom-lab.github.io/styxx/ledger/vectors/base.jsonl",
+  "curl -sS -o anchors/index.json --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/index.json",
+  "curl -sS -o SNAPSHOTS.jsonl --create-dirs https://fathom-lab.github.io/styxx/ledger/SNAPSHOTS.jsonl",
+  "curl -sS -o STATS.json --create-dirs https://fathom-lab.github.io/styxx/ledger/STATS.json",
+  "curl -sS -o anchors/2026-10-24.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-24.txt",
+  "curl -sS -o anchors/2026-10-24.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-24.txt.ots",
+  "curl -sS -o anchors/2026-10-25.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-25.txt",
+  "curl -sS -o anchors/2026-10-25.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-25.txt.ots",
+  "curl -sS -o anchors/2026-10-26.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-26.txt",
+  "curl -sS -o anchors/2026-10-26.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-26.txt.ots",
+  "curl -sS -o anchors/2026-10-27.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-27.txt",
+  "curl -sS -o anchors/2026-10-27.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-27.txt.ots",
+  "curl -sS -o anchors/2026-10-28.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-28.txt",
+  "curl -sS -o anchors/2026-10-28.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-28.txt.ots",
+  "curl -sS -o anchors/2026-10-29.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-29.txt",
+  "curl -sS -o anchors/2026-10-29.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-29.txt.ots",
+  "curl -sS -o anchors/2026-10-30.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-30.txt",
+  "curl -sS -o anchors/2026-10-30.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-30.txt.ots",
+  "curl -sS -o anchors/2026-10-31.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-31.txt",
+  "curl -sS -o anchors/2026-10-31.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-31.txt.ots",
+  "curl -sS -o anchors/2026-11-01.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-01.txt",
+  "curl -sS -o anchors/2026-11-01.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-01.txt.ots",
+  "curl -sS -o anchors/2026-11-02.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-02.txt",
+  "curl -sS -o anchors/2026-11-02.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-02.txt.ots",
+  "curl -sS -o anchors/2026-11-03.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-03.txt",
+  "curl -sS -o anchors/2026-11-03.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-03.txt.ots",
+  "curl -sS -o anchors/2026-11-04.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-04.txt",
+  "curl -sS -o anchors/2026-11-04.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-04.txt.ots",
+  "curl -sS -o anchors/2026-11-05.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-05.txt",
+  "curl -sS -o anchors/2026-11-05.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-05.txt.ots",
+  "curl -sS -o anchors/2026-11-07.txt --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-07.txt",
+  "curl -sS -o anchors/2026-11-07.txt.ots --create-dirs https://fathom-lab.github.io/styxx/ledger/anchors/2026-11-07.txt.ots",
+  "node tools/check_ledger.cjs ledger.jsonl --withheld withheld.json --anchor \"gate anchor 2026-10-24 head 534edfa76783997add1384f8022262d9b13d435f57e2fcdf512e2484ada0c52e seq 57\" --anchor \"gate anchor 2026-10-25 head 76de868c00863ca95bf00a5a5cfa515105fb11138e8b74e7e2102e6b34bc9ff4 seq 116\" --anchor \"gate anchor 2026-10-26 head 866c2114755d0d211f6342bb68957978b36db0fa47720ee7db94b923d6efe12d seq 145\" --anchor \"gate anchor 2026-10-27 head 088ef4aaa21134615a68b82063a0c00abdfb0a803ea01e3ec59616bf902de19d seq 166\" --anchor \"gate anchor 2026-10-28 head e8812517c25254c5973ff622923ff2e007873aec3c471bcd43c302dee6cd60db seq 173\" --anchor \"gate anchor 2026-10-29 head 4f87699b935481f8caeab48512690bc896dcf4bdd4a9c2bdc83e5f125678f422 seq 184\" --anchor \"gate anchor 2026-10-30 head 05bf27d888b2a9a5f8c015ab59c88ee3417b852efd9a309d9aac8c496d949a32 seq 199\" --anchor \"gate anchor 2026-10-31 head 37beee453c00cd8f0cfcafe8562593d31159550786e19c4bd9ca5abef508ec69 seq 240\" --anchor \"gate anchor 2026-11-01 head 5cab3c8352481b2d80ea3ec5a59796ff82b5ab6fcff7476b0aa1db626457aa62 seq 243\" --anchor \"gate anchor 2026-11-02 head 2ed2b4998e77ba9c6821a37333242793742a537a6d5801abd710c8f6a8e5ec0e seq 316\" --anchor \"gate anchor 2026-11-03 head afd04344e6d37d8db746e2f8147791d25bc0be1ec68f3826a4191679f26ca4fe seq 336\" --anchor \"gate anchor 2026-11-04 head 45a4faffc078c4a5adf79768a267c74f19aa2619c12f75a69adfc055e97985d5 seq 664\" --anchor \"gate anchor 2026-11-05 head be4a89b24fe3b27cc5343acd1d12369dad415c37f550a268aeef186b2a912ca5 seq 704\" --anchor \"gate anchor 2026-11-07 head 62e123dede84ebf90a12e42f55eb94c270e238593d0dd4cbb72b161df3b71e2f seq 729\" --json",
+  "node tools/run_vectors.cjs --vectors vectors/vectors.json --verify tools/verify.js",
+  "# explorer https://blockstream.info/api: GET https://blockstream.info/api/block-height/<h> then GET https://blockstream.info/api/block/<hash>; the proof's merkle path must end at that header's merkle_root",
+  "# explorer https://mempool.space/api: GET https://mempool.space/api/block-height/<h> then GET https://mempool.space/api/block/<hash>; the proof's merkle path must end at that header's merkle_root"
+ ],
+ "checks": {
+  "fetch": {
+   "ok": true,
+   "fetched": 9,
+   "total": 9,
+   "failed": []
+  },
+  "chain": {
+   "ok": true,
+   "check_ledger_ok": true,
+   "exit_code": 0,
+   "lines": 729,
+   "file_lines": 730,
+   "head": "0e5a698dece0bb33764c5202a03745a140a6ef66dba7bbcbc3896842795e152f",
+   "file_sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
+   "kinds": {
+    "started": 22,
+    "send": 344,
+    "delivered": 349,
+    "anchor": 14
+   },
+   "withheld": 5,
+   "bridged": [
+    129,
+    131,
+    136,
+    138,
+    351
+   ],
+   "coverage": {
+    "pinned": 692,
+    "unpinned_by_withholding": 32,
+    "unpinned_ranges": [
+     [
+      117,
+      128
+     ],
+     [
+      130,
+      130
+     ],
+     [
+      132,
+      135
+     ],
+     [
+      137,
+      137
+     ],
+     [
+      337,
+      350
+     ]
+    ],
+    "after_last_anchor": 5,
+    "withheld": 5,
+    "last_anchor_seq": 729
+   },
+   "anchor_lines_in_ledger": [
+    {
+     "date": "2026-10-24",
+     "seq": 57,
+     "ok": true
+    },
+    {
+     "date": "2026-10-25",
+     "seq": 116,
+     "ok": true
+    },
+    {
+     "date": "2026-10-26",
+     "seq": 145,
+     "ok": true
+    },
+    {
+     "date": "2026-10-27",
+     "seq": 166,
+     "ok": true
+    },
+    {
+     "date": "2026-10-28",
+     "seq": 173,
+     "ok": true
+    },
+    {
+     "date": "2026-10-29",
+     "seq": 184,
+     "ok": true
+    },
+    {
+     "date": "2026-10-30",
+     "seq": 199,
+     "ok": true
+    },
+    {
+     "date": "2026-10-31",
+     "seq": 240,
+     "ok": true
+    },
+    {
+     "date": "2026-11-01",
+     "seq": 243,
+     "ok": true
+    },
+    {
+     "date": "2026-11-02",
+     "seq": 316,
+     "ok": true
+    },
+    {
+     "date": "2026-11-03",
+     "seq": 336,
+     "ok": true
+    },
+    {
+     "date": "2026-11-04",
+     "seq": 664,
+     "ok": true
+    },
+    {
+     "date": "2026-11-05",
+     "seq": 704,
+     "ok": true
+    },
+    {
+     "date": "2026-11-07",
+     "seq": 729,
+     "ok": true
+    }
+   ],
+   "own_anchor_lines_in_chain": 14,
+   "own_anchor_lines": 14,
+   "problems": []
+  },
+  "snapshot": {
+   "last_line": {
+    "built_at": "2026-11-08T21:24:33Z",
+    "extends": true,
+    "extends_commit": "c8339f00ba21",
+    "full_file_sha256": "42d7aa7c2e5707fbc312e754c9d1be3394b07d91f462171ee9041b46828484d2",
+    "head": "0e5a698dece0bb33764c5202a03745a140a6ef66dba7bbcbc3896842795e152f",
+    "last_anchor_date": "2026-11-07",
+    "lines": 734,
+    "public_texts": {
+     "allow_listed_lines": 46,
+     "public_lines": 53,
+     "published": 45,
+     "rewrite_reason": null,
+     "unreconstructable": 0,
+     "withheld": 1
+    },
+    "published_file_sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
+    "published_lines": 729,
+    "rewrite_reason": null,
+    "withheld_seqs": [
+     129,
+     131,
+     136,
+     138,
+     351
+    ]
+   },
+   "agrees_with_fetched_ledger": true
+  },
+  "vectors": {
+   "ok": true,
+   "passed": 10,
+   "total": 10,
+   "exit_code": 0,
+   "output": [
+    "ok   identity",
+    "ok   rewrite-one-field",
+    "ok   rewrite-prev",
+    "ok   drop-a-line",
+    "ok   drop-a-line-withheld",
+    "ok   drop-a-line-withheld-wrong-digest",
+    "ok   cr-byte",
+    "ok   duplicate-key",
+    "ok   truncate-last-line",
+    "ok   flip-and-rechain",
+    "10 of 10 vectors answered as the file says"
+   ],
+   "stderr": null
+  },
+  "verifier_drift": {
+   "drift": false,
+   "files": {
+    "verify": {
+     "published": "verify.js",
+     "published_sha256": "6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46",
+     "pinned_sha256": "6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46",
+     "same": true
+    },
+    "check": {
+     "published": "check_ledger.cjs",
+     "published_sha256": "85c76195a194b5901bcf3f99f0aee19584925f9a1b44ae385b2057b0649e6503",
+     "pinned_sha256": "85c76195a194b5901bcf3f99f0aee19584925f9a1b44ae385b2057b0649e6503",
+     "same": true
+    }
+   },
+   "note": "the checks above ran the shelf's pinned tools (tools/PINNED.json), not the row's published ones"
+  },
+  "anchors": {
+   "ok": true,
+   "total": 14,
+   "verified": 14,
+   "pending": 0,
+   "in_chain": 14,
+   "failed": [],
+   "index_counts": {
+    "anchors": 14,
+    "bitcoin": 14,
+    "mismatch": 0,
+    "pending": 0,
+    "unknown": 0,
+    "unstamped": 0
+   },
+   "index_written_at": "2026-11-08T21:24:48Z",
+   "per_anchor": [
+    {
+     "date": "2026-10-24",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 57,
+      "anchor_line_seq": 58,
+      "text_sha256": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+      "ots_sha256": "51c56be2582c6f4d4afb01642b8244be1b90b3708b12a133d36304a87a64c512",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:42Z",
+      "posted_at": "2026-10-25T04:00:01Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-10-24.txt",
+      "fetched": true,
+      "sha256": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+      "bytes": 99,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-10-24 head 534edfa76783997add1384f8022262d9b13d435f57e2fcdf512e2484ada0c52e seq 57",
+      "parsed": {
+       "date": "2026-10-24",
+       "head": "534edfa76783997add1384f8022262d9b13d435f57e2fcdf512e2484ada0c52e",
+       "seq": 57
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-10-24.txt.ots",
+      "fetched": true,
+      "sha256": "51c56be2582c6f4d4afb01642b8244be1b90b3708b12a133d36304a87a64c512",
+      "bytes": 4984,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 58,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+      "text_digest": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-10-25",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 116,
+      "anchor_line_seq": 117,
+      "text_sha256": "b3749f8326c18041a8838ef2ca811c1cbf14885fccaf9b9f43d0f3eb4dd876e5",
+      "ots_sha256": "d0c879a3be1e4d005f6d83f44c381b1b8f9636a2685c95f2b533c5376362701b",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:43Z",
+      "posted_at": "2026-10-26T04:00:00Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-10-25.txt",
+      "fetched": true,
+      "sha256": "b3749f8326c18041a8838ef2ca811c1cbf14885fccaf9b9f43d0f3eb4dd876e5",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-10-25 head 76de868c00863ca95bf00a5a5cfa515105fb11138e8b74e7e2102e6b34bc9ff4 seq 116",
+      "parsed": {
+       "date": "2026-10-25",
+       "head": "76de868c00863ca95bf00a5a5cfa515105fb11138e8b74e7e2102e6b34bc9ff4",
+       "seq": 116
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-10-25.txt.ots",
+      "fetched": true,
+      "sha256": "d0c879a3be1e4d005f6d83f44c381b1b8f9636a2685c95f2b533c5376362701b",
+      "bytes": 4879,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 117,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "b3749f8326c18041a8838ef2ca811c1cbf14885fccaf9b9f43d0f3eb4dd876e5",
+      "text_digest": "b3749f8326c18041a8838ef2ca811c1cbf14885fccaf9b9f43d0f3eb4dd876e5",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-10-26",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 145,
+      "anchor_line_seq": 146,
+      "text_sha256": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+      "ots_sha256": "fd9a0358352b74f172fe1aafde74f8c9dc01c8708b57c2dc46bdf2cf0fde0239",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:43Z",
+      "posted_at": "2026-10-27T04:00:00Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-10-26.txt",
+      "fetched": true,
+      "sha256": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-10-26 head 866c2114755d0d211f6342bb68957978b36db0fa47720ee7db94b923d6efe12d seq 145",
+      "parsed": {
+       "date": "2026-10-26",
+       "head": "866c2114755d0d211f6342bb68957978b36db0fa47720ee7db94b923d6efe12d",
+       "seq": 145
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-10-26.txt.ots",
+      "fetched": true,
+      "sha256": "fd9a0358352b74f172fe1aafde74f8c9dc01c8708b57c2dc46bdf2cf0fde0239",
+      "bytes": 5054,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 146,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+      "text_digest": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-10-27",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 166,
+      "anchor_line_seq": 167,
+      "text_sha256": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+      "ots_sha256": "7adad32ca9b4500c76ec893651f9f63e0e87102f77a04aa309bb3a55ddaa3e47",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:44Z",
+      "posted_at": "2026-10-28T04:00:00Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-10-27.txt",
+      "fetched": true,
+      "sha256": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-10-27 head 088ef4aaa21134615a68b82063a0c00abdfb0a803ea01e3ec59616bf902de19d seq 166",
+      "parsed": {
+       "date": "2026-10-27",
+       "head": "088ef4aaa21134615a68b82063a0c00abdfb0a803ea01e3ec59616bf902de19d",
+       "seq": 166
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-10-27.txt.ots",
+      "fetched": true,
+      "sha256": "7adad32ca9b4500c76ec893651f9f63e0e87102f77a04aa309bb3a55ddaa3e47",
+      "bytes": 4844,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 167,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+      "text_digest": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-10-28",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 173,
+      "anchor_line_seq": 174,
+      "text_sha256": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+      "ots_sha256": "4ec38c0432a61c764bb158903e2eee9b488e2cae688595485ca2b50c17d0b4e2",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:44Z",
+      "posted_at": "2026-10-29T04:00:02Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-10-28.txt",
+      "fetched": true,
+      "sha256": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-10-28 head e8812517c25254c5973ff622923ff2e007873aec3c471bcd43c302dee6cd60db seq 173",
+      "parsed": {
+       "date": "2026-10-28",
+       "head": "e8812517c25254c5973ff622923ff2e007873aec3c471bcd43c302dee6cd60db",
+       "seq": 173
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-10-28.txt.ots",
+      "fetched": true,
+      "sha256": "4ec38c0432a61c764bb158903e2eee9b488e2cae688595485ca2b50c17d0b4e2",
+      "bytes": 4774,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 174,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+      "text_digest": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-10-29",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 184,
+      "anchor_line_seq": 185,
+      "text_sha256": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+      "ots_sha256": "a02040496e887ae06388b1d05b919736e4fc6740bf367b89e584cc5d9a5aa7b8",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:45Z",
+      "posted_at": "2026-10-30T04:00:01Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-10-29.txt",
+      "fetched": true,
+      "sha256": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-10-29 head 4f87699b935481f8caeab48512690bc896dcf4bdd4a9c2bdc83e5f125678f422 seq 184",
+      "parsed": {
+       "date": "2026-10-29",
+       "head": "4f87699b935481f8caeab48512690bc896dcf4bdd4a9c2bdc83e5f125678f422",
+       "seq": 184
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-10-29.txt.ots",
+      "fetched": true,
+      "sha256": "a02040496e887ae06388b1d05b919736e4fc6740bf367b89e584cc5d9a5aa7b8",
+      "bytes": 4879,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 185,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+      "text_digest": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-10-30",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 199,
+      "anchor_line_seq": 200,
+      "text_sha256": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+      "ots_sha256": "03c78096f37941367bcfb93920541546dab7600d711a3899c61f474d86a626cf",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:45Z",
+      "posted_at": "2026-10-31T04:00:00Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-10-30.txt",
+      "fetched": true,
+      "sha256": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-10-30 head 05bf27d888b2a9a5f8c015ab59c88ee3417b852efd9a309d9aac8c496d949a32 seq 199",
+      "parsed": {
+       "date": "2026-10-30",
+       "head": "05bf27d888b2a9a5f8c015ab59c88ee3417b852efd9a309d9aac8c496d949a32",
+       "seq": 199
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-10-30.txt.ots",
+      "fetched": true,
+      "sha256": "03c78096f37941367bcfb93920541546dab7600d711a3899c61f474d86a626cf",
+      "bytes": 4879,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 200,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+      "text_digest": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-10-31",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 240,
+      "anchor_line_seq": 241,
+      "text_sha256": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+      "ots_sha256": "1d2c9e2a19fc84fa9bd0a381deda6cf769789e26a316678d38bf961ad3287480",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:46Z",
+      "posted_at": "2026-11-01T04:00:00Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-10-31.txt",
+      "fetched": true,
+      "sha256": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-10-31 head 37beee453c00cd8f0cfcafe8562593d31159550786e19c4bd9ca5abef508ec69 seq 240",
+      "parsed": {
+       "date": "2026-10-31",
+       "head": "37beee453c00cd8f0cfcafe8562593d31159550786e19c4bd9ca5abef508ec69",
+       "seq": 240
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-10-31.txt.ots",
+      "fetched": true,
+      "sha256": "1d2c9e2a19fc84fa9bd0a381deda6cf769789e26a316678d38bf961ad3287480",
+      "bytes": 4844,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 241,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+      "text_digest": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-11-01",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 243,
+      "anchor_line_seq": 244,
+      "text_sha256": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+      "ots_sha256": "92507db1582b63154ff3ecb564cdf672318297f50837296d10f316e385fc4e2a",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:47Z",
+      "posted_at": "2026-11-02T05:00:02Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-11-01.txt",
+      "fetched": true,
+      "sha256": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-11-01 head 5cab3c8352481b2d80ea3ec5a59796ff82b5ab6fcff7476b0aa1db626457aa62 seq 243",
+      "parsed": {
+       "date": "2026-11-01",
+       "head": "5cab3c8352481b2d80ea3ec5a59796ff82b5ab6fcff7476b0aa1db626457aa62",
+       "seq": 243
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-11-01.txt.ots",
+      "fetched": true,
+      "sha256": "92507db1582b63154ff3ecb564cdf672318297f50837296d10f316e385fc4e2a",
+      "bytes": 5019,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 244,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+      "text_digest": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-11-02",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 316,
+      "anchor_line_seq": 317,
+      "text_sha256": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+      "ots_sha256": "55614a3fba2914b729a1beb40a8bc7b4e90b15f5ad700e19302c797672275ce1",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:47Z",
+      "posted_at": "2026-11-03T05:00:00Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-11-02.txt",
+      "fetched": true,
+      "sha256": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-11-02 head 2ed2b4998e77ba9c6821a37333242793742a537a6d5801abd710c8f6a8e5ec0e seq 316",
+      "parsed": {
+       "date": "2026-11-02",
+       "head": "2ed2b4998e77ba9c6821a37333242793742a537a6d5801abd710c8f6a8e5ec0e",
+       "seq": 316
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-11-02.txt.ots",
+      "fetched": true,
+      "sha256": "55614a3fba2914b729a1beb40a8bc7b4e90b15f5ad700e19302c797672275ce1",
+      "bytes": 4879,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 317,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+      "text_digest": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-11-03",
+     "index": {
+      "status": "bitcoin",
+      "block": 974530,
+      "seq": 336,
+      "anchor_line_seq": 337,
+      "text_sha256": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+      "ots_sha256": "cd036ea2a08150259c1c5f783ed90fed730ffbc9424bdf40dc3b26ea364407d8",
+      "late": false,
+      "stamped_at": "2026-11-04T12:27:48Z",
+      "posted_at": "2026-11-04T05:00:01Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-11-03.txt",
+      "fetched": true,
+      "sha256": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-11-03 head afd04344e6d37d8db746e2f8147791d25bc0be1ec68f3826a4191679f26ca4fe seq 336",
+      "parsed": {
+       "date": "2026-11-03",
+       "head": "afd04344e6d37d8db746e2f8147791d25bc0be1ec68f3826a4191679f26ca4fe",
+       "seq": 336
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-11-03.txt.ots",
+      "fetched": true,
+      "sha256": "cd036ea2a08150259c1c5f783ed90fed730ffbc9424bdf40dc3b26ea364407d8",
+      "bytes": 4809,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 337,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       },
+       {
+        "height": 974530,
+        "expected_merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:17 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+          "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+          "timestamp": 1793798695,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793798695
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+      "text_digest": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974530,
+     "status": "bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-11-04",
+     "index": {
+      "status": "bitcoin",
+      "block": 974635,
+      "seq": 664,
+      "anchor_line_seq": 665,
+      "text_sha256": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+      "ots_sha256": "b06612332d4598481609b61a7303af3079612692d738df1809e4b49d57da95f9",
+      "late": false,
+      "stamped_at": "2026-11-05T05:30:32Z",
+      "posted_at": "2026-11-05T05:00:00Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-11-04.txt",
+      "fetched": true,
+      "sha256": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-11-04 head 45a4faffc078c4a5adf79768a267c74f19aa2619c12f75a69adfc055e97985d5 seq 664",
+      "parsed": {
+       "date": "2026-11-04",
+       "head": "45a4faffc078c4a5adf79768a267c74f19aa2619c12f75a69adfc055e97985d5",
+       "seq": 664
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-11-04.txt.ots",
+      "fetched": true,
+      "sha256": "b06612332d4598481609b61a7303af3079612692d738df1809e4b49d57da95f9",
+      "bytes": 4842,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 665,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974635,
+        "expected_merkle_root": "73abfe6635988cf34a75231fc8d7450a2932edd89d735213985103cdba9c36c0",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "00000000000000000001152c132b54b5b62515240ae340901f14457c0e126b30",
+          "merkle_root": "73abfe6635988cf34a75231fc8d7450a2932edd89d735213985103cdba9c36c0",
+          "timestamp": 1793863154,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793863154
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "00000000000000000001152c132b54b5b62515240ae340901f14457c0e126b30",
+          "merkle_root": "73abfe6635988cf34a75231fc8d7450a2932edd89d735213985103cdba9c36c0",
+          "timestamp": 1793863154,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793863154
+         }
+        ]
+       },
+       {
+        "height": 974635,
+        "expected_merkle_root": "73abfe6635988cf34a75231fc8d7450a2932edd89d735213985103cdba9c36c0",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "00000000000000000001152c132b54b5b62515240ae340901f14457c0e126b30",
+          "merkle_root": "73abfe6635988cf34a75231fc8d7450a2932edd89d735213985103cdba9c36c0",
+          "timestamp": 1793863154,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793863154
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "00000000000000000001152c132b54b5b62515240ae340901f14457c0e126b30",
+          "merkle_root": "73abfe6635988cf34a75231fc8d7450a2932edd89d735213985103cdba9c36c0",
+          "timestamp": 1793863154,
+          "http_date": "Sun, 08 Nov 2026 21:27:18 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793863154
+         }
+        ]
+       },
+       {
+        "height": 974643,
+        "expected_merkle_root": "a95b2a77d3bef045c24ada287631ce15cc9257ff877c6b267376f0182377ccbc",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "0000000000000000000172c8295241d08616b8fa4e52e829601d27cad40fabd4",
+          "merkle_root": "a95b2a77d3bef045c24ada287631ce15cc9257ff877c6b267376f0182377ccbc",
+          "timestamp": 1793866369,
+          "http_date": "Sun, 08 Nov 2026 21:27:19 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793866369
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "0000000000000000000172c8295241d08616b8fa4e52e829601d27cad40fabd4",
+          "merkle_root": "a95b2a77d3bef045c24ada287631ce15cc9257ff877c6b267376f0182377ccbc",
+          "timestamp": 1793866369,
+          "http_date": "Sun, 08 Nov 2026 21:27:19 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793866369
+         }
+        ]
+       },
+       {
+        "height": 974654,
+        "expected_merkle_root": "e09a2d6484a09a75f8718c4501a7fc9c576b588d19828415a7bbd3cad573fa60",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "00000000000000000001d6d28eccee173cfcb0a33ad05219fed09e320d9c10ca",
+          "merkle_root": "e09a2d6484a09a75f8718c4501a7fc9c576b588d19828415a7bbd3cad573fa60",
+          "timestamp": 1793871022,
+          "http_date": "Sun, 08 Nov 2026 21:27:19 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793871022
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "00000000000000000001d6d28eccee173cfcb0a33ad05219fed09e320d9c10ca",
+          "merkle_root": "e09a2d6484a09a75f8718c4501a7fc9c576b588d19828415a7bbd3cad573fa60",
+          "timestamp": 1793871022,
+          "http_date": "Sun, 08 Nov 2026 21:27:19 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793871022
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+      "text_digest": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974635,
+     "status": "bitcoin: block 974635, header from 2 of 2 explorers agree (attestedTime 2026-11-05T07:19:14Z); 4 attestations in blocks 974635 x2, 974643, 974654",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-11-05",
+     "index": {
+      "status": "bitcoin",
+      "block": 974768,
+      "seq": 704,
+      "anchor_line_seq": 705,
+      "text_sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+      "ots_sha256": "9f0796c82bfb44ebfbc3a4e4df8f9d61f28d1d7960489e632a5fe9c7a9a5085a",
+      "late": false,
+      "stamped_at": "2026-11-06T05:30:20Z",
+      "posted_at": "2026-11-06T05:00:01Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-11-05.txt",
+      "fetched": true,
+      "sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-11-05 head be4a89b24fe3b27cc5343acd1d12369dad415c37f550a268aeef186b2a912ca5 seq 704",
+      "parsed": {
+       "date": "2026-11-05",
+       "head": "be4a89b24fe3b27cc5343acd1d12369dad415c37f550a268aeef186b2a912ca5",
+       "seq": 704
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-11-05.txt.ots",
+      "fetched": true,
+      "sha256": "9f0796c82bfb44ebfbc3a4e4df8f9d61f28d1d7960489e632a5fe9c7a9a5085a",
+      "bytes": 4879,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 705,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 974768,
+        "expected_merkle_root": "02ae932f8a69e4c1459236d761f096208b69b842aa026b1d8d6f4f4ed0a13c26",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "00000000000000000001437f91ce8284fb4e0d44f845753a28fa66b155626c64",
+          "merkle_root": "02ae932f8a69e4c1459236d761f096208b69b842aa026b1d8d6f4f4ed0a13c26",
+          "timestamp": 1793945540,
+          "http_date": "Sun, 08 Nov 2026 21:27:19 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793945540
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "00000000000000000001437f91ce8284fb4e0d44f845753a28fa66b155626c64",
+          "merkle_root": "02ae932f8a69e4c1459236d761f096208b69b842aa026b1d8d6f4f4ed0a13c26",
+          "timestamp": 1793945540,
+          "http_date": "Sun, 08 Nov 2026 21:27:19 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793945540
+         }
+        ]
+       },
+       {
+        "height": 974770,
+        "expected_merkle_root": "cf99bb05a4faa860b338e8ccb7393473c5369ad0c82a6a4798443c7d683004ea",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "00000000000000000000e9d5b31e790333bc0b40af1d6bd7ec220d6d71371dbe",
+          "merkle_root": "cf99bb05a4faa860b338e8ccb7393473c5369ad0c82a6a4798443c7d683004ea",
+          "timestamp": 1793946945,
+          "http_date": "Sun, 08 Nov 2026 21:27:20 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793946945
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "00000000000000000000e9d5b31e790333bc0b40af1d6bd7ec220d6d71371dbe",
+          "merkle_root": "cf99bb05a4faa860b338e8ccb7393473c5369ad0c82a6a4798443c7d683004ea",
+          "timestamp": 1793946945,
+          "http_date": "Sun, 08 Nov 2026 21:27:20 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793946945
+         }
+        ]
+       },
+       {
+        "height": 974799,
+        "expected_merkle_root": "7a5be9b302473e2258bcfb675d368c48a664100a96fd5f0f482cd43d0f4e8d5a",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "00000000000000000001cf611d466d9998afebb0b665c51437e768d3a72cd418",
+          "merkle_root": "7a5be9b302473e2258bcfb675d368c48a664100a96fd5f0f482cd43d0f4e8d5a",
+          "timestamp": 1793960542,
+          "http_date": "Sun, 08 Nov 2026 21:27:20 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793960542
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "00000000000000000001cf611d466d9998afebb0b665c51437e768d3a72cd418",
+          "merkle_root": "7a5be9b302473e2258bcfb675d368c48a664100a96fd5f0f482cd43d0f4e8d5a",
+          "timestamp": 1793960542,
+          "http_date": "Sun, 08 Nov 2026 21:27:20 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793960542
+         }
+        ]
+       },
+       {
+        "height": 974808,
+        "expected_merkle_root": "63247c9133f347ba4b9b414d6c104f654697b6185ab72bd017007f00d883f3e5",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "00000000000000000001924ad7f4ddd3f88c045970a68bc1dfab51e283a38807",
+          "merkle_root": "63247c9133f347ba4b9b414d6c104f654697b6185ab72bd017007f00d883f3e5",
+          "timestamp": 1793967145,
+          "http_date": "Sun, 08 Nov 2026 21:27:20 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793967145
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "00000000000000000001924ad7f4ddd3f88c045970a68bc1dfab51e283a38807",
+          "merkle_root": "63247c9133f347ba4b9b414d6c104f654697b6185ab72bd017007f00d883f3e5",
+          "timestamp": 1793967145,
+          "http_date": "Sun, 08 Nov 2026 21:27:20 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1793967145
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+      "text_digest": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+      "digest_matches_text": true
+     },
+     "lowest_block": 974768,
+     "status": "bitcoin: block 974768, header from 2 of 2 explorers agree (attestedTime 2026-11-06T06:12:20Z); 4 attestations in blocks 974768, 974770, 974799, 974808",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    },
+    {
+     "date": "2026-11-07",
+     "index": {
+      "status": "bitcoin",
+      "block": 975028,
+      "seq": 729,
+      "anchor_line_seq": 730,
+      "text_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+      "ots_sha256": "28cfb2cd340a3fcdbcdf65638deab831e26d844c3a90094a14a08cd305038ad2",
+      "late": false,
+      "stamped_at": "2026-11-08T05:30:23Z",
+      "posted_at": "2026-11-08T05:00:00Z"
+     },
+     "problems": [],
+     "text": {
+      "file": "anchors/2026-11-07.txt",
+      "fetched": true,
+      "sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+      "bytes": 100,
+      "index_sha256_matches": true,
+      "value": "gate anchor 2026-11-07 head 62e123dede84ebf90a12e42f55eb94c270e238593d0dd4cbb72b161df3b71e2f seq 729",
+      "parsed": {
+       "date": "2026-11-07",
+       "head": "62e123dede84ebf90a12e42f55eb94c270e238593d0dd4cbb72b161df3b71e2f",
+       "seq": 729
+      },
+      "index_agrees": true
+     },
+     "ots": {
+      "file": "anchors/2026-11-07.txt.ots",
+      "fetched": true,
+      "sha256": "28cfb2cd340a3fcdbcdf65638deab831e26d844c3a90094a14a08cd305038ad2",
+      "bytes": 5022,
+      "index_sha256_matches": true
+     },
+     "chain": {
+      "in_chain": true,
+      "ok": true,
+      "via_withheld": false,
+      "day_lines_after": 0,
+      "ledger_anchor_line": {
+       "seq": 730,
+       "agrees": true,
+       "late": false
+      },
+      "problem": null
+     },
+     "proof": {
+      "bitcoin_attestations": [
+       {
+        "height": 975028,
+        "expected_merkle_root": "42e6acb7b1403c47ca6419d9e645a2ed8bc6716528518d225be751b13601dce7",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "0000000000000000000147a1705fb6d8b1ce88cfbd9c426086f3a1310af9afa5",
+          "merkle_root": "42e6acb7b1403c47ca6419d9e645a2ed8bc6716528518d225be751b13601dce7",
+          "timestamp": 1794116700,
+          "http_date": "Sun, 08 Nov 2026 21:27:20 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1794116700
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "0000000000000000000147a1705fb6d8b1ce88cfbd9c426086f3a1310af9afa5",
+          "merkle_root": "42e6acb7b1403c47ca6419d9e645a2ed8bc6716528518d225be751b13601dce7",
+          "timestamp": 1794116700,
+          "http_date": "Sun, 08 Nov 2026 21:27:21 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1794116700
+         }
+        ]
+       },
+       {
+        "height": 975030,
+        "expected_merkle_root": "6314d22a0e726c1db3815edae820f7d35e7d51ce48d10d8112b0f147824e3222",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "0000000000000000000018e449d3c93ecaa9987897f54bccd6b3cdae9d787bc1",
+          "merkle_root": "6314d22a0e726c1db3815edae820f7d35e7d51ce48d10d8112b0f147824e3222",
+          "timestamp": 1794118475,
+          "http_date": "Sun, 08 Nov 2026 21:27:21 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1794118475
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "0000000000000000000018e449d3c93ecaa9987897f54bccd6b3cdae9d787bc1",
+          "merkle_root": "6314d22a0e726c1db3815edae820f7d35e7d51ce48d10d8112b0f147824e3222",
+          "timestamp": 1794118475,
+          "http_date": "Sun, 08 Nov 2026 21:27:21 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1794118475
+         }
+        ]
+       },
+       {
+        "height": 975060,
+        "expected_merkle_root": "db0998ebea5a2d6e9b4ba580979e53aa8373fc4cadd26e521e58342c7178f547",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "00000000000000000001b173151d9b4c20a092c107cb056993c4fbad9f6c7174",
+          "merkle_root": "db0998ebea5a2d6e9b4ba580979e53aa8373fc4cadd26e521e58342c7178f547",
+          "timestamp": 1794140561,
+          "http_date": "Sun, 08 Nov 2026 21:27:21 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1794140561
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "00000000000000000001b173151d9b4c20a092c107cb056993c4fbad9f6c7174",
+          "merkle_root": "db0998ebea5a2d6e9b4ba580979e53aa8373fc4cadd26e521e58342c7178f547",
+          "timestamp": 1794140561,
+          "http_date": "Sun, 08 Nov 2026 21:27:21 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1794140561
+         }
+        ]
+       },
+       {
+        "height": 975074,
+        "expected_merkle_root": "b503be4eb8dae4f9590fdffaf1dff925a764068d6d5a786ec425bda119acc151",
+        "explorers": [
+         {
+          "explorer": "https://blockstream.info/api",
+          "ok": true,
+          "hash": "000000000000000000015f84919e594a2c2431c495faf7e04447e063c027aa75",
+          "merkle_root": "b503be4eb8dae4f9590fdffaf1dff925a764068d6d5a786ec425bda119acc151",
+          "timestamp": 1794153025,
+          "http_date": "Sun, 08 Nov 2026 21:27:21 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1794153025
+         },
+         {
+          "explorer": "https://mempool.space/api",
+          "ok": true,
+          "hash": "000000000000000000015f84919e594a2c2431c495faf7e04447e063c027aa75",
+          "merkle_root": "b503be4eb8dae4f9590fdffaf1dff925a764068d6d5a786ec425bda119acc151",
+          "timestamp": 1794153025,
+          "http_date": "Sun, 08 Nov 2026 21:27:21 GMT",
+          "error": null,
+          "verified": true,
+          "attested_time": 1794153025
+         }
+        ]
+       }
+      ],
+      "pending_calendars": [
+       "https://alice.btc.calendar.opentimestamps.org",
+       "https://bob.btc.calendar.opentimestamps.org",
+       "https://btc.calendar.catallaxy.com",
+       "https://finney.calendar.eternitywall.com"
+      ],
+      "unknown_attestations": 0,
+      "file_digest": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+      "text_digest": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+      "digest_matches_text": true
+     },
+     "lowest_block": 975028,
+     "status": "bitcoin: block 975028, header from 2 of 2 explorers agree (attestedTime 2026-11-08T05:45:00Z); 4 attestations in blocks 975028, 975030, 975060, 975074",
+     "index_block_agrees": true,
+     "verified": true,
+     "ok": true
+    }
+   ]
+  },
+  "anchor_index_vs_ledger": {
+   "ok": true,
+   "ledger_anchor_lines": 14,
+   "in_index": 14,
+   "index_entries": 14,
+   "with_ledger_line": 14,
+   "only_in_ledger": [],
+   "only_in_index": []
+  },
+  "gaps": {
+   "count": 1,
+   "dates": [
+    "2026-11-06"
+   ],
+   "from": "2026-10-24",
+   "through": "2026-11-07",
+   "window_from": "the day before the run day in America/New_York (2026-11-08)",
+   "run_day_local": "2026-11-08",
+   "expected_days": 15,
+   "anchors_in_range": 14,
+   "late": [],
+   "note": "coverage window is 2026-10-24 .. 2026-11-07 (America/New_York; the end is the day before the run day in America/New_York (2026-11-08)); a day with neither an index entry nor a ledger anchor line is a gap: printed, not failed. the writer's own anchor_anomaly lines are what would explain it"
+  },
+  "outside_pin": {
+   "lines_after_last_attested_head": 5,
+   "last_attested_anchor": {
+    "date": "2026-11-07",
+    "seq": 729,
+    "block": 975028,
+    "by": "explorers"
+   },
+   "note": "lines after that seq are pinned by nothing outside the lab tonight: a pending anchor, the shelf's own history and this repository are the lab's"
+  },
+  "append_only": {
+   "status": "extends",
+   "previous": {
+    "date": "2026-11-08",
+    "fetched_at": "2026-11-08T21:26:12Z",
+    "sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
+    "bytes": 1233153,
+    "lines": 729,
+    "head": "0e5a698dece0bb33764c5202a03745a140a6ef66dba7bbcbc3896842795e152f",
+    "lines_after_last_attested_head": 5,
+    "anchors": {
+     "2026-10-24": {
+      "text_sha256": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+      "ots_sha256": "51c56be2582c6f4d4afb01642b8244be1b90b3708b12a133d36304a87a64c512",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-25": {
+      "text_sha256": "b3749f8326c18041a8838ef2ca811c1cbf14885fccaf9b9f43d0f3eb4dd876e5",
+      "ots_sha256": "d0c879a3be1e4d005f6d83f44c381b1b8f9636a2685c95f2b533c5376362701b",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-26": {
+      "text_sha256": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+      "ots_sha256": "fd9a0358352b74f172fe1aafde74f8c9dc01c8708b57c2dc46bdf2cf0fde0239",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-27": {
+      "text_sha256": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+      "ots_sha256": "7adad32ca9b4500c76ec893651f9f63e0e87102f77a04aa309bb3a55ddaa3e47",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-28": {
+      "text_sha256": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+      "ots_sha256": "4ec38c0432a61c764bb158903e2eee9b488e2cae688595485ca2b50c17d0b4e2",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-29": {
+      "text_sha256": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+      "ots_sha256": "a02040496e887ae06388b1d05b919736e4fc6740bf367b89e584cc5d9a5aa7b8",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-30": {
+      "text_sha256": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+      "ots_sha256": "03c78096f37941367bcfb93920541546dab7600d711a3899c61f474d86a626cf",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-31": {
+      "text_sha256": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+      "ots_sha256": "1d2c9e2a19fc84fa9bd0a381deda6cf769789e26a316678d38bf961ad3287480",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-01": {
+      "text_sha256": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+      "ots_sha256": "92507db1582b63154ff3ecb564cdf672318297f50837296d10f316e385fc4e2a",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-02": {
+      "text_sha256": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+      "ots_sha256": "55614a3fba2914b729a1beb40a8bc7b4e90b15f5ad700e19302c797672275ce1",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-03": {
+      "text_sha256": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+      "ots_sha256": "cd036ea2a08150259c1c5f783ed90fed730ffbc9424bdf40dc3b26ea364407d8",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-04": {
+      "text_sha256": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+      "ots_sha256": "b06612332d4598481609b61a7303af3079612692d738df1809e4b49d57da95f9",
+      "lowest_block": 974635,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-05": {
+      "text_sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+      "ots_sha256": "9f0796c82bfb44ebfbc3a4e4df8f9d61f28d1d7960489e632a5fe9c7a9a5085a",
+      "lowest_block": 974768,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-07": {
+      "text_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+      "ots_sha256": "28cfb2cd340a3fcdbcdf65638deab831e26d844c3a90094a14a08cd305038ad2",
+      "lowest_block": 975028,
+      "calendars": 4,
+      "status": "bitcoin"
+     }
+    }
+   },
+   "today": {
+    "date": "2026-11-08",
+    "fetched_at": "2026-11-08T21:27:15Z",
+    "sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
+    "bytes": 1233153,
+    "lines": 729,
+    "head": "0e5a698dece0bb33764c5202a03745a140a6ef66dba7bbcbc3896842795e152f",
+    "lines_after_last_attested_head": 5,
+    "anchors": {
+     "2026-10-24": {
+      "text_sha256": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+      "ots_sha256": "51c56be2582c6f4d4afb01642b8244be1b90b3708b12a133d36304a87a64c512",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-25": {
+      "text_sha256": "b3749f8326c18041a8838ef2ca811c1cbf14885fccaf9b9f43d0f3eb4dd876e5",
+      "ots_sha256": "d0c879a3be1e4d005f6d83f44c381b1b8f9636a2685c95f2b533c5376362701b",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-26": {
+      "text_sha256": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+      "ots_sha256": "fd9a0358352b74f172fe1aafde74f8c9dc01c8708b57c2dc46bdf2cf0fde0239",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-27": {
+      "text_sha256": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+      "ots_sha256": "7adad32ca9b4500c76ec893651f9f63e0e87102f77a04aa309bb3a55ddaa3e47",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-28": {
+      "text_sha256": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+      "ots_sha256": "4ec38c0432a61c764bb158903e2eee9b488e2cae688595485ca2b50c17d0b4e2",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-29": {
+      "text_sha256": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+      "ots_sha256": "a02040496e887ae06388b1d05b919736e4fc6740bf367b89e584cc5d9a5aa7b8",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-30": {
+      "text_sha256": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+      "ots_sha256": "03c78096f37941367bcfb93920541546dab7600d711a3899c61f474d86a626cf",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-10-31": {
+      "text_sha256": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+      "ots_sha256": "1d2c9e2a19fc84fa9bd0a381deda6cf769789e26a316678d38bf961ad3287480",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-01": {
+      "text_sha256": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+      "ots_sha256": "92507db1582b63154ff3ecb564cdf672318297f50837296d10f316e385fc4e2a",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-02": {
+      "text_sha256": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+      "ots_sha256": "55614a3fba2914b729a1beb40a8bc7b4e90b15f5ad700e19302c797672275ce1",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-03": {
+      "text_sha256": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+      "ots_sha256": "cd036ea2a08150259c1c5f783ed90fed730ffbc9424bdf40dc3b26ea364407d8",
+      "lowest_block": 974530,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-04": {
+      "text_sha256": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+      "ots_sha256": "b06612332d4598481609b61a7303af3079612692d738df1809e4b49d57da95f9",
+      "lowest_block": 974635,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-05": {
+      "text_sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+      "ots_sha256": "9f0796c82bfb44ebfbc3a4e4df8f9d61f28d1d7960489e632a5fe9c7a9a5085a",
+      "lowest_block": 974768,
+      "calendars": 4,
+      "status": "bitcoin"
+     },
+     "2026-11-07": {
+      "text_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+      "ots_sha256": "28cfb2cd340a3fcdbcdf65638deab831e26d844c3a90094a14a08cd305038ad2",
+      "lowest_block": 975028,
+      "calendars": 4,
+      "status": "bitcoin"
+     }
+    }
+   },
+   "prefix_sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
+   "added_bytes": 0,
+   "added_lines": 0,
+   "anchor_changes": []
+  },
+  "self_stamps": {
+   "skipped": true,
+   "note": "--stamp-self not passed: the shelf's own report is not stamped and earlier stamps are not upgraded on this run"
+  }
+ },
+ "notes": [],
+ "problems": [],
+ "run_finished_at": "2026-11-08T21:27:21Z",
+ "ok": true,
+ "exit_code": 0,
+ "rerun": "git clone https://github.com/fathom-lab/styxx-shelf && cd styxx-shelf && npm ci && node shelf.mjs --row darkflobi --out ./docs --date 2026-11-08 --through 2026-11-07"
+}

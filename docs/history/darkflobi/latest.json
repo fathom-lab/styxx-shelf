@@ -1,0 +1,109 @@
+{
+ "date": "2026-11-08",
+ "fetched_at": "2026-11-08T21:27:15Z",
+ "sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
+ "bytes": 1233153,
+ "lines": 729,
+ "head": "0e5a698dece0bb33764c5202a03745a140a6ef66dba7bbcbc3896842795e152f",
+ "lines_after_last_attested_head": 5,
+ "anchors": {
+  "2026-10-24": {
+   "text_sha256": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+   "ots_sha256": "51c56be2582c6f4d4afb01642b8244be1b90b3708b12a133d36304a87a64c512",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-10-25": {
+   "text_sha256": "b3749f8326c18041a8838ef2ca811c1cbf14885fccaf9b9f43d0f3eb4dd876e5",
+   "ots_sha256": "d0c879a3be1e4d005f6d83f44c381b1b8f9636a2685c95f2b533c5376362701b",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-10-26": {
+   "text_sha256": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+   "ots_sha256": "fd9a0358352b74f172fe1aafde74f8c9dc01c8708b57c2dc46bdf2cf0fde0239",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-10-27": {
+   "text_sha256": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+   "ots_sha256": "7adad32ca9b4500c76ec893651f9f63e0e87102f77a04aa309bb3a55ddaa3e47",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-10-28": {
+   "text_sha256": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+   "ots_sha256": "4ec38c0432a61c764bb158903e2eee9b488e2cae688595485ca2b50c17d0b4e2",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-10-29": {
+   "text_sha256": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+   "ots_sha256": "a02040496e887ae06388b1d05b919736e4fc6740bf367b89e584cc5d9a5aa7b8",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-10-30": {
+   "text_sha256": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+   "ots_sha256": "03c78096f37941367bcfb93920541546dab7600d711a3899c61f474d86a626cf",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-10-31": {
+   "text_sha256": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+   "ots_sha256": "1d2c9e2a19fc84fa9bd0a381deda6cf769789e26a316678d38bf961ad3287480",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-11-01": {
+   "text_sha256": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+   "ots_sha256": "92507db1582b63154ff3ecb564cdf672318297f50837296d10f316e385fc4e2a",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-11-02": {
+   "text_sha256": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+   "ots_sha256": "55614a3fba2914b729a1beb40a8bc7b4e90b15f5ad700e19302c797672275ce1",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-11-03": {
+   "text_sha256": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+   "ots_sha256": "cd036ea2a08150259c1c5f783ed90fed730ffbc9424bdf40dc3b26ea364407d8",
+   "lowest_block": 974530,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-11-04": {
+   "text_sha256": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+   "ots_sha256": "b06612332d4598481609b61a7303af3079612692d738df1809e4b49d57da95f9",
+   "lowest_block": 974635,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-11-05": {
+   "text_sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+   "ots_sha256": "9f0796c82bfb44ebfbc3a4e4df8f9d61f28d1d7960489e632a5fe9c7a9a5085a",
+   "lowest_block": 974768,
+   "calendars": 4,
+   "status": "bitcoin"
+  },
+  "2026-11-07": {
+   "text_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+   "ots_sha256": "28cfb2cd340a3fcdbcdf65638deab831e26d844c3a90094a14a08cd305038ad2",
+   "lowest_block": 975028,
+   "calendars": 4,
+   "status": "bitcoin"
+  }
+ }
+}

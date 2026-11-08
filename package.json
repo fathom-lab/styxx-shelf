@@ -1,0 +1,16 @@
+{
+  "name": "styxx-shelf",
+  "version": "0.1.0",
+  "description": "nightly re-derivation of published darkflobi.gate ledgers from a place that is not the box: fetch, re-derive the chain, run the vectors, check the anchors against two bitcoin explorers, print the command",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "shelf": "node shelf.mjs --out ./docs",
+    "test": "node test/test_shelf.mjs"
+  },
+  "dependencies": {
+    "opentimestamps": "0.4.9"
+  }
+}

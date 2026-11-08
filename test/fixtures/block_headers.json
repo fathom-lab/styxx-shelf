@@ -1,0 +1,176 @@
+{
+ "source": "https://blockstream.info/api",
+ "cross_checked_against": "https://mempool.space/api",
+ "fetched_at": "2026-11-08T20:47:05.207Z",
+ "what": "block-height/<h> (hash) and block/<hash> (header json) as the explorer returned them; the test's fake explorers serve these bytes; the shelf itself always fetches live",
+ "blocks": {
+  "974530": {
+   "height": 974530,
+   "hash": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+   "header": {
+    "id": "000000000000000000009fba11c5f69c7c695c12e9034ff6cbd40ef81d7029f2",
+    "height": 974530,
+    "version": 782065664,
+    "timestamp": 1793798695,
+    "tx_count": 3972,
+    "size": 1682621,
+    "weight": 3997598,
+    "merkle_root": "e660cb07735a4b9820f8b6981e88dff7a47374e95ffa03111bc4fbb444bdb42b",
+    "previousblockhash": "00000000000000000001d5e719a2618b73f61278ed31a380681ab0e712d590a9",
+    "mediantime": 1793794684,
+    "nonce": 68759331,
+    "bits": 386000300,
+    "difficulty": 148364561003867.4
+   },
+   "http_date": "Sun, 08 Nov 2026 20:47:05 GMT",
+   "mempool_space_agrees": true
+  },
+  "974635": {
+   "height": 974635,
+   "hash": "00000000000000000001152c132b54b5b62515240ae340901f14457c0e126b30",
+   "header": {
+    "id": "00000000000000000001152c132b54b5b62515240ae340901f14457c0e126b30",
+    "height": 974635,
+    "version": 537174016,
+    "timestamp": 1793863154,
+    "tx_count": 2622,
+    "size": 1637027,
+    "weight": 3992747,
+    "merkle_root": "73abfe6635988cf34a75231fc8d7450a2932edd89d735213985103cdba9c36c0",
+    "previousblockhash": "00000000000000000000ddaa8767dde6e27a172d915eceb41fda6149a798188d",
+    "mediantime": 1793858989,
+    "nonce": 2442590223,
+    "bits": 386000300,
+    "difficulty": 148364561003867.4
+   },
+   "http_date": "Sun, 08 Nov 2026 20:47:06 GMT",
+   "mempool_space_agrees": true
+  },
+  "974643": {
+   "height": 974643,
+   "hash": "0000000000000000000172c8295241d08616b8fa4e52e829601d27cad40fabd4",
+   "header": {
+    "id": "0000000000000000000172c8295241d08616b8fa4e52e829601d27cad40fabd4",
+    "height": 974643,
+    "version": 771751936,
+    "timestamp": 1793866369,
+    "tx_count": 1008,
+    "size": 3578058,
+    "weight": 3993702,
+    "merkle_root": "a95b2a77d3bef045c24ada287631ce15cc9257ff877c6b267376f0182377ccbc",
+    "previousblockhash": "0000000000000000000055d76a326e65e32ba1b84df1f299cbe8d7674cd9d5c1",
+    "mediantime": 1793863599,
+    "nonce": 208958608,
+    "bits": 386000300,
+    "difficulty": 148364561003867.4
+   },
+   "http_date": "Sun, 08 Nov 2026 20:47:06 GMT",
+   "mempool_space_agrees": true
+  },
+  "974654": {
+   "height": 974654,
+   "hash": "00000000000000000001d6d28eccee173cfcb0a33ad05219fed09e320d9c10ca",
+   "header": {
+    "id": "00000000000000000001d6d28eccee173cfcb0a33ad05219fed09e320d9c10ca",
+    "height": 974654,
+    "version": 537108480,
+    "timestamp": 1793871022,
+    "tx_count": 2082,
+    "size": 1732659,
+    "weight": 3993699,
+    "merkle_root": "e09a2d6484a09a75f8718c4501a7fc9c576b588d19828415a7bbd3cad573fa60",
+    "previousblockhash": "00000000000000000000d0c11732ac5b2b3c357a70e3b49be2cb6483e85fdfb9",
+    "mediantime": 1793869355,
+    "nonce": 4084114512,
+    "bits": 386000300,
+    "difficulty": 148364561003867.4
+   },
+   "http_date": "Sun, 08 Nov 2026 20:47:06 GMT",
+   "mempool_space_agrees": true
+  },
+  "974768": {
+   "height": 974768,
+   "hash": "00000000000000000001437f91ce8284fb4e0d44f845753a28fa66b155626c64",
+   "header": {
+    "id": "00000000000000000001437f91ce8284fb4e0d44f845753a28fa66b155626c64",
+    "height": 974768,
+    "version": 558284800,
+    "timestamp": 1793945540,
+    "tx_count": 2717,
+    "size": 1985720,
+    "weight": 3993923,
+    "merkle_root": "02ae932f8a69e4c1459236d761f096208b69b842aa026b1d8d6f4f4ed0a13c26",
+    "previousblockhash": "000000000000000000005ad286a2f9bdba74490c54d3033b6acaa88815666f95",
+    "mediantime": 1793941802,
+    "nonce": 1379992577,
+    "bits": 386000300,
+    "difficulty": 148364561003867.4
+   },
+   "http_date": "Sun, 08 Nov 2026 20:47:07 GMT",
+   "mempool_space_agrees": true
+  },
+  "974770": {
+   "height": 974770,
+   "hash": "00000000000000000000e9d5b31e790333bc0b40af1d6bd7ec220d6d71371dbe",
+   "header": {
+    "id": "00000000000000000000e9d5b31e790333bc0b40af1d6bd7ec220d6d71371dbe",
+    "height": 974770,
+    "version": 608493568,
+    "timestamp": 1793946945,
+    "tx_count": 2962,
+    "size": 1656293,
+    "weight": 3993716,
+    "merkle_root": "cf99bb05a4faa860b338e8ccb7393473c5369ad0c82a6a4798443c7d683004ea",
+    "previousblockhash": "000000000000000000013965d58e0f9e4ec9f76a4ecf05d29d451221e8aa16ae",
+    "mediantime": 1793943221,
+    "nonce": 203925624,
+    "bits": 386000300,
+    "difficulty": 148364561003867.4
+   },
+   "http_date": "Sun, 08 Nov 2026 20:47:07 GMT",
+   "mempool_space_agrees": true
+  },
+  "974799": {
+   "height": 974799,
+   "hash": "00000000000000000001cf611d466d9998afebb0b665c51437e768d3a72cd418",
+   "header": {
+    "id": "00000000000000000001cf611d466d9998afebb0b665c51437e768d3a72cd418",
+    "height": 974799,
+    "version": 536928256,
+    "timestamp": 1793960542,
+    "tx_count": 2143,
+    "size": 1596320,
+    "weight": 3993575,
+    "merkle_root": "7a5be9b302473e2258bcfb675d368c48a664100a96fd5f0f482cd43d0f4e8d5a",
+    "previousblockhash": "0000000000000000000195f14c083ab8210d13ed30762671858be57cbacec096",
+    "mediantime": 1793958033,
+    "nonce": 1154962931,
+    "bits": 386000300,
+    "difficulty": 148364561003867.4
+   },
+   "http_date": "Sun, 08 Nov 2026 20:47:07 GMT",
+   "mempool_space_agrees": true
+  },
+  "974808": {
+   "height": 974808,
+   "hash": "00000000000000000001924ad7f4ddd3f88c045970a68bc1dfab51e283a38807",
+   "header": {
+    "id": "00000000000000000001924ad7f4ddd3f88c045970a68bc1dfab51e283a38807",
+    "height": 974808,
+    "version": 537681920,
+    "timestamp": 1793967145,
+    "tx_count": 3067,
+    "size": 1544539,
+    "weight": 3993994,
+    "merkle_root": "63247c9133f347ba4b9b414d6c104f654697b6185ab72bd017007f00d883f3e5",
+    "previousblockhash": "00000000000000000001494c050e4d732f88414bc978215cd42e2812de8de193",
+    "mediantime": 1793963376,
+    "nonce": 1074817846,
+    "bits": 386000300,
+    "difficulty": 148364561003867.4
+   },
+   "http_date": "Sun, 08 Nov 2026 20:47:07 GMT",
+   "mempool_space_agrees": true
+  }
+ }
+}

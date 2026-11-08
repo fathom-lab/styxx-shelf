@@ -1,0 +1,27 @@
+{
+  "rows": [
+    {
+      "name": "darkflobi",
+      "base": "https://fathom-lab.github.io/styxx/ledger/",
+      "files": {
+        "ledger": "ledger.jsonl",
+        "withheld": "withheld.json",
+        "verify": "verify.js",
+        "check": "check_ledger.cjs",
+        "vectors": "vectors/vectors.json",
+        "vectors_base": "vectors/base.jsonl",
+        "anchors_index": "anchors/index.json",
+        "snapshots": "SNAPSHOTS.jsonl",
+        "stats": "STATS.json"
+      }
+    }
+  ],
+  "explorers": [
+    "https://blockstream.info/api",
+    "https://mempool.space/api"
+  ],
+  "schedule_utc": "07:00",
+  "anchor_tz": "America/New_York",
+  "fetch_timeout_seconds": 60,
+  "pending_max_days": 7
+}

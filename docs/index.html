@@ -1,0 +1,235 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>styxx shelf</title>
+<style>
+:root{color-scheme:dark}
+body{background:#000;color:#c8ffc8;font:14px/1.45 ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;margin:0;padding:24px 16px;max-width:1280px}
+h1,h2,h3{font-weight:normal;color:#00ff00;margin:1.2em 0 .4em}
+h1{font-size:20px}h2{font-size:17px}h3{font-size:15px}
+a{color:#00ffff}
+table{border-collapse:collapse;width:100%;margin:.5em 0;font-size:13px}
+th,td{border:1px solid #063;padding:4px 6px;text-align:left;vertical-align:top}
+th{color:#00ff00;font-weight:normal;background:#031}
+.ok{color:#00ff00}.bad{color:#ff5555}.dim{color:#6a9}
+.mono{font-family:inherit;word-break:break-all}
+code,pre{color:#00ffff;background:#021;padding:1px 4px;border-radius:2px;white-space:pre-wrap;word-break:break-all}
+pre{padding:8px;overflow:auto}
+section{border-top:1px solid #063;margin-top:2em}
+.wrap{overflow-x:auto}
+</style>
+<h1>styxx shelf — the re-derivation runs somewhere that is not the box</h1>
+<p>every night a github action fetches each row's published ledger, re-derives its chain with the shelf's own pinned copy of the verifier, runs the row's conformance vectors, checks every anchor the row's index lists against the chain and its opentimestamps proof against the bitcoin block header as two explorers return it, counts the days with no anchor, and compares the bytes with the previous night's fetch. this page is written by that run; it loads nothing. each row says where its run ran: a run marked "not the action (a local run)" was made on a lab machine, not by the workflow.</p>
+<p>written 2026-11-08T21:27:21Z · 1 row · schedule 07:00 utc · explorers https://blockstream.info/api, https://mempool.space/api</p>
+<div class="wrap"><table>
+<tr><th>row</th><th>fetched at / where</th><th>ledger sha256</th><th>lines</th><th>head</th><th>chain re-derives</th><th>vectors</th><th>anchors verified</th><th>gaps</th><th>append-only</th><th>verifier drift</th><th>lines after last attested head</th><th>exit</th></tr>
+<tr>
+<td><a href="#darkflobi">darkflobi</a></td>
+<td>2026-11-08T21:27:15Z<br><span class="dim">not the action (a local run)</span></td>
+<td class="mono"><span title="ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2">ab9d4fc95e4fb668</span></td>
+<td>729</td>
+<td class="mono"><span title="0e5a698dece0bb33764c5202a03745a140a6ef66dba7bbcbc3896842795e152f">0e5a698dece0bb33</span></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">10 of 10</b></td>
+<td>14 of 14</td>
+<td>1 of 15 days <span class="dim">(2026-11-06)</span></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">no</b></td>
+<td>5 of 729</td>
+<td><b class="ok">0</b></td>
+</tr>
+</table></div>
+<h2>what this is / what this is not</h2>
+<ul>
+<li><b>reproducible, not independent.</b> the lab that writes the ledger also controls this repository, its workflow and its pinned verifier. what a reader gets is a run they can repeat from the printed command and compare digest for digest; not a second party's word.</li>
+<li><b>the anchor texts are fetched from the lab's exhibit</b> (anchors/&lt;date&gt;.txt), since the telegram supergroup they were posted to needs an account to read. the shelf checks that those bytes are what the index says, that the proof is over them, and that they name a head in the chain. it cannot see the post.</li>
+<li><b>what is outside the lab is the bitcoin block header</b>, fetched from two explorers and compared. a proof attests that the anchor's bytes existed before that block; not that they were published anywhere, not at what url, not that the head covers every send.</li>
+<li><b>append-only is checked against the shelf's own record of the previous fetch, kept in this repository.</b> it shows a rewrite between two nights only while that record was not itself rewritten; the record's git history is the lab's too. lines after the last bitcoin-attested head (tonight: 5 of 729) are pinned by nothing outside the lab. a reader who kept last night's report and its .ots can show it existed before the block it names; one who did not must trust this repository's git history.</li>
+<li><b>a withheld line is bridged on the lab's word.</b> withheld.json carries a digest the shelf cannot re-derive; the chain is checked through it and the lines it leaves unpinned are counted in the report.</li>
+<li><b>a failure is printed, never hidden.</b> exit 1 on any failed check, with the report still written; "pending" is a state, not a pass, and a proof pending past the configured limit is a failed check; a day with no anchor is a count and a list of dates; a verifier that drifted from the pinned copy is said so, and the pinned copy is what ran.</li>
+<li><b>what the shelf asks and does not ask:</b> it asks the opentimestamps calendars only to stamp and upgrade its own nightly report (--stamp-self, on in the workflow), never to verify a row's proof: a row's pending proof stays pending here until the row's writer upgrades it. it asks no bitcoin node and no telegram.</li>
+</ul>
+<h2>run it yourself</h2>
+<pre>git clone https://github.com/fathom-lab/styxx-shelf &amp;&amp; cd styxx-shelf &amp;&amp; npm ci &amp;&amp; node shelf.mjs --row darkflobi --out ./docs</pre>
+<p class="dim">node 20+. compare your docs/reports/&lt;row&gt;/&lt;date&gt;.json with the one here: the sha256 of every fetched file, the head, the per-anchor merkle roots and the block headers should agree when the url served the same bytes. each row's "rerun" line below carries the --date and --through of the recorded run.</p>
+<section id="darkflobi">
+<h2>darkflobi <span class="dim">https://fathom-lab.github.io/styxx/ledger/</span></h2>
+<p>run 2026-11-08T21:27:15Z → 2026-11-08T21:27:21Z on <b>not the action (a local run)</b>, shelf 0.1.0, node v24.13.0, date 2026-11-08. full record: <a href="reports/darkflobi/2026-11-08.json">reports/darkflobi/2026-11-08.json</a> (<a href="reports/darkflobi/latest.json">latest</a>).</p>
+<p class="ok">no check failed</p><p>(0 anchors pending, 1 of 15 days with no anchor, 5 lines after the last bitcoin-attested head)</p>
+
+<h3>chain</h3>
+<p>re-derives: 729 published lines (730 file lines), head <code>0e5a698dece0bb33764c5202a03745a140a6ef66dba7bbcbc3896842795e152f</code>, kinds {&quot;started&quot;:22,&quot;send&quot;:344,&quot;delivered&quot;:349,&quot;anchor&quot;:14}, withheld 5 (bridged 5), the ledger's own anchor lines in chain 14 of 14, pinned by a posted head 692 of 729 lines, not pinned because of a withheld line 32, after the last posted head 5.</p>
+<p class="dim">the row's SNAPSHOTS.jsonl last line names the fetched ledger's sha256.</p>
+<h3>vectors</h3>
+<p>10 of 10 answered as the row's vectors file says (pinned runner, pinned verifier).</p>
+<pre>ok   identity
+ok   rewrite-one-field
+ok   rewrite-prev
+ok   drop-a-line
+ok   drop-a-line-withheld
+ok   drop-a-line-withheld-wrong-digest
+ok   cr-byte
+ok   duplicate-key
+ok   truncate-last-line
+ok   flip-and-rechain
+10 of 10 vectors answered as the file says</pre>
+<h3>verifier drift</h3>
+<p>no: the row's published verify.js and check_ledger.cjs hash to the pinned copies.</p>
+<table><tr><th>file</th><th>published sha256</th><th>pinned sha256</th><th>same</th></tr><tr><td>verify.js</td><td class="mono">6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46</td><td class="mono">6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46</td><td><b class="ok">yes</b></td></tr><tr><td>check_ledger.cjs</td><td class="mono">85c76195a194b5901bcf3f99f0aee19584925f9a1b44ae385b2057b0649e6503</td><td class="mono">85c76195a194b5901bcf3f99f0aee19584925f9a1b44ae385b2057b0649e6503</td><td><b class="ok">yes</b></td></tr></table>
+<h3>anchors — verified 14 of 14, pending 0 of 14, in chain 14 of 14</h3>
+<p class="dim">"verified" means: the fetched text hashes to what the index says, the proof is over those bytes, the text's head and seq are in the fetched chain, and every bitcoin attestation's merkle path ends at the block header that 2 of 2 explorers return (https://blockstream.info/api, https://mempool.space/api). "pending" means the proof holds calendar promises only; the shelf does not ask the calendars for a row's proof, and a proof pending for more than 7 days after its anchor date is a failed check. "explorer unreachable" is an explorer that did not answer, not a header that disagreed; both leave the anchor not verified.</p>
+<table><tr><th>date</th><th>seq</th><th>text sha256</th><th>ots sha256</th><th>in chain</th><th>block(s)</th><th>status</th></tr>
+<tr>
+<td>2026-10-24</td>
+<td>57</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-10-25</td>
+<td>116</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-10-26</td>
+<td>145</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-10-27</td>
+<td>166</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-10-28</td>
+<td>173</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-10-29</td>
+<td>184</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-10-30</td>
+<td>199</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-10-31</td>
+<td>240</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-11-01</td>
+<td>243</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-11-02</td>
+<td>316</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-11-03</td>
+<td>336</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974530 x4</td>
+<td class="ok">bitcoin: block 974530, header from 2 of 2 explorers agree (attestedTime 2026-11-04T13:24:55Z); 4 attestations in block 974530 x4</td>
+</tr>
+<tr>
+<td>2026-11-04</td>
+<td>664</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974635 x2, 974643, 974654</td>
+<td class="ok">bitcoin: block 974635, header from 2 of 2 explorers agree (attestedTime 2026-11-05T07:19:14Z); 4 attestations in blocks 974635 x2, 974643, 974654</td>
+</tr>
+<tr>
+<td>2026-11-05</td>
+<td>704</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>974768, 974770, 974799, 974808</td>
+<td class="ok">bitcoin: block 974768, header from 2 of 2 explorers agree (attestedTime 2026-11-06T06:12:20Z); 4 attestations in blocks 974768, 974770, 974799, 974808</td>
+</tr>
+<tr>
+<td>2026-11-07</td>
+<td>729</td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td><b class="ok">yes</b></td>
+<td>975028, 975030, 975060, 975074</td>
+<td class="ok">bitcoin: block 975028, header from 2 of 2 explorers agree (attestedTime 2026-11-08T05:45:00Z); 4 attestations in blocks 975028, 975030, 975060, 975074</td>
+</tr>
+</table>
+<p>index against the ledger's own anchor lines: 14 of 14 ledger anchor lines are in the index, 14 of 14 index entries have a ledger anchor line.</p>
+<h3>gaps — 1 of 15 days</h3>
+<p>window 2026-10-24 .. 2026-11-07 (America/New_York; the end is the day before the run day in America/New_York (2026-11-08)): no anchor for <b>2026-11-06</b>. a gap is a day with neither an index entry nor a ledger anchor line; printed, not failed.</p>
+<h3>append-only</h3>
+<p>extends the previous fetch (2026-11-08: 1233153 bytes, 729 lines) by +0 bytes, +0 lines</p>
+<p class="dim">no anchor's text, proof or block changed since the previous fetch (14 compared).</p>
+<p>lines after the last bitcoin-attested head: <b>5 of 729</b> (anchor 2026-11-07 pins seq 729, block 975028, by explorers). those lines are pinned by nothing outside the lab tonight.</p>
+<p class="dim">the previous fetch is <a href="history/darkflobi/latest.json">history/darkflobi/latest.json</a>, a record in this repository (see "what this is not").</p>
+<h3>the shelf's own stamps</h3>
+<p>--stamp-self not passed: the shelf&#39;s own report is not stamped and earlier stamps are not upgraded on this run</p>
+<h3>fetched</h3>
+<table><tr><th>file</th><th>http</th><th>date header</th><th>bytes</th><th>sha256</th></tr>
+<tr><td>ledger.jsonl</td><td>200</td><td>Sun, 08 Nov 2026 21:27:15 GMT</td><td>1233153</td><td class="mono">ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2</td></tr>
+<tr><td>withheld.json</td><td>200</td><td>Sun, 08 Nov 2026 21:27:15 GMT</td><td>1777</td><td class="mono">096e3123c16e10bfcf8853ba82c6bc1bd75bdb935c34674d9ceba829b6c60f59</td></tr>
+<tr><td>verify.js</td><td>200</td><td>Sun, 08 Nov 2026 21:27:16 GMT</td><td>13872</td><td class="mono">6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46</td></tr>
+<tr><td>check_ledger.cjs</td><td>200</td><td>Sun, 08 Nov 2026 21:27:16 GMT</td><td>4122</td><td class="mono">85c76195a194b5901bcf3f99f0aee19584925f9a1b44ae385b2057b0649e6503</td></tr>
+<tr><td>vectors/vectors.json</td><td>200</td><td>Sun, 08 Nov 2026 21:27:16 GMT</td><td>5725</td><td class="mono">be43667f1662e822fd31d5941e6166fdd7ce145de72b6dfea9b32bbb4ae69d4b</td></tr>
+<tr><td>vectors/base.jsonl</td><td>200</td><td>Sun, 08 Nov 2026 21:27:16 GMT</td><td>194204</td><td class="mono">8029fce0bed73a52067d2e7e3552555d45c81d837187a93b6dd20d48ad8861f1</td></tr>
+<tr><td>anchors/index.json</td><td>200</td><td>Sun, 08 Nov 2026 21:27:16 GMT</td><td>13573</td><td class="mono">e36bd72935d6bba08c710483c0fcd6769c77511ea70fac7cfc3713f82a4258a8</td></tr>
+<tr><td>SNAPSHOTS.jsonl</td><td>200</td><td>Sun, 08 Nov 2026 21:27:16 GMT</td><td>5673</td><td class="mono">3b0afeb58d11107f9e14f4289a08c6d0774a5d19fedacd8f48c0997c3e9b7c19</td></tr>
+<tr><td>STATS.json</td><td>200</td><td>Sun, 08 Nov 2026 21:27:16 GMT</td><td>5719</td><td class="mono">d3c783a23715e8b82030c164016dae615b6ae5ec130ebd6ab5b51c0a8b1fefca</td></tr>
+</table>
+<p class="dim">plus 28 anchor files (in the json record).</p>
+<h3>rerun</h3>
+<pre>git clone https://github.com/fathom-lab/styxx-shelf &amp;&amp; cd styxx-shelf &amp;&amp; npm ci &amp;&amp; node shelf.mjs --row darkflobi --out ./docs --date 2026-11-08 --through 2026-11-07</pre>
+<p class="dim">by hand, inside the clone: 39 commands (every curl and every node line) are listed under <code>commands</code> in the json record. the rerun carries --date and --through so the gap window is the recorded one.</p>
+</section>
