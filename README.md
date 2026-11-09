@@ -48,6 +48,91 @@ crash.
 - a run made outside the workflow says so: the report's `ran_on` is either `github actions` with the run url, commit
   and attempt, or `not the action (a local run)`; the page prints it beside the row.
 
+## get your ledger read
+
+for an operator outside the lab who keeps a styxx ledger (protocol v1, written with the kit at
+https://github.com/fathom-lab/styxx-ledger) and wants the shelf's read of it, for example for condition (c) of the
+kit's census template (`census/PREREG_census_TEMPLATE.md` there). as of 2026-11-09: requests 0 (issues on this
+repository, open or closed: 0); outside ledgers read: 0.
+
+1. **publish** `ledger.jsonl` at an https url that serves it byte for byte with no login, and `withheld.json` beside
+   it if you withhold lines. post each day's anchor text at a place that holds ("anchor places", below). the ledger
+   needs at least one anchor entry, which the writer makes after that day has ended in your `anchor_tz`.
+2. **check it yourself** (optional): in a clone of this repository, node 20 or later, nothing to install,
+   `node shelf_read.cjs --url <ledger url> --protocol v1 [--withheld-url <url>] [--place-url <url>]` prints the
+   report the lab's read would write; exit 0 when the chain re-derives.
+3. **ask**: open an issue at https://github.com/fathom-lab/styxx-shelf/issues/new/choose and pick "ledger read" if it
+   is listed (the form is `.github/ISSUE_TEMPLATE/ledger_read.md`, which the operator adds: see "the operator's
+   setup"); otherwise a plain issue giving the agent, the ledger url, the withheld url or `none`, the `anchor_tz`, the
+   anchor place and why it holds, your ledger's earliest anchor text that holds (verbatim: the shelf reads that one,
+   and your template's `{{earliest_anchor}}` must be this text or (c) fails), a name for the row, and who runs the
+   agent. an issue needs a github account. the row, the report and that anchor text are published on the shelf's
+   pages.
+4. **the lab's acts, not yours**: the lab says on the issue, dated, whether your anchor place holds by the rule under
+   "anchor places" (a word that does not bind the scoring: under the census template as it stands, its §9, the lab
+   judges the place again at the scoring date, and that judgement is the one the scorer uses); appends a row for your
+   ledger to `docs/outside_ledgers.json` (`written_by: "outside"`) in a dated commit; runs
+   `node shelf_read.cjs --row <name>`; commits the report; and replies with the kept read's url. the register row is
+   the lab's act: a pull request that edits the register is a request, not a row.
+5. **what you paste** into the census template's section 15:
+   `shelf read: <the kept read's url> sha256 <64 hex of that file> at <read_at>`, where the url has the form
+   `https://fathom-lab.github.io/styxx-shelf/reports/reads/<name>/<read_at with each : written ->.json` (darkflobi's
+   read at 2026-11-09T14:37:14Z is `reports/reads/darkflobi/2026-11-09T14-37-14Z.json` under that host). the census
+   scorer fetches a shelf report only from under that prefix; for (c) the read must fall after your earliest anchor's
+   day ended and before 00:00 of your d0. the `at` you paste is the report's own `read_at`, copied: the scorer checks
+   the pasted time and does not compare it with the report's (see "ledgers read by url", below).
+6. **how long**: the read itself ran in under a second on the lab's box (2 of 2 dry runs on 2026-11-09: 107 lines in
+   0.6 s, 815 lines in 0.7 s). the row and the read are done by hand; with 0 requests so far the lab quotes no
+   turnaround. once the workflow is in this repository, every row not withdrawn is read again each night.
+
+the read is the lab's shelf reading your ledger with the lab's copy of the verifier: reproducible, not independent of
+the lab ("what this is not"), and it says nothing about your agent or whether a line records what happened.
+
+## anchor places
+
+an anchor place is where a ledger's daily anchor text is posted. the rule (the kit's `PROTOCOL_v1.md` §5 and the
+census template §9): **a stranger reads it without a login, and the operator cannot edit or delete a post there once
+it is made.** the lab judges a place by that rule and says so on the request (step 4 of "get your ledger read"),
+dated, before a row is added; the census template judges the place again at its scoring date (its §9). the word on
+the request does not bind the scoring: under the template as it stands, the judgement at the scoring date is the one
+the scorer uses (`--anchor-place-holds` or `--anchor-place-fails WHY`), and a place judged to fail there prints every
+day of the window as unanchored. the places as the lab reads them on 2026-11-09, from what each lets the one who
+posts do:
+
+| place | by the rule | why |
+|---|---|---|
+| a capture of the post by the internet archive (`https://web.archive.org/save/<url>`), made the day it is posted | holds, with a caveat | readable without a login; the capture is the archive's, not the operator's, and its time is the archive's clock. the caveat: the captured page is the operator's own and the archive takes removal requests from site owners, so the operator can have a capture removed, which by the rule's letter is a delete. the lab reads the place as holding with that caveat because a capture cannot be edited and a removal is the archive's act on a request, not the operator's own; but with a second capture of other text the same day, a removal can replace that day's post. a reader of the archive sees each capture and its time; the census scorer sees neither (below) |
+| a bitcoin transaction that carries the anchor text, or its sha256 with the text posted beside it | holds | readable on any block explorer without a login; a mined transaction is not edited or removed. a fee each day |
+| a discord channel | fails | reading needs an account; the poster can edit and delete |
+| a telegram channel or group | fails | admins can edit and delete; a group needs an account to read (darkflobi's supergroup does) |
+| an x post | fails | the author can delete it |
+| a github issue, comment, discussion or gist | fails | the author can edit it |
+| a mastodon or bluesky post | fails | the author can delete it |
+| a page, file or git repository the operator hosts or can push to | fails | the operator can rewrite it |
+
+in either place that holds, the operator can make more than one post on a day (two captures of a page whose text
+changed between them, two transactions). the census scorer reads the posted texts only from `{{anchors_url}}`, the
+operator's own index (which the template labels the writer's statement), or from texts the lab collects and hands it
+(`--anchors`); it reads neither a post's time at the place nor the place's other posts (`census.py` at styxx-ledger
+26cce4d). a post the index leaves out is unseen by the scorer; only a reading of the place itself finds it.
+
+**what the shelf's place check reads.** shelf_read fetches one url, the row's anchor place url with `{date}` replaced
+by the earliest anchor's date as `YYYY-MM-DD`, and looks in its body for that anchor's text: verbatim (`found`), its
+sha256 in hex (`found_sha256`: how an explorer's json shows a transaction that carries only the digest) or its utf-8
+bytes in hex (`found_hex`: how an explorer's json shows a transaction's data); otherwise `not_found`. so for an
+archive capture the row names that capture's exact url, best as `https://web.archive.org/web/<YYYYMMDDhhmmss>id_/<url>`
+(the captured bytes as they were; the `{date}` form cannot build the 14-digit time), and for a transaction an
+explorer's json url for it (for example `https://blockstream.info/api/tx/<txid>`; a page that renders the data in the
+browser's script reads `not_found`). the check says what one body carries for the earliest anchor: not that the url
+is a place that holds (the lab's judgement, above), not that a transaction is mined, not when a post or a capture was
+made.
+
+an opentimestamps proof alone is not a place: it attests that bytes existed before a bitcoin block, not that they
+were posted where a stranger could read them. a place not in the table is judged by the rule when an operator names
+it. the lab's own two rows fail the rule: darkflobi's anchors go to a telegram supergroup that needs an account and
+that the lab can edit (so the shelf reads the lab's copy, `anchors/<date>.txt`), and red's place is a page on the
+lab's own site. both ledgers are the lab's, and neither is an outside window.
+
 ## run it yourself
 
     git clone https://github.com/fathom-lab/styxx-shelf && cd styxx-shelf
@@ -135,7 +220,7 @@ shelf_read refuses it. `docs/shelf_core.js` (`checkRegister`, `checkRegisterAppe
 tests hold the register to it across every commit of the file (each consecutive pair in `git log`, then the last
 commit against the working copy). today: 2 rows, 2 of 2 the lab's own v0 ledgers (darkflobi, red); outside ledgers
 read: 0; v1 rows 0 of 2. **a v1 row is added by the lab, with a dated commit, when an outside operator publishes a v1 ledger
-and asks.** an anchor place url may carry `{date}`, replaced by the earliest anchor's date (darkflobi's anchors are
+and asks** (how to ask: "get your ledger read", above). an anchor place url may carry `{date}`, replaced by the earliest anchor's date as `YYYY-MM-DD` (darkflobi's anchors are
 posted to a telegram supergroup that needs an account; its row names the exhibit's `anchors/<date>.txt` copy and
 says so; red's names its own page, which the lab can edit).
 
@@ -150,9 +235,10 @@ is not the recorded one and hands chain.js a javascript sha256 where `node:crypt
 names one), records sha256 and byte count, re-derives the chain, composes each of the ledger's own anchor entries'
 text (v1 `<agent> anchor <date> head <hex> seq <n>`, v0 `gate anchor ...`) and checks it with the verifier's
 `checkAnchor` and against the entry's `anchor_text_sha256`, takes the earliest that holds, and fetches the row's
-anchor place to say whether that text is there: `found`, `not_found` or `could_not_read`, with the http status
-(`not_checked` when the row names no place url). exit 0 when the chain re-derives, 1 when not or the ledger did not
-answer, 2 on usage.
+anchor place url to say what its body carries of that text: `found` (verbatim), `found_sha256` (its sha256 in hex),
+`found_hex` (its utf-8 bytes in hex), `not_found` or `could_not_read`, with the http status (`not_checked` when the
+row names no place url); what one url's body carries, not whether it is a place that holds ("anchor places", above).
+exit 0 when the chain re-derives, 1 when not or the ledger did not answer, 2 on usage.
 
 **the report** (`docs/outside_report_schema.json`): `shelf_commit` (git HEAD of this checkout, marked "(uncommitted
 changes present)" when so), `read_at`, `ledger_url`, `bytes`, `sha256`, `protocol`, `lines` (entries after the
@@ -161,20 +247,28 @@ header), `head`, `rederives` (`ok`, `problem_codes` in the kit's code vocabulary
 `anchors` (`count`, `holding`, `earliest`: `date`, `seq`, `text`, `text_sha256`, `holds`, `place_check`). counts and
 digests only; the one text is the earliest anchor's, public by design, which the census scorer looks for verbatim.
 deterministic for fixed bytes except `read_at` and `shelf_commit`. every read is written twice: `docs/reports/<name>.json`
-(the latest, replaced by the next read) and `docs/reports/reads/<name>/<read_at>.json` (kept, never rewritten). the
+(the latest, replaced by the next read) and `docs/reports/reads/<name>/<read_at with each : written ->.json` (kept, never rewritten). the
 census template's section 15 line names the kept copy. the page prints how old each read is (its `read_at`
 against the time the page was written, and on `outside.html` against the time the browser opened it), the line count
 of the nightly row that reads the same url beside it, and marks a read made from a checkout with uncommitted
 changes:
 
-    shelf read: https://fathom-lab.github.io/styxx-shelf/reports/reads/<name>/<read_at>.json sha256 <64 hex of that file> at <read_at>
+    shelf read: https://fathom-lab.github.io/styxx-shelf/reports/reads/<name>/<read_at with each : written ->.json sha256 <64 hex of that file> at <read_at>
 
-**until a styxx-ledger commit sets `census.SHELF_HAS_V1_ROW`, the census scorer prints condition (c) as "stated,
-unverified" and no window opens**: a section 15 line pasted today is printed back by the scorer, not fetched and not
-checked (styxx-ledger `python/src/styxx_ledger/census.py` lines 73-75 and 1166-1168 at commit 9cf0dda). once the kit
-flips it, the census scorer (`census.py`, `_shelf`) is written to fetch that url, check the sha256 of its bytes, that the body
-name the registered `ledger_url` and `earliest_anchor` (the text, which carries the head), that the anchor holds on
-the chain, and that `read_at` falls after the anchor's day ended and before d0; the shelf's tests emulate those checks. every
+**since styxx-ledger f29ae3d (2026-11-09) `census.SHELF_HAS_V1_ROW` is True, so the census scorer reads condition (c)
+from the shelf**: it fetches the report a section 15 shelf read line names, only from under
+`https://fathom-lab.github.io/styxx-shelf/reports/reads/` (`census.SHELF_REPORT_PREFIX`, since 94e4181; a report on
+any other host fails (c) unfetched), and checks the sha256 of its bytes, that the body names the registered
+`ledger_url` and `earliest_anchor` (the text, which carries the head), that the anchor holds on the chain, and that
+the time pasted on the shelf read line (`at`) falls after the anchor's day ended and before d0 (`census.py`,
+`_on_the_shelf` and `_shelf`, as read at styxx-ledger 26cce4d). the scorer does not compare that time with the
+report's own `read_at`, so the pasted time is the operator's word: a read made after d0, pasted with an earlier
+`at`, passes both time checks. a kit fix is proposed (compare `at` with the fetched report's `read_at`); until it lands, a reader
+compares the two by hand. the shelf's tests emulate the checks on the report's bytes and body and on the pasted time
+(`scorerChecks`), not the host pin, and hold the proposed comparison beside them as a separate check
+(`atIsTheReadAt`). (c) holds for an outside window only after the shelf has read that ledger and its report is kept
+here. this sentence replaced, on 2026-11-09, one saying (c) could not hold until a kit commit set `SHELF_HAS_V1_ROW`,
+which was false from f29ae3d on. every
 report so far was written when the lab ran shelf_read by hand on its box; the workflow written for this repository
 (not in it as of 2026-11-09) runs `npm test`, then `shelf_read.cjs --row` for every register row not withdrawn, then
 shelf.mjs, each night. a register row whose protocol is not v0 or v1 is never read with a guessed verifier: shelf_read refuses the whole
@@ -208,3 +302,7 @@ lab's github token cannot write `.github/workflows/`:
    suite turns the job red and nothing is read or committed), the reads (an exit of 2 or more turns the job red; the
    shelf still runs), shelf.mjs (exit 2 turns it red), and the commit of `docs/`. the report appears at
    https://fathom-lab.github.io/styxx-shelf/ a minute or two after the commit.
+4. the request form: add `.github/ISSUE_TEMPLATE/ledger_read.md` to `main`, with the contents the lab keeps under
+   `github_for_operator/shelf_dot_github/ISSUE_TEMPLATE/ledger_read.md` in the same working folder (the lab keeps out
+   of `.github/`, so this paste is the operator's too). it is the "ledger read" form of "get your ledger read"; without
+   it a requester opens a plain issue with the same fields.

@@ -29,6 +29,8 @@ const V1 = require(path.join(DOCS, "v1", "verify.js"));
 const SCHEMA = JSON.parse(fs.readFileSync(path.join(DOCS, "outside_report_schema.json"), "utf8"));
 const FX1 = JSON.parse(fs.readFileSync(path.join(HERE, "fixtures", "v1", "FIXTURES.json"), "utf8"));
 const sha256 = (b) => crypto.createHash("sha256").update(b).digest("hex");
+// the page builder's escape (shelf.mjs esc), so a test can look for a shelf_core.js sentence as the page writes it
+const htmlEsc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 // ---- a json-schema subset validator (type, enum, const, pattern, minimum, required, properties, additionalProperties false, items)
 function validate(schema, v, at = "$") {
@@ -58,7 +60,10 @@ function validate(schema, v, at = "$") {
 // the registered ledger_url (1178) and the registered earliest_anchor text (1179), both as substrings of the body;
 // the read time parses (1182, parse_timestamp: YYYY-MM-DDTHH:MM:SSZ) and falls at or after 00:00 of the day after the
 // anchor's date in anchor_tz (1183-1187); read_before_d0 (1188) is the operator's d0, not the report's. earliest_anchor_holds (1181) is the scorer's own chain check, run here with
-// the verifier on the same ledger bytes.
+// the verifier on the same ledger bytes. the time checked is `at`, pasted on the section 15 line, as the scorer takes
+// it (census.py at styxx-ledger 26cce4d, _shelf: t = _utc(at)); neither the scorer nor this emulation compares it with
+// the report's own read_at, so a pasted time is the operator's word. atIsTheReadAt is the comparison proposed for the
+// kit, held here as a separate check: it is not what census.py does today.
 function midnightUtcAfter(date, tz) {   // 00:00 of date+1 in tz, as epoch ms
   const [y, m, d] = date.split("-").map(Number);
   const guess = Date.UTC(y, m - 1, d + 1, 0, 0, 0);
@@ -77,10 +82,16 @@ function scorerChecks({ reportBytes, pastedSha, ledgerUrl, earliestAnchor, at, t
     read_after_the_anchors_day_ended: !!date && !isNaN(t) && t >= midnightUtcAfter(date, tz)
   };
 }
+// proposed for the kit (2026-11-09 review), not in census.py: the pasted `at` is the fetched report's own read_at
+function atIsTheReadAt(reportBytes, at) {
+  let rep;
+  try { rep = JSON.parse(reportBytes.toString("utf8")); } catch (e) { return false; }
+  return !!rep && typeof rep.read_at === "string" && rep.read_at === at;
+}
 
 // ---- the local server: /fx/<path> serves the fixtures dir, /place/<date>.txt answers the anchor text from a map,
-// /blank serves a page with no anchor, /gone answers 404
-let srv, base, places = {};
+// /blank serves a page with no anchor, /gone answers 404, /x/<path> answers a body a test puts in `extra`
+let srv, base, places = {}, extra = {};
 function start() {
   return new Promise((resolve) => {
     srv = http.createServer((req, res) => {
@@ -94,6 +105,7 @@ function start() {
       const m = /^\/place\/(\d{4}-\d{2}-\d{2})\.txt$/.exec(p);
       if (m) return places[m[1]] ? send(200, places[m[1]] + "\n") : send(404, "no post");
       if (p === "/blank") return send(200, "<html><body>a page with no anchor on it</body></html>");
+      if (p.startsWith("/x/")) return extra[p] !== undefined ? send(200, extra[p]) : send(404, "not found");
       // withheld.json in the kit's other accepted form, {"withheld": [...]}, and a form neither accepts
       if (p === "/wrap/site-withheld.json") return send(200, JSON.stringify({ withheld: JSON.parse(fs.readFileSync(path.join(HERE, "fixtures", "site", "withheld.json"), "utf8")) }));
       if (p === "/wrap/empty-withheld.json") return send(200, JSON.stringify({ withheld: [] }));
@@ -469,9 +481,12 @@ describe("the committed reports in docs/reports", () => {
 });
 
 describe("the page", () => {
-  test("the readme says (c) cannot hold until the kit flips SHELF_HAS_V1_ROW, and who wrote the register's ledgers", () => {
+  // 2026-11-09 (improvements rank 25): the kit set SHELF_HAS_V1_ROW in f29ae3d, so the sentence that (c) could not hold
+  // until it did is gone from the readme, the page and outside.html; they now say how the scorer reads (c)
+  test("the readme says how the census scorer reads (c) since the kit set SHELF_HAS_V1_ROW, and who wrote the register's ledgers", () => {
     const r = fs.readFileSync(path.join(REPO, "README.md"), "utf8").replace(/\s+/g, " ");
-    assert.ok(r.includes("until a styxx-ledger commit sets `census.SHELF_HAS_V1_ROW`, the census scorer prints condition (c) as \"stated, unverified\" and no window opens"));
+    assert.ok(r.includes("**since styxx-ledger f29ae3d (2026-11-09) `census.SHELF_HAS_V1_ROW` is True, so the census scorer reads condition (c) from the shelf**: it fetches the report a section 15 shelf read line names, only from under `https://fathom-lab.github.io/styxx-shelf/reports/reads/`"));
+    assert.ok(!r.includes("until a styxx-ledger commit sets `census.SHELF_HAS_V1_ROW`, the census scorer prints"));
     assert.ok(r.includes("2 of 2 the lab's own v0 ledgers (darkflobi, red); outside ledgers read: 0; v1 rows 0 of 2"));
   });
   test("shelf.mjs --page-only writes the outside ledgers section: every register row, its committed report, the kit commit and hashes, no script", () => {
@@ -488,7 +503,8 @@ describe("the page", () => {
     assert.ok(sec.includes("<h2>ledgers read by url — 2 rows, 2 of 2 the lab&#39;s own; outside ledgers read: 0; v1 rows 0 of 2; withdrawn 0 of 2</h2>"), "the section heading");
     assert.ok(!/<h2>outside ledgers/.test(sec), "the heading must not call the lab's ledgers outside ones");
     assert.ok(sec.includes("written by the lab"));
-    assert.ok(sec.includes("until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as &quot;stated, unverified&quot; and no window opens"));
+    assert.ok(sec.includes(htmlEsc(CORE.SCORER_GATE)), "the scorer sentence");
+    assert.ok(!sec.includes("until a styxx-ledger commit sets"), "the stale scorer sentence");
     assert.match(sec, /the shelf is the lab's/);
     assert.match(sec, /read by the lab's shelf/);
     const v = JSON.parse(fs.readFileSync(path.join(out, "v1", "VENDORED.json"), "utf8"));
@@ -504,7 +520,8 @@ describe("the page", () => {
     assert.match(h, /could not read: the ledger url answered http /);
     assert.match(h, /<h1>styxx shelf — ledgers read by url, re-derived in your browser<\/h1>/);
     assert.ok(!/outside ledgers, re-derived/.test(h));
-    assert.ok(h.includes('until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as "stated, unverified" and no window opens'));
+    assert.ok(h.includes("<p>" + CORE.SCORER_GATE + "</p>"), "outside.html carries the scorer sentence as shelf_core.js has it");
+    assert.ok(!h.includes("until a styxx-ledger commit sets"), "the stale scorer sentence");
     assert.ok(h.includes('var SHELF_HOME = "https://fathom-lab.github.io/styxx-shelf/";') && !h.includes("new URL(onceRel, location.href)"), "the section 15 line names the published host");
     assert.ok(h.includes("ShelfCore.unwrapWithheld("), "the browser unwraps withheld.json as the kit does");
     assert.match(h, /re-derive now in your browser/);
@@ -702,5 +719,323 @@ describe("2026-11-09: where reports ran, how old a read is, a plain opening, an 
     const flatR = r.replace(/\s+/g, " ");
     assert.ok(flatR.includes("shelf_read refuses the whole register (exit 2 for every row's read"));
     assert.ok(!flatR.includes("is refused by shelf_read (exit 2), by the page"));
+  });
+});
+
+// ---- 2026-11-09, improvements ranks 25, 26 and 72 (the shelf's half): the way from a stranger to a read and a register
+// row (the readme, outside.html, the generated page, the request form the operator pastes), the anchor places and their
+// rule, and a declared language on every page under docs/
+describe("2026-11-09: get your ledger read, anchor places, the pages' language", () => {
+  const pageOnly = (out) => spawnSync(process.execPath, [path.join(REPO, "shelf.mjs"), "--page-only", "--out", out], { encoding: "utf8" });
+  const flat = (h) => h.replace(/\s+/g, " ");
+  const BANNED = /\bfirst\b|no one|nobody|provably|breakthrough/i;
+  const PREFIX = "https://fathom-lab.github.io/styxx-shelf/reports/reads/";
+  const PATTERN = PREFIX + "<name>/<read_at with each : written ->.json";
+  const EXAMPLE = "reports/reads/darkflobi/2026-11-09T14-37-14Z.json";
+  const readme = () => fs.readFileSync(path.join(REPO, "README.md"), "utf8");
+  const mdSection = (md, heading) => {
+    const i = md.indexOf("\n## " + heading + "\n");
+    assert.ok(i >= 0, "no readme section " + heading);
+    const j = md.indexOf("\n## ", i + 4);
+    return md.slice(i, j < 0 ? undefined : j);
+  };
+  // the fields a request names: the form's bold labels, and the readme's and outside.html's plain-issue list
+  // (2026-11-09 review: the field names the earliest anchor that holds, the one the shelf reads and the scorer needs)
+  const FORM_FIELDS = ["agent", "protocol", "ledger url", "withheld url", "anchor_tz", "anchor place", "why the place holds", "your ledger's earliest anchor text that holds", "your own dry run", "a name for the row", "who runs the agent"];
+  const PLAIN_LIST = "giving the agent, the ledger url, the withheld url or `none`, the `anchor_tz`, the anchor place and why it holds, your ledger's earliest anchor text that holds (verbatim: the shelf reads that one, and your template's `{{earliest_anchor}}` must be this text or (c) fails), a name for the row, and who runs the agent.";
+
+  test("every page under docs/ declares its language: index.html as shelf.mjs writes it, the committed one, and outside.html", () => {
+    const head = '<!doctype html>\n<html lang="en">\n<meta charset="utf-8">';
+    const out = path.join(tmp, "page-lang");
+    fs.cpSync(DOCS, out, { recursive: true });
+    const r = pageOnly(out);
+    assert.equal(r.status, 0, r.stderr);
+    assert.ok(fs.readFileSync(path.join(out, "index.html"), "utf8").startsWith(head), "index.html as --page-only writes it");
+    const pages = [];
+    const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.html?$/i.test(e.name)) pages.push(p); } };
+    walk(DOCS);
+    assert.deepEqual(pages.map(p => path.relative(DOCS, p).split(path.sep).join("/")).sort(), ["index.html", "outside.html"]);
+    for (const p of pages) assert.ok(fs.readFileSync(p, "utf8").startsWith(head), path.relative(DOCS, p));
+  });
+
+  test("the readme's get your ledger read: the request, the lab's acts, the url to paste, how long, dated", () => {
+    const s = flat(mdSection(readme(), "get your ledger read"));
+    for (const x of [
+      "as of 2026-11-09: requests 0 (issues on this repository, open or closed: 0); outside ledgers read: 0.",
+      "https://github.com/fathom-lab/styxx-shelf/issues/new/choose",
+      "`.github/ISSUE_TEMPLATE/ledger_read.md`, which the operator adds",
+      PLAIN_LIST,
+      "an issue needs a github account.",
+      "`node shelf_read.cjs --url <ledger url> --protocol v1 [--withheld-url <url>] [--place-url <url>]`",
+      "appends a row for your ledger to `docs/outside_ledgers.json` (`written_by: \"outside\"`) in a dated commit",
+      "the register row is the lab's act: a pull request that edits the register is a request, not a row.",
+      "`shelf read: <the kept read's url> sha256 <64 hex of that file> at <read_at>`",
+      "`" + PATTERN + "`",
+      "the census scorer fetches a shelf report only from under that prefix",
+      "2 of 2 dry runs on 2026-11-09: 107 lines in 0.6 s, 815 lines in 0.7 s",
+      "with 0 requests so far the lab quotes no turnaround"
+    ]) assert.ok(s.includes(x), x);
+    assert.ok(!BANNED.test(s), String(s.match(BANNED)));
+  });
+
+  test("the example kept read the pages cite exists, and its name is its read_at with each : written -", () => {
+    const rep = JSON.parse(fs.readFileSync(path.join(DOCS, ...EXAMPLE.split("/")), "utf8"));
+    assert.equal(rep.read_at, "2026-11-09T14:37:14Z");
+    assert.equal(`reports/reads/${path.basename(path.dirname(EXAMPLE))}/${rep.read_at.replace(/:/g, "-")}.json`, EXAMPLE);
+    assert.equal(rep.ledger_url, "https://fathom-lab.github.io/styxx/ledger/ledger.jsonl");
+  });
+
+  test("outside.html's get your ledger read: linked from the top, static html before the scripts, the same essentials", () => {
+    const h = fs.readFileSync(path.join(DOCS, "outside.html"), "utf8");
+    assert.ok(h.includes('<a href="index.html">back to the shelf</a> · <a href="#get-your-ledger-read">get your ledger read</a>'));
+    const i = h.indexOf('<section id="get-your-ledger-read">'), j = h.indexOf("</section>", i);
+    assert.ok(i > 0 && j > i, "the section");
+    assert.ok(j < h.indexOf("<script"), "the section is static html, before the scripts, so it reads without javascript");
+    const s = flat(h.slice(i, j));
+    for (const x of [
+      "<h2>get your ledger read</h2>",
+      "as of 2026-11-09: requests 0 (issues on the shelf's repository, open or closed: 0); outside ledgers read: 0.",
+      '<a href="https://github.com/fathom-lab/styxx-shelf/issues/new/choose">',
+      PLAIN_LIST.replace(/`/g, ""),
+      "<b>the lab's acts, not yours</b>",
+      "the register row is the lab's act: a pull request that edits the register is a request, not a row.",
+      "<code>written_by: \"outside\"</code>",
+      "<code>" + htmlEsc(PATTERN) + "</code>",
+      `<a href="${EXAMPLE}">${EXAMPLE}</a>`,
+      '<a href="https://github.com/fathom-lab/styxx-shelf#anchor-places">anchor places</a>',
+      "2 of 2 dry runs on 2026-11-09: 107 lines in 0.6 s, 815 lines in 0.7 s",
+      "with 0 requests so far the lab quotes no turnaround"
+    ]) assert.ok(s.includes(x), x);
+    assert.ok(!BANNED.test(s), String(s.match(BANNED)));
+  });
+
+  test("the generated page points an operator to get your ledger read and to the anchor places", () => {
+    const out = path.join(tmp, "page-ask");
+    fs.cpSync(DOCS, out, { recursive: true });
+    const r = pageOnly(out);
+    assert.equal(r.status, 0, r.stderr);
+    const html = fs.readFileSync(path.join(out, "index.html"), "utf8");
+    const sec = html.slice(html.indexOf('<section id="outside">'));
+    assert.ok(sec.includes('<a href="outside.html#get-your-ledger-read">get your ledger read</a>'));
+    assert.ok(sec.includes('<a href="https://github.com/fathom-lab/styxx-shelf#anchor-places">anchor places</a>'));
+    assert.ok(sec.includes("every read is kept at reports/reads/&lt;row&gt;/&lt;read_at with each : written -&gt;.json and never rewritten"), "the kept read's name as shelf_read writes it");
+    assert.ok(fs.readFileSync(path.join(DOCS, "outside.html"), "utf8").includes('<section id="get-your-ledger-read">'), "the link's target");
+  });
+
+  test("the scorer sentence is one sentence on all three surfaces, and the stale one is on none", () => {
+    assert.ok(CORE.SCORER_GATE.startsWith("since styxx-ledger f29ae3d (2026-11-09) the census scorer reads condition (c) from the shelf"));
+    assert.ok(CORE.SCORER_GATE.includes("only from under " + PREFIX));
+    assert.ok(!BANNED.test(CORE.SCORER_GATE));
+    const out = path.join(tmp, "page-gate");
+    fs.cpSync(DOCS, out, { recursive: true });
+    assert.equal(pageOnly(out).status, 0);
+    const page = fs.readFileSync(path.join(out, "index.html"), "utf8");
+    const outside = fs.readFileSync(path.join(DOCS, "outside.html"), "utf8");
+    assert.ok(page.includes(htmlEsc(CORE.SCORER_GATE)));
+    assert.ok(outside.includes("<p>" + CORE.SCORER_GATE + "</p>"));
+    for (const [name, text] of [["README.md", readme()], ["index.html", page], ["outside.html", outside], ["shelf_core.js", fs.readFileSync(path.join(DOCS, "shelf_core.js"), "utf8")]]) {
+      assert.ok(!/prints condition \(c\) as (&quot;|\\?")stated, unverified/.test(text), name + " still carries the stale scorer sentence");
+    }
+  });
+
+  test("the readme's anchor places: the rule, each place judged with its reason, the lab's own rows named as failing", () => {
+    const md = mdSection(readme(), "anchor places");
+    const s = flat(md);
+    assert.ok(s.includes("**a stranger reads it without a login, and the operator cannot edit or delete a post there once it is made.**"));
+    assert.ok(s.includes("the lab judges a place by that rule and says so on the request (step 4 of \"get your ledger read\"), dated, before a row is added"));
+    assert.ok(s.includes("the places as the lab reads them on 2026-11-09"));
+    const rows = md.split("\n").filter(l => /^\| (?!place \|)/.test(l));
+    const verdict = (l) => l.split("|")[2].trim();
+    assert.equal(rows.length, 8, rows.join("\n"));
+    // 2026-11-09 review: the archive row reads "holds, with a caveat" (the operator can have a capture of their own
+    // page removed, which the rule's letter counts as a delete); the bitcoin row holds
+    assert.ok(rows.every(l => ["holds", "holds, with a caveat", "fails"].includes(verdict(l)) && l.split("|")[3].trim().length > 10), "every row has a verdict and a reason");
+    assert.equal(rows.filter(l => verdict(l) === "holds").length, 1);
+    assert.equal(rows.filter(l => verdict(l) === "holds, with a caveat").length, 1);
+    const archive = rows.find(l => l.startsWith("| a capture of the post by the internet archive "));
+    assert.ok(archive && verdict(archive) === "holds, with a caveat", archive);
+    for (const x of ["the captured page is the operator's own and the archive takes removal requests from site owners", "which by the rule's letter is a delete", "with a second capture of other text the same day, a removal can replace that day's post", "the census scorer sees neither"]) assert.ok(archive.includes(x), x);
+    assert.ok(rows.some(l => l.startsWith("| a bitcoin transaction ") && verdict(l) === "holds"));
+    for (const p of ["a discord channel", "a telegram channel or group", "an x post", "a github issue, comment, discussion or gist", "a mastodon or bluesky post", "a page, file or git repository the operator hosts or can push to"]) {
+      assert.ok(rows.some(l => l.startsWith("| " + p + " | fails |")), p);
+    }
+    assert.ok(s.includes("an opentimestamps proof alone is not a place"));
+    assert.ok(s.includes("the lab's own two rows fail the rule"));
+    assert.ok(!BANNED.test(s), String(s.match(BANNED)));
+  });
+
+  test("the request form the operator pastes: front matter, every field, the lab's acts, the scorer's prefix", (t) => {
+    // the form is pasted by the operator into .github/ISSUE_TEMPLATE/; until then the lab keeps it beside this checkout
+    const p = [path.join(REPO, ".github", "ISSUE_TEMPLATE", "ledger_read.md"), path.join(REPO, "..", "github_for_operator", "shelf_dot_github", "ISSUE_TEMPLATE", "ledger_read.md")].find(f => fs.existsSync(f));
+    if (!p) { t.skip("the form is in neither .github/ISSUE_TEMPLATE/ nor the lab's github_for_operator folder beside this checkout"); return; }
+    const f = fs.readFileSync(p, "utf8");
+    assert.ok(/^---\nname: ledger read\nabout: [^\n]+\ntitle: "ledger read: <agent>"\n---\n/.test(f), "front matter");
+    for (const x of FORM_FIELDS) assert.ok(f.includes("**" + x + "**"), x);
+    assert.ok(f.includes("the row and the read are the lab's acts, done by hand: this issue is the request, not the row"));
+    assert.ok(f.includes("`" + PATTERN + "`"));
+    assert.ok(f.includes("https://github.com/fathom-lab/styxx-shelf#anchor-places") && f.includes("https://github.com/fathom-lab/styxx-shelf#get-your-ledger-read"));
+    assert.ok(f.includes("asking is agreeing to that"));
+    assert.ok(!BANNED.test(f), String(f.match(BANNED)));
+  });
+});
+
+// ---- 2026-11-09, the review of the improvements round (the shelf's half): the place check reads the text's sha256 or
+// its bytes in hex as well as the text (finding 6), the scorer's time is the pasted `at` (finding 7), the request names
+// the earliest anchor that holds (finding 8), the archive's caveat and what the scorer reads of posts (finding 5), the
+// lab's word on a place does not bind the scoring (finding 4)
+describe("2026-11-09 review: the place check's forms, the pasted time, the request field, the lab's word on a place", () => {
+  const texts = FX1.files["ledger.jsonl"].anchor_texts;
+  const flat = (h) => h.replace(/\s+/g, " ");
+  const BANNED = /\bfirst\b|no one|nobody|provably|breakthrough/i;
+  const readme = () => fs.readFileSync(path.join(REPO, "README.md"), "utf8");
+  const section = (md, heading) => { const i = md.indexOf("\n## " + heading + "\n"); assert.ok(i >= 0, "no readme section " + heading); const j = md.indexOf("\n## ", i + 4); return md.slice(i, j < 0 ? undefined : j); };
+  const formPath = () => [path.join(REPO, ".github", "ISSUE_TEMPLATE", "ledger_read.md"), path.join(REPO, "..", "github_for_operator", "shelf_dot_github", "ISSUE_TEMPLATE", "ledger_read.md")].find(f => fs.existsSync(f));
+  // an esplora-style transaction json (the shape of blockstream.info/api/tx/<txid> and mempool.space/api/tx/<txid>):
+  // the OP_RETURN output's script in hex, as an explorer's json shows it
+  const txJson = (scriptHex) => JSON.stringify({ txid: "ab".repeat(32), version: 2, locktime: 0, vin: [], vout: [{ scriptpubkey: scriptHex, scriptpubkey_asm: "OP_RETURN " + scriptHex.slice(2), scriptpubkey_type: "op_return", value: 0 }], status: { confirmed: true, block_height: 975200 } });
+
+  test("placeVerdict: the text verbatim, its sha256 in hex (any case), its bytes in hex (any case); not found; could not read; a non-string text is never found", () => {
+    const t = texts[0], h = sha256(t), hx = Buffer.from(t, "utf8").toString("hex");
+    assert.equal(CORE.utf8Hex(t), hx);
+    assert.equal(CORE.utf8Hex("ü"), "c3bc");
+    assert.equal(CORE.placeVerdict(200, "posted: " + t + "\n", t, h), "found");
+    assert.equal(CORE.placeVerdict(200, txJson("6a20" + h), t, h), "found_sha256");
+    assert.equal(CORE.placeVerdict(200, txJson("6a20" + h.toUpperCase()), t, h), "found_sha256");
+    assert.equal(CORE.placeVerdict(200, txJson("6a20" + h), t), "not_found", "without the digest handed in, no digest is looked for");
+    assert.equal(CORE.placeVerdict(200, txJson("6a20" + h), t, "not a digest"), "not_found");
+    assert.equal(CORE.placeVerdict(200, txJson("6a4c64" + hx), t, h), "found_hex");
+    assert.equal(CORE.placeVerdict(200, txJson("6a4c64" + hx.toUpperCase()), t, h), "found_hex");
+    assert.equal(CORE.placeVerdict(200, txJson("6a20" + sha256(texts[1])), t, h), "not_found", "another anchor's digest");
+    assert.equal(CORE.placeVerdict(200, txJson("6a4c63" + hx.slice(0, -2)), t, h), "not_found", "a cut text's hex");
+    assert.equal(CORE.placeVerdict(404, t, t, h), "could_not_read");
+    assert.equal(CORE.placeVerdict(200, null, t, h), "could_not_read");
+    assert.equal(CORE.placeVerdict(200, '{"text": null}', null, null), "not_found", "a null text was once looked for as the letters null");
+    assert.equal(CORE.placeVerdict(200, "anything", "", null), "not_found");
+    assert.deepEqual(CORE.PLACE_RESULTS, SCHEMA.properties.anchors.properties.earliest.properties.place_check.properties.result.enum, "the schema's enum is the core's list");
+    assert.equal(CORE.placeFoundWords("found"), "found");
+    assert.equal(CORE.placeFoundWords("found_sha256"), "found as its sha256 (hex)");
+    assert.equal(CORE.placeFoundWords("found_hex"), "found as its bytes (hex)");
+    for (const x of ["not_found", "could_not_read", "not_checked", "toString", "__proto__", undefined]) assert.equal(CORE.placeFoundWords(x), null, String(x));
+  });
+
+  test("shelf_read: a transaction's json carrying the earliest anchor's sha256 reads found_sha256, carrying its bytes found_hex; both reports hold the schema", async () => {
+    const t = texts[0];
+    extra = { "/x/tx-digest": txJson("6a20" + sha256(t)), "/x/tx-text": txJson("6a4c64" + Buffer.from(t, "utf8").toString("hex")) };
+    let r = await readTo(["--url", `${base}/fx/v1/ledger.jsonl`, "--protocol", "v1", "--place-url", `${base}/x/tx-digest`], "kb-tx-digest");
+    assert.equal(r.code, 0, r.stderr + r.stdout);
+    assert.deepEqual(r.report.anchors.earliest.place_check, { result: "found_sha256", url: `${base}/x/tx-digest`, http_status: 200 });
+    assert.deepEqual(validate(SCHEMA, r.report), []);
+    assert.match(r.stdout, /place found_sha256 \(http 200\)/);
+    r = await readTo(["--url", `${base}/fx/v1/ledger.jsonl`, "--protocol", "v1", "--place-url", `${base}/x/tx-text`], "kb-tx-text");
+    assert.equal(r.code, 0, r.stderr + r.stdout);
+    assert.deepEqual(r.report.anchors.earliest.place_check, { result: "found_hex", url: `${base}/x/tx-text`, http_status: 200 });
+    assert.deepEqual(validate(SCHEMA, r.report), []);
+    // a place result outside the list does not hold the schema
+    const bad = JSON.parse(JSON.stringify(r.report)); bad.anchors.earliest.place_check.result = "found_somewhere";
+    assert.ok(validate(SCHEMA, bad).some(e => /found_somewhere/.test(e)));
+  });
+
+  test("the page prints found_sha256 and found_hex as found, in their own words; a verbatim find stays 'found'", () => {
+    const out = path.join(tmp, "page-place-forms");
+    fs.cpSync(DOCS, out, { recursive: true });
+    const rowHtml = (html, name) => { const i = html.indexOf(`<tr id="outside-${name}">`); assert.ok(i >= 0, name); return html.slice(i, html.indexOf("</tr>", i)); };
+    for (const [result, words] of [["found_sha256", "found as its sha256 (hex)"], ["found_hex", "found as its bytes (hex)"]]) {
+      const rp = path.join(out, "reports", "red.json");
+      const rep = JSON.parse(fs.readFileSync(path.join(DOCS, "reports", "red.json"), "utf8"));
+      assert.ok(rep.anchors.earliest, "fixture: red's committed report has an earliest anchor");
+      rep.anchors.earliest.place_check.result = result;
+      fs.writeFileSync(rp, JSON.stringify(rep, null, 1) + "\n");
+      const r = spawnSync(process.execPath, [path.join(REPO, "shelf.mjs"), "--page-only", "--out", out], { encoding: "utf8" });
+      assert.equal(r.status, 0, r.stderr);
+      const html = fs.readFileSync(path.join(out, "index.html"), "utf8");
+      assert.ok(rowHtml(html, "red").includes(`place: <b class="ok">${words}</b>`), result);
+      assert.ok(rowHtml(html, "darkflobi").includes('place: <b class="ok">found</b>'), "darkflobi's verbatim find");
+    }
+  });
+
+  test("the readme says what the place check reads: one url, three found forms, the archive's exact capture url, an explorer's json, and what it does not say", () => {
+    const s = flat(section(readme(), "anchor places"));
+    for (const x of [
+      "**what the shelf's place check reads.** shelf_read fetches one url, the row's anchor place url with `{date}` replaced by the earliest anchor's date as `YYYY-MM-DD`",
+      "verbatim (`found`), its sha256 in hex (`found_sha256`",
+      "or its utf-8 bytes in hex (`found_hex`",
+      "`https://web.archive.org/web/<YYYYMMDDhhmmss>id_/<url>`",
+      "the `{date}` form cannot build the 14-digit time",
+      "`https://blockstream.info/api/tx/<txid>`",
+      "not that the url is a place that holds (the lab's judgement, above), not that a transaction is mined, not when a post or a capture was made."
+    ]) assert.ok(s.includes(x), x);
+    const r = flat(readme());
+    assert.ok(r.includes("`found` (verbatim), `found_sha256` (its sha256 in hex), `found_hex` (its utf-8 bytes in hex), `not_found` or `could_not_read`"));
+    assert.ok(!r.includes("to say whether that text is there: `found`, `not_found` or `could_not_read`"), "the old list of results");
+    assert.ok(r.includes("an anchor place url may carry `{date}`, replaced by the earliest anchor's date as `YYYY-MM-DD`"));
+    // the {date} form gives YYYY-MM-DD, which no archive capture url carries
+    assert.equal(CORE.placeUrl({ kind: "archive", url: "https://web.archive.org/web/{date}/https://example.org/a.txt" }, "2026-11-08"), "https://web.archive.org/web/2026-11-08/https://example.org/a.txt");
+    assert.ok(!BANNED.test(s), String(s.match(BANNED)));
+  });
+
+  test("the readme says what the scorer reads of posts: the operator's index or the lab's collection, no post's time, no other post", () => {
+    const s = flat(section(readme(), "anchor places"));
+    assert.ok(s.includes("in either place that holds, the operator can make more than one post on a day (two captures of a page whose text changed between them, two transactions)."));
+    assert.ok(s.includes("the census scorer reads the posted texts only from `{{anchors_url}}`, the operator's own index (which the template labels the writer's statement), or from texts the lab collects and hands it (`--anchors`); it reads neither a post's time at the place nor the place's other posts"));
+    assert.ok(s.includes("a post the index leaves out is unseen by the scorer; only a reading of the place itself finds it."));
+    assert.ok(!s.includes("a capture removed before the lab reads it leaves its day unanchored"), "the old archive sentence");
+  });
+
+  test("the lab's word on a place before the window is said not to bind the scoring: readme (anchor places and step 4), outside.html, the form", () => {
+    const places = flat(section(readme(), "anchor places"));
+    assert.ok(places.includes("the word on the request does not bind the scoring: under the template as it stands, the judgement at the scoring date is the one the scorer uses (`--anchor-place-holds` or `--anchor-place-fails WHY`), and a place judged to fail there prints every day of the window as unanchored."));
+    const binding = "a word that does not bind the scoring: under the census template as it stands, its §9, the lab judges the place again at the scoring date, and that judgement is the one the scorer uses";
+    assert.ok(flat(section(readme(), "get your ledger read")).includes(binding), "readme step 4");
+    assert.ok(flat(fs.readFileSync(path.join(DOCS, "outside.html"), "utf8")).includes(binding), "outside.html step 4");
+    const f = formPath();
+    if (f) assert.ok(flat(fs.readFileSync(f, "utf8")).includes(binding), "the form");
+  });
+
+  test("the request names the earliest anchor that holds: the form's field, the readme's and outside.html's plain list; the old wording is gone", () => {
+    const want = "your ledger's earliest anchor text that holds";
+    const old = "the earliest anchor text you want read";
+    const r = readme(), o = fs.readFileSync(path.join(DOCS, "outside.html"), "utf8");
+    assert.ok(flat(r).includes(want + " (verbatim: the shelf reads that one, and your template's `{{earliest_anchor}}` must be this text or (c) fails)"));
+    assert.ok(flat(o).includes(want + " (verbatim: the shelf reads that one, and your template's {{earliest_anchor}} must be this text or (c) fails)"));
+    for (const [name, text] of [["README.md", r], ["outside.html", o]]) assert.ok(!flat(text).includes(old), name);
+    const f = formPath();
+    if (f) {
+      const form = fs.readFileSync(f, "utf8");
+      assert.ok(form.includes("**" + want + "** (verbatim: the shelf reads that one, and your template's `{{earliest_anchor}}` must be this text or (c) fails"));
+      assert.ok(!form.includes(old));
+      const place = flat(form.slice(form.indexOf("**anchor place**"), form.indexOf("**why the place holds**")));
+      for (const x of ["as YYYY-MM-DD", "its text verbatim, its sha256 in hex or its bytes in hex", "`https://web.archive.org/web/<YYYYMMDDhhmmss>id_/<url>`", "`https://blockstream.info/api/tx/<txid>`", "not when the post was made"]) assert.ok(place.includes(x), x);
+      assert.ok(!BANNED.test(form), String(form.match(BANNED)));
+    }
+    // what the shelf reads is the earliest anchor that holds, so an earlier one that does not hold is passed over
+    const list = [{ date: "2026-10-31", seq: 9, holds: false }, { date: "2026-11-01", seq: 12, holds: true }, { date: "2026-11-02", seq: 15, holds: true }];
+    assert.equal(CORE.earliestAnchor(list).date, "2026-11-01");
+  });
+
+  test("the scorer's time is the pasted at: a read later than the pasted time passes the emulated checks; the proposed comparison catches it", async () => {
+    const ledgerUrl = `${base}/fx/v1/ledger.jsonl`;
+    const r = await readTo(["--url", ledgerUrl, "--protocol", "v1"], "census-at");
+    assert.equal(r.code, 0, r.stderr);
+    const bytes = fs.readFileSync(r.oncePath);
+    const readAt = r.report.read_at;
+    const earlier = "2026-11-01T05:00:00Z";   // after the 2026-10-31 anchor's day ended in new york (04:00z), before the read
+    assert.ok(Date.parse(earlier) < Date.parse(readAt));
+    const common = { reportBytes: bytes, pastedSha: sha256(bytes), ledgerUrl, earliestAnchor: texts[0], tz: "America/New_York", holds: true };
+    const asRead = scorerChecks({ ...common, at: readAt }), shifted = scorerChecks({ ...common, at: earlier });
+    assert.ok(Object.values(asRead).every(Boolean), JSON.stringify(asRead));
+    assert.ok(Object.values(shifted).every(Boolean), "the scorer's checks pass a pasted time other than the read's: " + JSON.stringify(shifted));
+    assert.equal(atIsTheReadAt(bytes, readAt), true);
+    assert.equal(atIsTheReadAt(bytes, earlier), false);
+    assert.equal(atIsTheReadAt(Buffer.from("not json"), readAt), false);
+  });
+
+  test("the readme and the report schema say the scorer checks the pasted at and does not compare it with read_at", () => {
+    const r = flat(readme());
+    assert.ok(r.includes("that the time pasted on the shelf read line (`at`) falls after the anchor's day ended and before d0"));
+    assert.ok(r.includes("the scorer does not compare that time with the report's own `read_at`, so the pasted time is the operator's word"));
+    assert.ok(!r.includes("and that `read_at` falls after the anchor's day ended and before d0"), "the old sentence");
+    assert.ok(r.includes("the `at` you paste is the report's own `read_at`, copied: the scorer checks the pasted time and does not compare it with the report's"));
+    assert.ok(SCHEMA.description.includes("the scorer reads the pasted time and does not compare it with the report's read_at"));
+    assert.ok(!SCHEMA.description.includes("read_at is that time"), "the old schema sentence");
   });
 });

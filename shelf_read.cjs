@@ -10,8 +10,10 @@
    what it does: fetches the ledger bytes (30 s timeout; and withheld.json when the row names one), records their
    sha256 and byte count, re-derives the chain (v1 with the kit's verifier vendored in docs/v1 at commit 838a003; v0
    with the shelf's pinned tools/verify.js), lists the ledger's own anchor entries, takes the earliest that holds,
-   and when the row names an anchor place with a url ({date} replaced by that anchor's date) fetches it and says
-   whether the anchor text is there: found / not_found / could_not_read, with the http status.
+   and when the row names an anchor place with a url ({date} replaced by that anchor's date, YYYY-MM-DD) fetches it
+   and says what the body carries of the anchor text: found (verbatim) / found_sha256 (its sha256 in hex) /
+   found_hex (its utf-8 bytes in hex) / not_found / could_not_read, with the http status. that is what one url's
+   body carries, not whether the url is a place that holds, not that a transaction is mined, not when a post was made.
 
    writes <out>/<name>.json (the latest read) and <out>/reads/<name>/<read_at>.json (this read, never overwritten:
    the copy whose url and sha256 an operator pastes, since the latest is replaced by the next read). the report
@@ -149,7 +151,7 @@ async function read(row) {
     else if (!url) place = { result: "not_checked", why: "the row's anchor place has no url", url: null, http_status: null };
     else {
       const p = await fetchBytes(url);
-      place = { result: CORE.placeVerdict(p.bytes ? p.status : null, p.bytes ? p.bytes.toString("utf8") : null, e.text), url, http_status: p.status };
+      place = { result: CORE.placeVerdict(p.bytes ? p.status : null, p.bytes ? p.bytes.toString("utf8") : null, e.text, e.text_sha256), url, http_status: p.status };
     }
     earliest = { date: e.date, seq: e.seq, text: e.text, text_sha256: e.text_sha256, holds: e.holds, place_check: place };
   }

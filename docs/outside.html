@@ -1,4 +1,5 @@
 <!doctype html>
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>styxx shelf ledgers read by url</title>
@@ -24,13 +25,26 @@ button:disabled{color:#6a9;cursor:default}
 <p id="what">what you can check here: press a row's button and this browser fetches that ledger from its url and re-derives its chain and its anchors with the verifier listed below, nothing to install; or, in a clone of this repository, run <code>node shelf_read.cjs --row &lt;name&gt;</code>.</p>
 <p id="counts" class="dim">counting the register…</p>
 <p>the shelf is the lab's. each row of the register (<a href="outside_ledgers.json">outside_ledgers.json</a>) is a ledger the lab's shelf reads with <code>shelf_read.cjs</code>; the committed report for it is shown below, and the button fetches the ledger from its url and runs the same verifier in this page. a ledger written by someone outside the lab and listed here is read by the lab's shelf, with the lab's verifier copy and the lab's code: reproducible, not independent of the lab. nothing here says anything about the agent behind a ledger, or whether what a line records is so: the shelf re-derives digests.</p>
-<p>until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as "stated, unverified" and no window opens: a section 15 line pasted today is printed back by the scorer, not fetched and not checked.</p>
-<p><a href="index.html">back to the shelf</a> · the report's fields: <a href="outside_report_schema.json">outside_report_schema.json</a></p>
+<p>since styxx-ledger f29ae3d (2026-11-09) the census scorer reads condition (c) from the shelf: it fetches the report a section 15 shelf read line names, only from under https://fathom-lab.github.io/styxx-shelf/reports/reads/ (since 94e4181; a report on any other host fails (c) unfetched), and checks it against the registration and the chain. (c) holds for an outside window only after the shelf has read that ledger and its report is kept here.</p>
+<p><a href="index.html">back to the shelf</a> · <a href="#get-your-ledger-read">get your ledger read</a> · the report's fields: <a href="outside_report_schema.json">outside_report_schema.json</a></p>
 <h2>the verifiers this page runs</h2>
 <div id="vendored"><p class="dim">loading docs/v1/VENDORED.json…</p></div>
 <h2>rows</h2>
 <div id="rows"><p class="dim">loading the register…</p></div>
 <noscript><p>this section needs javascript; the committed reports are plain json under <a href="reports/">reports/</a>.</p></noscript>
+<section id="get-your-ledger-read">
+<h2>get your ledger read</h2>
+<p>for an operator outside the lab who keeps a styxx ledger (protocol v1, written with the kit at <a href="https://github.com/fathom-lab/styxx-ledger">github.com/fathom-lab/styxx-ledger</a>) and wants the shelf's read of it, for example for condition (c) of the kit's census template (<a href="https://github.com/fathom-lab/styxx-ledger/blob/main/census/PREREG_census_TEMPLATE.md">census/PREREG_census_TEMPLATE.md</a>). as of 2026-11-09: requests 0 (issues on the shelf's repository, open or closed: 0); outside ledgers read: 0.</p>
+<ol>
+<li><b>publish</b> <code>ledger.jsonl</code> at an https url that serves it byte for byte with no login, and <code>withheld.json</code> beside it if you withhold lines. post each day's anchor text where a stranger reads it without a login and where you cannot edit or delete it: which places hold, and which fail, is under <a href="https://github.com/fathom-lab/styxx-shelf#anchor-places">anchor places</a> in the readme. the ledger needs at least one anchor entry, which the writer makes after that day has ended in your <code>anchor_tz</code>.</li>
+<li><b>check it yourself</b> (optional): in a clone of this repository, node 20 or later, nothing to install, <code>node shelf_read.cjs --url &lt;ledger url&gt; --protocol v1 [--withheld-url &lt;url&gt;] [--place-url &lt;url&gt;]</code> prints the report the lab's read would write; exit 0 when the chain re-derives.</li>
+<li><b>ask</b>: open an issue at <a href="https://github.com/fathom-lab/styxx-shelf/issues/new/choose">github.com/fathom-lab/styxx-shelf/issues/new/choose</a> and pick "ledger read" if it is listed; otherwise a plain issue giving the agent, the ledger url, the withheld url or none, the anchor_tz, the anchor place and why it holds, your ledger's earliest anchor text that holds (verbatim: the shelf reads that one, and your template's {{earliest_anchor}} must be this text or (c) fails), a name for the row, and who runs the agent. an issue needs a github account. the row, the report and that anchor text are published on these pages.</li>
+<li><b>the lab's acts, not yours</b>: the lab says on the issue, dated, whether your anchor place holds (a word that does not bind the scoring: under the census template as it stands, its §9, the lab judges the place again at the scoring date, and that judgement is the one the scorer uses); appends a row for your ledger to <a href="outside_ledgers.json">outside_ledgers.json</a> (<code>written_by: "outside"</code>) in a dated commit; runs <code>node shelf_read.cjs --row &lt;name&gt;</code>; commits the report; and replies with the kept read's url. the register row is the lab's act: a pull request that edits the register is a request, not a row.</li>
+<li><b>what you paste</b> into the census template's section 15: <code>shelf read: &lt;the kept read's url&gt; sha256 &lt;64 hex of that file&gt; at &lt;read_at&gt;</code>. the url has the form <code>https://fathom-lab.github.io/styxx-shelf/reports/reads/&lt;name&gt;/&lt;read_at with each : written -&gt;.json</code> (darkflobi's read at 2026-11-09T14:37:14Z is <a href="reports/reads/darkflobi/2026-11-09T14-37-14Z.json">reports/reads/darkflobi/2026-11-09T14-37-14Z.json</a>). the census scorer fetches a shelf report only from under that prefix; for (c) the read must fall after your earliest anchor's day ended and before 00:00 of your d0. the <code>at</code> you paste is the report's own <code>read_at</code>, copied: the scorer checks the pasted time and does not compare it with the report's.</li>
+<li><b>how long</b>: the read itself ran in under a second on the lab's box (2 of 2 dry runs on 2026-11-09: 107 lines in 0.6 s, 815 lines in 0.7 s). the row and the read are done by hand; with 0 requests so far the lab quotes no turnaround. once the workflow is in this repository, every row not withdrawn is read again each night.</li>
+</ol>
+<p>a read here is the lab's shelf reading your ledger with the lab's copy of the verifier; the paragraph near the top of this page that begins "the shelf is the lab's" says what that is and is not.</p>
+</section>
 <script src="shelf_core.js"></script>
 <script src="v0/verify.js"></script>
 <script src="v1/load.js"></script>

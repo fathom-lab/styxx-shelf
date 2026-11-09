@@ -94,11 +94,39 @@
     if (!place || typeof place.url !== "string" || !place.url) return null;
     return place.url.split("{date}").join(date || "");
   }
-  /* found / not_found / could_not_read, given what the fetch returned */
-  function placeVerdict(status, bodyText, anchorText) {
-    if (bodyText === null || bodyText === undefined || !(status >= 200 && status < 300)) return "could_not_read";
-    return String(bodyText).indexOf(anchorText) >= 0 ? "found" : "not_found";
+  /* the hex of a string's utf-8 bytes, lowercase */
+  function utf8Hex(s) {
+    var b = new TextEncoder().encode(String(s)), h = "";
+    for (var i = 0; i < b.length; i++) h += (b[i] < 16 ? "0" : "") + b[i].toString(16);
+    return h;
   }
+  /* what the body fetched from a place url carries of the anchor text, given what the fetch returned:
+       found           the text, verbatim
+       found_sha256    the text's sha256 in hex, any case (textSha256: the sha256 of the text's utf-8 bytes, no line
+                       end, as the ledger's anchor entry records it): how an explorer's json shows a transaction that
+                       carries only the digest
+       found_hex       the text's utf-8 bytes in hex, any case: how an explorer's json shows a transaction's data
+       not_found       none of the three
+       could_not_read  no body, or a status outside 2xx
+     what one body at one url carries, nothing more: not that the url is a place that holds (the lab's judgement),
+     not that a transaction is mined, not when a post or a capture was made. a text that is not a string is never
+     found (until the 2026-11-09 change that added found_sha256 and found_hex, a null text was looked for as the
+     four letters "null"). */
+  function placeVerdict(status, bodyText, anchorText, textSha256) {
+    if (bodyText === null || bodyText === undefined || !(status >= 200 && status < 300)) return "could_not_read";
+    if (typeof anchorText !== "string" || !anchorText) return "not_found";
+    var body = String(bodyText);
+    if (body.indexOf(anchorText) >= 0) return "found";
+    var low = body.toLowerCase();
+    if (typeof textSha256 === "string" && /^[0-9a-f]{64}$/.test(textSha256) && low.indexOf(textSha256) >= 0) return "found_sha256";
+    if (low.indexOf(utf8Hex(anchorText)) >= 0) return "found_hex";
+    return "not_found";
+  }
+  /* the place results a report may carry, and the ones that say the url's body carries the text in some form */
+  var PLACE_RESULTS = ["found", "found_sha256", "found_hex", "not_found", "could_not_read", "not_checked"];
+  var PLACE_FOUND = { found: "found", found_sha256: "found as its sha256 (hex)", found_hex: "found as its bytes (hex)" };
+  /* the words a page prints for a found result, or null for any other result (own keys only) */
+  function placeFoundWords(result) { return Object.prototype.hasOwnProperty.call(PLACE_FOUND, result) ? PLACE_FOUND[result] : null; }
 
   // ---- the register
   function isDate(s) { return typeof s === "string" && /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}Z)?$/.test(s); }
@@ -158,9 +186,11 @@
     if (w && typeof w === "object" && Array.isArray(w.withheld)) return { list: w.withheld, code: null };
     return { list: [], code: "withheld_not_a_list" };
   }
-  /* until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as "stated,
-     unverified" and no window opens: said on the readme, the shelf page and outside.html */
-  var SCORER_GATE = "until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as \"stated, unverified\" and no window opens: a section 15 line pasted today is printed back by the scorer, not fetched and not checked.";
+  /* condition (c) of the census scorer as the kit has it since styxx-ledger f29ae3d (census.SHELF_HAS_V1_ROW = True)
+     and 94e4181 (census.SHELF_REPORT_PREFIX): said on the readme, the shelf page and outside.html (which carries it
+     as a literal; a test holds the two equal). on 2026-11-09 it replaced the sentence that (c) could not hold until a
+     kit commit set SHELF_HAS_V1_ROW, which was false from f29ae3d on. */
+  var SCORER_GATE = "since styxx-ledger f29ae3d (2026-11-09) the census scorer reads condition (c) from the shelf: it fetches the report a section 15 shelf read line names, only from under https://fathom-lab.github.io/styxx-shelf/reports/reads/ (since 94e4181; a report on any other host fails (c) unfetched), and checks it against the registration and the chain. (c) holds for an outside window only after the shelf has read that ledger and its report is kept here.";
 
   /* a row whose protocol the shelf does not know is refused, never read with a guessed verifier: -> null when the
      protocol is v0 or v1, else the sentence every view prints in the row's place */
@@ -199,7 +229,8 @@
     REGISTER_SCHEMA: REGISTER_SCHEMA, REPORT_KEYS: REPORT_KEYS, ROW_KEYS: ROW_KEYS, WRITERS: WRITERS, SCORER_GATE: SCORER_GATE,
     registerCounts: registerCounts, registerHeading: registerHeading, unwrapWithheld: unwrapWithheld,
     readLedger: readLedger, earliestAnchor: earliestAnchor, problemCodes: problemCodes, v0Code: v0Code,
-    placeUrl: placeUrl, placeVerdict: placeVerdict, PROTOCOLS: PROTOCOLS, protocolRefusal: protocolRefusal, ageText: ageText,
+    placeUrl: placeUrl, placeVerdict: placeVerdict, utf8Hex: utf8Hex, PLACE_RESULTS: PLACE_RESULTS, PLACE_FOUND: PLACE_FOUND, placeFoundWords: placeFoundWords,
+    PROTOCOLS: PROTOCOLS, protocolRefusal: protocolRefusal, ageText: ageText,
     checkRegister: checkRegister, checkRegisterAppendOnly: checkRegisterAppendOnly
   };
 });

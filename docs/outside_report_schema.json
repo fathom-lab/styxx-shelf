@@ -1,7 +1,7 @@
 {
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "title": "styxx-shelf outside ledger report (shelf_read.cjs)",
- "description": "the per-ledger report docs/reports/<name>.json and docs/reports/reads/<name>/<read_at>.json. written from what the census scorer (styxx-ledger python/src/styxx_ledger/census.py, _shelf, read in the kit checkout on 2026-11-09) checks of it: the report's bytes hash to the sha256 the operator pasted (report_sha256); the body names the registered ledger_url verbatim (names_ledger_url, a substring test); the body names the registered earliest_anchor text verbatim, which carries the head (names_earliest_anchor_and_its_head, a substring test); the read time `at` of the section 15 line falls after the anchor's day ended and before 00:00 d0 (read_at is that time, YYYY-MM-DDTHH:MM:SSZ, the form the scorer's parse_timestamp reads). the scorer re-checks the earliest anchor on the chain itself (earliest_anchor_holds); the report's holds is the shelf's answer beside it.",
+ "description": "the per-ledger report docs/reports/<name>.json and docs/reports/reads/<name>/<read_at>.json. written from what the census scorer (styxx-ledger python/src/styxx_ledger/census.py, _shelf, read in the kit checkout on 2026-11-09) checks of it: the report's bytes hash to the sha256 the operator pasted (report_sha256); the body names the registered ledger_url verbatim (names_ledger_url, a substring test); the body names the registered earliest_anchor text verbatim, which carries the head (names_earliest_anchor_and_its_head, a substring test); the time `at` pasted on the section 15 line falls after the anchor's day ended and before 00:00 d0 (the operator copies the report's read_at there, YYYY-MM-DDTHH:MM:SSZ, the form the scorer's parse_timestamp reads; the scorer reads the pasted time and does not compare it with the report's read_at, as read at styxx-ledger 26cce4d). the scorer re-checks the earliest anchor on the chain itself (earliest_anchor_holds); the report's holds is the shelf's answer beside it.",
  "type": "object",
  "additionalProperties": false,
  "required": ["shelf_commit", "read_at", "ledger_url", "bytes", "sha256", "protocol", "lines", "head", "rederives", "implementations", "anchors"],
@@ -57,7 +57,7 @@
        "additionalProperties": false,
        "required": ["result", "url", "http_status"],
        "properties": {
-        "result": { "enum": ["found", "not_found", "could_not_read", "not_checked"] },
+        "result": { "enum": ["found", "found_sha256", "found_hex", "not_found", "could_not_read", "not_checked"] },
         "url": { "type": ["string", "null"] },
         "http_status": { "type": ["integer", "null"] },
         "why": { "type": "string" }
