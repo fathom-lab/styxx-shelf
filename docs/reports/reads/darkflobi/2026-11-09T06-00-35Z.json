@@ -1,0 +1,36 @@
+{
+ "shelf_commit": "edf8651b69ab63d009e993d07473f91a1cec7fc9 (uncommitted changes present)",
+ "read_at": "2026-11-09T06:00:35Z",
+ "ledger_url": "https://fathom-lab.github.io/styxx/ledger/ledger.jsonl",
+ "bytes": 1341750,
+ "sha256": "20f6d62058a3c1950052271f2b3dc24f3b59a49cbf85693810148225e3514b69",
+ "protocol": "v0",
+ "lines": 787,
+ "head": "3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b",
+ "rederives": {
+  "ok": true,
+  "problem_codes": [],
+  "problems": 0,
+  "withheld_lines": 5
+ },
+ "implementations": {
+  "javascript": "re-derives (the shelf's pinned tools/verify.js, darkflobi.gate v0)",
+  "python": "not run by the shelf"
+ },
+ "anchors": {
+  "count": 15,
+  "holding": 15,
+  "earliest": {
+   "date": "2026-10-24",
+   "seq": 57,
+   "text": "gate anchor 2026-10-24 head 534edfa76783997add1384f8022262d9b13d435f57e2fcdf512e2484ada0c52e seq 57",
+   "text_sha256": "1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7",
+   "holds": true,
+   "place_check": {
+    "result": "found",
+    "url": "https://fathom-lab.github.io/styxx/ledger/anchors/2026-10-24.txt",
+    "http_status": 200
+   }
+  }
+ }
+}

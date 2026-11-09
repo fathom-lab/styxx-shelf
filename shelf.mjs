@@ -9,7 +9,10 @@
    pending stamps are upgraded, so the shelf's history is pinned outside the lab's repository too.
 
      node shelf.mjs [--row <name>] [--out <dir>] [--config shelf.config.json] [--explorer <url>]... [--no-ots]
-                    [--date <YYYY-MM-DD>] [--through <YYYY-MM-DD>] [--stamp-self] [--calendar <url>]...
+                    [--date <YYYY-MM-DD>] [--through <YYYY-MM-DD>] [--stamp-self] [--calendar <url>]... [--page-only]
+
+   --page-only rewrites index.html from the reports already on disk (the nightly rows' latest.json and the outside
+   ledgers' reports written by shelf_read.cjs) and fetches nothing.
 
    exit 0 when every check passed, 1 when any failed (the report is still written), 2 on usage or a crash.
    node 20+. one dependency: opentimestamps (pinned in package.json). */
@@ -24,6 +27,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 // the package's "main" names a file that does not exist; requiring index.js directly avoids node's DEP0128 warning
 const OTS = require("opentimestamps/index.js");
+const CORE = require("./docs/shelf_core.js");   // the register's counts and the scorer sentence, the same code outside.html runs
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SHELF_SCHEMA = "styxx-shelf/report/v0";
@@ -84,11 +88,11 @@ function ranOn() {
 
 function usage(msg) {
   if (msg) console.error("error: " + msg);
-  console.error("usage: node shelf.mjs [--row <name>] [--out <dir>] [--config shelf.config.json] [--explorer <url>]... [--no-ots] [--date <YYYY-MM-DD>] [--through <YYYY-MM-DD>] [--stamp-self] [--calendar <url>]...");
+  console.error("usage: node shelf.mjs [--row <name>] [--out <dir>] [--config shelf.config.json] [--explorer <url>]... [--no-ots] [--date <YYYY-MM-DD>] [--through <YYYY-MM-DD>] [--stamp-self] [--calendar <url>]... [--page-only]");
   process.exit(2);
 }
 function parseArgs(argv) {
-  const o = { row: null, out: path.join(HERE, "docs"), config: path.join(HERE, "shelf.config.json"), explorers: [], ots: true, date: null, through: null, stampSelf: false, calendars: [] };
+  const o = { row: null, out: path.join(HERE, "docs"), config: path.join(HERE, "shelf.config.json"), explorers: [], ots: true, date: null, through: null, stampSelf: false, calendars: [], pageOnly: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--row") o.row = argv[++i];
@@ -98,6 +102,7 @@ function parseArgs(argv) {
     else if (a === "--calendar") o.calendars.push(argv[++i]);
     else if (a === "--no-ots") o.ots = false;
     else if (a === "--stamp-self") o.stampSelf = true;
+    else if (a === "--page-only") o.pageOnly = true;
     else if (a === "--date") o.date = argv[++i];
     else if (a === "--through") o.through = argv[++i];
     else if (a === "-h" || a === "--help") usage();
@@ -689,7 +694,55 @@ ${rows}
 <pre>git clone https://github.com/fathom-lab/styxx-shelf &amp;&amp; cd styxx-shelf &amp;&amp; npm ci &amp;&amp; node shelf.mjs --row darkflobi --out ./docs</pre>
 <p class="dim">node 20+. compare your docs/reports/&lt;row&gt;/&lt;date&gt;.json with the one here: the sha256 of every fetched file, the head, the per-anchor merkle roots and the block headers should agree when the url served the same bytes. each row's "rerun" line below carries the --date and --through of the recorded run.</p>
 ${details}
+${renderOutside(outDir)}
 `;
+}
+
+// ---- the outside ledgers section: the register (outside_ledgers.json) and the reports shelf_read.cjs wrote
+function readJson(p) { try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch (e) { return null; } }
+function renderOutside(outDir) {
+  const reg = readJson(path.join(outDir, "outside_ledgers.json"));
+  if (!reg || !Array.isArray(reg.rows)) return `<section id="outside"><h2>ledgers read by url</h2><p class="dim">no register (outside_ledgers.json) in this output folder.</p></section>`;
+  const vend = readJson(path.join(outDir, "v1", "VENDORED.json"));
+  const pinned = readJson(TOOLS.pinned);
+  const cnt = CORE.registerCounts(reg);
+  const rows = reg.rows.map(row => {
+    const rep = readJson(path.join(outDir, "reports", row.name + ".json"));
+    const onceRel = rep ? `reports/reads/${row.name}/${String(rep.read_at).replace(/:/g, "-")}.json` : null;
+    const oncePath = onceRel ? path.join(outDir, ...onceRel.split("/")) : null;
+    const onceSha = oncePath && fs.existsSync(oncePath) ? sha256(fs.readFileSync(oncePath)) : null;
+    const a = rep?.anchors?.earliest;
+    const place = row.anchor_place ? `${esc(row.anchor_place.kind)}${row.anchor_place.url ? `<br><code>${esc(row.anchor_place.url)}</code>` : ""}` : "none named";
+    return `<tr id="outside-${esc(row.name)}">
+<td>${esc(row.name)}<br><span class="dim">written by ${row.written_by === "lab" ? "the lab" : row.written_by === "outside" ? "an operator outside the lab" : esc(row.written_by)}</span>${row.withdrawn_at ? `<br><span class="dim">withdrawn ${esc(row.withdrawn_at)}</span>` : ""}</td>
+<td>${esc(row.protocol)}</td>
+<td class="mono"><a href="${esc(row.ledger_url)}">${esc(row.ledger_url)}</a></td>
+<td>${place}</td>
+<td>${rep ? `${esc(rep.read_at)}<br><a href="${esc(onceRel)}">${esc(onceRel)}</a><br><span class="dim">sha256</span> <span class="mono">${esc(onceSha ?? "kept copy missing")}</span><br><span class="dim">shelf ${esc(rep.shelf_commit)}</span>` : `<span class="dim">no report yet</span>`}</td>
+<td>${rep ? `${esc(rep.bytes)}<br><span class="mono">${short(rep.sha256)}</span>` : "-"}</td>
+<td>${esc(rep?.lines ?? "-")}</td>
+<td class="mono">${short(rep?.head)}</td>
+<td>${rep ? (rep.rederives.ok ? `<b class="ok">yes</b>` : `<b class="bad">no</b> ${esc(rep.rederives.problem_codes.join(", "))}`) : "-"}</td>
+<td>${rep ? `${esc(rep.anchors.holding)} of ${esc(rep.anchors.count)}` : "-"}</td>
+<td>${a ? `${esc(a.date)} seq ${esc(a.seq)}<br>text sha256 <span class="mono">${short(a.text_sha256)}</span><br>place: ${a.place_check.result === "found" ? `<b class="ok">found</b>` : a.place_check.result === "not_checked" ? esc(a.place_check.result) : `<b class="bad">${esc(a.place_check.result)}</b>`}${a.place_check.http_status !== null ? ` (http ${esc(a.place_check.http_status)})` : ""}` : "-"}</td>
+<td><a href="outside.html#${esc(row.name)}">re-derive now in your browser</a></td>
+</tr>`;
+  }).join("\n");
+  const vt = vend ? `<p>v1 rows run the kit's verifier as copied from styxx-ledger commit <code>${esc(vend.kit_commit)}</code> (${esc(vend.kit_commit_full)}, <a href="${esc(vend.kit_repo)}">${esc(vend.kit_repo)}</a>), ${esc(vend.files.length)} files, none changed (<a href="v1/VENDORED.json">v1/VENDORED.json</a>):</p>
+<table><tr><th>file</th><th>kit path</th><th>sha256</th></tr>${vend.files.map(f => `<tr><td><a href="v1/${esc(f.path)}">${esc(f.path)}</a></td><td>${esc(f.kit_path)}</td><td class="mono">${esc(f.sha256)}</td></tr>`).join("")}</table>` : `<p class="bad">v1/VENDORED.json is missing from this output folder.</p>`;
+  const v0t = pinned ? `<p>v0 rows run the shelf's pinned tools/verify.js (sha256 <span class="mono">${esc(pinned.files["tools/verify.js"].sha256)}</span>), served to the browser as <a href="v0/verify.js">v0/verify.js</a>.</p>` : "";
+  return `<section id="outside">
+<h2>${esc(CORE.registerHeading(reg))}</h2>
+<p>who wrote each ledger is the row's <code>written_by</code>. ${cnt.outside_read === 0 ? `no row names a ledger written outside the lab: the ${esc(cnt.lab)} of ${esc(cnt.rows)} rows written by the lab (${esc(reg.rows.filter(r => r.written_by === "lab").map(r => r.name).join(", "))}) show the shelf reading the lab's own ledgers by url, not an outside one.` : `${esc(cnt.outside_read)} row(s) name a ledger written outside the lab; ${esc(cnt.lab)} of ${esc(cnt.rows)} are the lab's own.`} ${esc(CORE.SCORER_GATE)}</p>
+<p>the register <a href="outside_ledgers.json">outside_ledgers.json</a> lists the ledgers the shelf reads with <code>shelf_read.cjs</code>, one url each, protocol v0 or v1. the shelf is the lab's: a ledger listed here, whoever wrote it, is read by the lab's shelf, with the lab's copy of the verifier and the lab's code, and the reports below are the lab's. a report says whether the bytes at the url re-derive and where the earliest anchor that holds was looked for; it says nothing about the agent behind a ledger, or whether a line records what happened. rows are appended by the lab in a dated commit and never edited; a row taken off gets withdrawn_at and stays. a v1 row for an outside operator's ledger is added when that operator has published one and asks.</p>
+<div class="wrap"><table>
+<tr><th>row</th><th>protocol</th><th>ledger url</th><th>anchor place</th><th>committed report (kept copy, its sha256)</th><th>bytes / sha256</th><th>lines</th><th>head</th><th>re-derives</th><th>anchors holding</th><th>earliest anchor that holds</th><th>in your browser</th></tr>
+${rows}
+</table></div>
+<p class="dim">these reports are written when the lab runs <code>node shelf_read.cjs --row &lt;name&gt;</code> by hand; the nightly workflow runs shelf.mjs and does not write them. every read is kept at reports/reads/&lt;row&gt;/&lt;read_at&gt;.json and never rewritten; reports/&lt;row&gt;.json is the latest and is replaced by the next read. the census template's section 15 line (<code>shelf read: &lt;url&gt; sha256 &lt;64 hex&gt; at &lt;read_at&gt;</code>) names the kept copy. the report's fields: <a href="outside_report_schema.json">outside_report_schema.json</a>. the browser page fetches the ledger from its url and runs the same code (shelf_core.js and the verifiers below); it can read a host that allows a cross-origin read (github pages hosts do).</p>
+${vt}
+${v0t}
+</section>`;
 }
 
 // ---- main
@@ -705,10 +758,11 @@ ${details}
   const runDate = opts.date || utcDay();
   for (const row of rows) {
     const p = path.join(opts.out, "reports", row.name, `${runDate}.json`);
-    if (opts.date && runDate < utcDay() && fs.existsSync(p)) usage(`report for ${row.name} ${runDate} exists (${path.relative(process.cwd(), p)}); a rerun of a past date writes nowhere by default, pass --out <other dir>`);
+    if (!opts.pageOnly && opts.date && runDate < utcDay() && fs.existsSync(p)) usage(`report for ${row.name} ${runDate} exists (${path.relative(process.cwd(), p)}); a rerun of a past date writes nowhere by default, pass --out <other dir>`);
   }
   const results = [];
-  for (const row of rows) {
+  // --page-only: rewrite index.html from the reports already on disk; fetch nothing, run no row
+  for (const row of opts.pageOnly ? [] : rows) {
     try { results.push(await runRow(row, opts, cfg)); }
     catch (e) { console.error(`row ${row.name}: crashed: ${e && e.stack || e}`); process.exitCode = 2; }
   }
@@ -721,5 +775,6 @@ ${details}
   const failed = results.filter(r => r.exit_code !== 0).length;
   say(`${results.length} row(s) run, ${failed} with problems; page ${path.relative(process.cwd(), path.join(opts.out, "index.html")) || "index.html"}`);
   if (process.exitCode === 2) process.exit(2);
+  if (opts.pageOnly) process.exit(0);
   process.exit(failed || results.length !== rows.length ? 1 : 0);
 })().catch(e => { console.error("error: " + (e && e.stack || e)); process.exit(2); });

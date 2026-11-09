@@ -1,0 +1,138 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>styxx shelf ledgers read by url</title>
+<style>
+:root{color-scheme:dark}
+body{background:#000;color:#c8ffc8;font:14px/1.45 ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace;margin:0;padding:24px 16px;max-width:1280px}
+h1,h2,h3{font-weight:normal;color:#00ff00;margin:1.2em 0 .4em}
+h1{font-size:20px}h2{font-size:17px}h3{font-size:15px}
+a{color:#00ffff}
+table{border-collapse:collapse;width:100%;margin:.5em 0;font-size:13px}
+th,td{border:1px solid #063;padding:4px 6px;text-align:left;vertical-align:top}
+th{color:#00ff00;font-weight:normal;background:#031}
+.ok{color:#00ff00}.bad{color:#ff5555}.dim{color:#6a9}
+.mono{word-break:break-all}
+code,pre{color:#00ffff;background:#021;padding:1px 4px;border-radius:2px;white-space:pre-wrap;word-break:break-all}
+pre{padding:8px;overflow:auto}
+section{border-top:1px solid #063;margin-top:2em}
+button{font:inherit;background:#031;color:#00ff00;border:1px solid #0a5;padding:4px 10px;cursor:pointer}
+button:disabled{color:#6a9;cursor:default}
+.wrap{overflow-x:auto}
+</style>
+<h1>styxx shelf — ledgers read by url, re-derived in your browser</h1>
+<p id="counts" class="dim">counting the register…</p>
+<p>the shelf is the lab's. each row of the register (<a href="outside_ledgers.json">outside_ledgers.json</a>) is a ledger the lab's shelf reads with <code>shelf_read.cjs</code>; the committed report for it is shown below, and the button fetches the ledger from its url and runs the same verifier in this page. a ledger written by someone outside the lab and listed here is read by the lab's shelf, with the lab's verifier copy and the lab's code: reproducible, not independent of the lab. nothing here says anything about the agent behind a ledger, or whether what a line records is so: the shelf re-derives digests.</p>
+<p>until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as "stated, unverified" and no window opens: a section 15 line pasted today is printed back by the scorer, not fetched and not checked.</p>
+<p><a href="index.html">back to the shelf</a> · the report's fields: <a href="outside_report_schema.json">outside_report_schema.json</a></p>
+<h2>the verifiers this page runs</h2>
+<div id="vendored"><p class="dim">loading docs/v1/VENDORED.json…</p></div>
+<h2>rows</h2>
+<div id="rows"><p class="dim">loading the register…</p></div>
+<noscript><p>this section needs javascript; the committed reports are plain json under <a href="reports/">reports/</a>.</p></noscript>
+<script src="shelf_core.js"></script>
+<script src="v0/verify.js"></script>
+<script src="v1/load.js"></script>
+<script>
+"use strict";
+(function () {
+  var esc = function (s) { return String(s === undefined || s === null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  // the section 15 line names the published copy, whatever host this page was opened from
+  var SHELF_HOME = "https://fathom-lab.github.io/styxx-shelf/";
+  var COULD_NOT_READ = "could not read: the host did not allow a cross-origin read, or it is offline (github pages hosts allow it)";
+  async function shaHex(u8) {
+    if (window.crypto && crypto.subtle) { var d = await crypto.subtle.digest("SHA-256", u8); return Array.from(new Uint8Array(d)).map(function (b) { return (b < 16 ? "0" : "") + b.toString(16); }).join(""); }
+    return ShelfV1.sha256Hex(u8);
+  }
+  async function getBytes(url) {
+    try { var r = await fetch(url, { cache: "no-store" }); if (!r.ok) return { status: r.status, bytes: null }; return { status: r.status, bytes: new Uint8Array(await r.arrayBuffer()) }; }
+    catch (e) { return { status: null, bytes: null }; }
+  }
+  var v1 = null, v1err = null;
+  var v1ready = ShelfV1.load("v1/").then(function (x) { v1 = x; return x; }, function (e) { v1err = e; return null; });
+
+  async function showVendored() {
+    var el = document.getElementById("vendored");
+    await v1ready;
+    var v0 = await getBytes("v0/verify.js"), v0sha = v0.bytes ? await shaHex(v0.bytes) : null;
+    if (!v1) { el.innerHTML = '<p class="bad">the v1 verifier did not load: ' + esc(v1err && v1err.message) + "</p>"; return; }
+    var V = v1.vendored;
+    el.innerHTML = "<p>v1: styxx-ledger at commit <code>" + esc(V.kit_commit) + "</code> (" + esc(V.kit_commit_full) + ', <a href="' + esc(V.kit_repo) + '">' + esc(V.kit_repo) + "</a>), " + esc(V.files.length) + " files copied from the commit, none changed; this page loaded " + esc(v1.checked.length) + " of them and ran each only after it hashed to the recorded sha256 (" + esc(v1.checked.filter(function (c) { return c.matches; }).length) + " of " + esc(v1.checked.length) + ' matched). the browser loader is the shelf\'s own <a href="v1/load.js">v1/load.js</a>.</p>' +
+      '<div class="wrap"><table><tr><th>file</th><th>kit path</th><th>sha256 (VENDORED.json)</th><th>loaded here</th></tr>' +
+      V.files.map(function (f) { var c = v1.checked.find(function (x) { return x.path === f.path; }); return "<tr><td>" + esc(f.path) + "</td><td>" + esc(f.kit_path) + '</td><td class="mono">' + esc(f.sha256) + "</td><td>" + (c ? (c.matches ? '<b class="ok">same</b>' : '<b class="bad">differs</b>') : '<span class="dim">not code</span>') + "</td></tr>"; }).join("") +
+      "</table></div><p>v0: the shelf's pinned <code>tools/verify.js</code>, served as <a href=\"v0/verify.js\">v0/verify.js</a>, sha256 here <code>" + esc(v0sha || "not read") + "</code> (the shelf's tests hold it equal to tools/PINNED.json).</p>";
+  }
+
+  function reportCells(rep) {
+    if (!rep) return '<span class="dim">no committed report</span>';
+    var a = rep.anchors && rep.anchors.earliest;
+    return "read " + esc(rep.read_at) + " by shelf " + esc(rep.shelf_commit) + "<br>" + esc(rep.bytes) + " bytes, sha256 <code>" + esc(rep.sha256) + "</code><br>" + esc(rep.lines) + " lines, head <code>" + esc(rep.head) + "</code><br>re-derives " +
+      (rep.rederives.ok ? '<b class="ok">yes</b>' : '<b class="bad">no</b> (' + esc(rep.rederives.problem_codes.join(", ")) + ")") + "; anchors holding " + esc(rep.anchors.holding) + " of " + esc(rep.anchors.count) +
+      (a ? "; earliest " + esc(a.date) + " seq " + esc(a.seq) + ", place " + esc(a.place_check.result) + (a.place_check.http_status !== null ? " (http " + esc(a.place_check.http_status) + ")" : "") : "");
+  }
+
+  async function rederive(row, rep, out, btn) {
+    btn.disabled = true; out.textContent = "fetching " + row.ledger_url + " …";
+    try {
+      var f = await getBytes(row.ledger_url);
+      if (!f.bytes) { out.textContent = f.status ? "could not read: the ledger url answered http " + f.status : COULD_NOT_READ; return; }
+      var withheld = [];
+      if (row.withheld_url) {
+        var w = await getBytes(row.withheld_url);
+        if (!w.bytes) { out.textContent = "the ledger answered; withheld.json did not. " + (w.status ? "the withheld url answered http " + w.status : COULD_NOT_READ); return; }
+        var u = ShelfCore.unwrapWithheld(JSON.parse(new TextDecoder().decode(w.bytes)));
+        if (u.code) { out.textContent = "the ledger answered; withheld.json is not a list of withheld lines, nor an object with one (" + u.code + ")"; return; }
+        withheld = u.list;
+      }
+      var verifier = row.protocol === "v1" ? (await v1ready, v1 && v1.verify) : window.LedgerVerify;
+      if (!verifier) { out.textContent = "the " + row.protocol + " verifier did not load"; return; }
+      var r = await ShelfCore.readLedger({ protocol: row.protocol, bytes: f.bytes, withheld: withheld, verifier: verifier });
+      var sha = await shaHex(f.bytes), e = ShelfCore.earliestAnchor(r.anchors.list);
+      var lines = [
+        "read now in this browser, " + new Date().toISOString().replace(/\.\d{3}Z$/, "Z"),
+        "bytes " + f.bytes.length + ", sha256 " + sha + (rep ? (sha === rep.sha256 ? " (the committed report's bytes)" : " (not the committed report's bytes: the ledger changed since that read)") : ""),
+        "lines " + r.lines,
+        "head " + r.head + (rep ? (r.head === rep.head ? " (the committed report's head)" : " (not the committed report's head)") : ""),
+        "re-derives " + (r.rederives.ok ? "yes" : "no (" + r.rederives.problem_codes.join(", ") + ")"),
+        "anchors " + r.anchors.count + ", holding " + r.anchors.holding + " of " + r.anchors.count + (e ? "; earliest " + e.date + " seq " + e.seq + (e.holds ? " holds" : " does not hold") : "")
+      ];
+      out.textContent = lines.join("\n");
+    } catch (err) { out.textContent = "the read failed in this page: " + (err && err.message || err); }
+    finally { btn.disabled = false; }
+  }
+
+  async function showRows() {
+    var el = document.getElementById("rows");
+    var g = await getBytes("outside_ledgers.json");
+    if (!g.bytes) { el.innerHTML = '<p class="bad">the register did not load</p>'; return; }
+    var reg = JSON.parse(new TextDecoder().decode(g.bytes));
+    var bad = ShelfCore.checkRegister(reg);
+    var live = reg.rows.filter(function (r) { return !r.withdrawn_at; });
+    document.getElementById("counts").textContent = ShelfCore.registerHeading(reg) + ".";
+    el.innerHTML = "<p>" + esc(reg.rows.length) + " row" + (reg.rows.length === 1 ? "" : "s") + " (" + esc(live.length) + " read, " + esc(reg.rows.length - live.length) + " withdrawn); written by the lab " + esc(reg.rows.filter(function (r) { return r.written_by === "lab"; }).length) + " of " + esc(reg.rows.length) + "; v1 rows " + esc(reg.rows.filter(function (r) { return r.protocol === "v1"; }).length) + " of " + esc(reg.rows.length) + ". " + (bad.length ? '<b class="bad">the register breaks its own rules: ' + esc(bad.join("; ")) + "</b>" : "") + "</p>";
+    for (var i = 0; i < reg.rows.length; i++) {
+      var row = reg.rows[i];
+      var sec = document.createElement("section");
+      sec.id = row.name;
+      var rb = await getBytes("reports/" + row.name + ".json"), rep = null, repSha = null;
+      if (rb.bytes) { try { rep = JSON.parse(new TextDecoder().decode(rb.bytes)); repSha = await shaHex(rb.bytes); } catch (e) { rep = null; } }
+      var onceRel = rep ? "reports/reads/" + row.name + "/" + rep.read_at.replace(/:/g, "-") + ".json" : null, onceUrl = onceRel ? SHELF_HOME + onceRel : null;
+      var place = row.anchor_place ? esc(row.anchor_place.kind) + (row.anchor_place.url ? " — <code>" + esc(row.anchor_place.url) + "</code>" : "") : "none named";
+      sec.innerHTML = "<h3>" + esc(row.name) + ' <span class="dim">protocol ' + esc(row.protocol) + (row.withdrawn_at ? ", withdrawn " + esc(row.withdrawn_at) : "") + "</span></h3>" +
+        '<p>ledger <a href="' + esc(row.ledger_url) + '">' + esc(row.ledger_url) + "</a>" + (row.withheld_url ? ' · withheld <a href="' + esc(row.withheld_url) + '">' + esc(row.withheld_url) + "</a>" : "") + "<br>written by: " + (row.written_by === "lab" ? "the lab" : row.written_by === "outside" ? "an operator outside the lab" : esc(row.written_by)) + "<br>anchor place: " + place + "<br>added " + esc(row.added_at) + " by " + esc(row.added_by) + '<br><span class="dim">' + esc(row.note) + "</span></p>" +
+        "<p>committed report (" + (rep ? '<a href="reports/' + esc(row.name) + '.json">reports/' + esc(row.name) + ".json</a>, sha256 here <code>" + esc(repSha) + "</code>" : "none") + "):<br>" + reportCells(rep) + "</p>" +
+        (rep ? '<p class="dim">this read, kept and never rewritten: <a href="' + esc(onceRel) + '">' + esc(onceRel) + "</a>. the census template's section 15 line names that copy, not the latest one:</p><pre class=\"line\">computing…</pre>" : "") +
+        "<p><button>re-derive now in your browser</button></p><pre class=\"out\" aria-live=\"polite\"></pre>";
+      el.appendChild(sec);
+      (function (row, rep, sec, onceRel, onceUrl) {
+        var btn = sec.querySelector("button"), out = sec.querySelector("pre.out");
+        btn.addEventListener("click", function () { rederive(row, rep, out, btn); });
+        if (onceRel) getBytes(onceRel).then(async function (o) {
+          sec.querySelector("pre.line").textContent = o.bytes ? "shelf read: " + onceUrl + " sha256 " + (await shaHex(o.bytes)) + " at " + rep.read_at : "the kept copy " + onceRel + " did not load (not committed yet?)";
+        });
+      })(row, rep, sec, onceRel, onceUrl);
+    }
+  }
+  showVendored(); showRows();
+})();
+</script>

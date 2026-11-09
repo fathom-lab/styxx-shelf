@@ -20,7 +20,7 @@ section{border-top:1px solid #063;margin-top:2em}
 </style>
 <h1>styxx shelf — the re-derivation runs somewhere that is not the box</h1>
 <p>every night a github action fetches each row's published ledger, re-derives its chain with the shelf's own pinned copy of the verifier, runs the row's conformance vectors, checks every anchor the row's index lists against the chain and its opentimestamps proof against the bitcoin block header as two explorers return it, counts the days with no anchor, and compares the bytes with the previous night's fetch. this page is written by that run; it loads nothing. each row says where its run ran: a run marked "not the action (a local run)" was made on a lab machine, not by the workflow.</p>
-<p>written 2026-11-08T21:27:21Z · 1 row · schedule 07:00 utc · explorers https://blockstream.info/api, https://mempool.space/api</p>
+<p>written 2026-11-09T06:19:52Z · 1 row · schedule 07:00 utc · explorers https://blockstream.info/api, https://mempool.space/api</p>
 <div class="wrap"><table>
 <tr><th>row</th><th>fetched at / where</th><th>ledger sha256</th><th>lines</th><th>head</th><th>chain re-derives</th><th>vectors</th><th>anchors verified</th><th>gaps</th><th>append-only</th><th>verifier drift</th><th>lines after last attested head</th><th>exit</th></tr>
 <tr>
@@ -232,4 +232,44 @@ ok   flip-and-rechain
 <h3>rerun</h3>
 <pre>git clone https://github.com/fathom-lab/styxx-shelf &amp;&amp; cd styxx-shelf &amp;&amp; npm ci &amp;&amp; node shelf.mjs --row darkflobi --out ./docs --date 2026-11-08 --through 2026-11-07</pre>
 <p class="dim">by hand, inside the clone: 39 commands (every curl and every node line) are listed under <code>commands</code> in the json record. the rerun carries --date and --through so the gap window is the recorded one.</p>
+</section>
+<section id="outside">
+<h2>ledgers read by url — 2 rows, 2 of 2 the lab&#39;s own; outside ledgers read: 0; v1 rows 0 of 2; withdrawn 0 of 2</h2>
+<p>who wrote each ledger is the row's <code>written_by</code>. no row names a ledger written outside the lab: the 2 of 2 rows written by the lab (darkflobi, red) show the shelf reading the lab's own ledgers by url, not an outside one. until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as &quot;stated, unverified&quot; and no window opens: a section 15 line pasted today is printed back by the scorer, not fetched and not checked.</p>
+<p>the register <a href="outside_ledgers.json">outside_ledgers.json</a> lists the ledgers the shelf reads with <code>shelf_read.cjs</code>, one url each, protocol v0 or v1. the shelf is the lab's: a ledger listed here, whoever wrote it, is read by the lab's shelf, with the lab's copy of the verifier and the lab's code, and the reports below are the lab's. a report says whether the bytes at the url re-derive and where the earliest anchor that holds was looked for; it says nothing about the agent behind a ledger, or whether a line records what happened. rows are appended by the lab in a dated commit and never edited; a row taken off gets withdrawn_at and stays. a v1 row for an outside operator's ledger is added when that operator has published one and asks.</p>
+<div class="wrap"><table>
+<tr><th>row</th><th>protocol</th><th>ledger url</th><th>anchor place</th><th>committed report (kept copy, its sha256)</th><th>bytes / sha256</th><th>lines</th><th>head</th><th>re-derives</th><th>anchors holding</th><th>earliest anchor that holds</th><th>in your browser</th></tr>
+<tr id="outside-darkflobi">
+<td>darkflobi<br><span class="dim">written by the lab</span></td>
+<td>v0</td>
+<td class="mono"><a href="https://fathom-lab.github.io/styxx/ledger/ledger.jsonl">https://fathom-lab.github.io/styxx/ledger/ledger.jsonl</a></td>
+<td>the lab&#39;s exhibit copy of each day&#39;s anchor text (anchors/&lt;date&gt;.txt); the telegram post itself needs an account to read, so the shelf reads the lab&#39;s copy, not the post<br><code>https://fathom-lab.github.io/styxx/ledger/anchors/{date}.txt</code></td>
+<td>2026-11-09T06:19:50Z<br><a href="reports/reads/darkflobi/2026-11-09T06-19-50Z.json">reports/reads/darkflobi/2026-11-09T06-19-50Z.json</a><br><span class="dim">sha256</span> <span class="mono">9163580ba0e3ccba4ca41441f83a3c07d7fb9ab99194a91b23666329fba84eb4</span><br><span class="dim">shelf edf8651b69ab63d009e993d07473f91a1cec7fc9 (uncommitted changes present)</span></td>
+<td>1341750<br><span class="mono"><span title="20f6d62058a3c1950052271f2b3dc24f3b59a49cbf85693810148225e3514b69">20f6d62058a3c195</span></span></td>
+<td>787</td>
+<td class="mono"><span title="3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b">3f9fe35a1b276ed3</span></td>
+<td><b class="ok">yes</b></td>
+<td>15 of 15</td>
+<td>2026-10-24 seq 57<br>text sha256 <span class="mono"><span title="1d187807253d257f672908f7565e89db406dc56575d9482bfe35090086b8e0e7">1d187807253d257f</span></span><br>place: <b class="ok">found</b> (http 200)</td>
+<td><a href="outside.html#darkflobi">re-derive now in your browser</a></td>
+</tr>
+<tr id="outside-red">
+<td>red<br><span class="dim">written by the lab</span></td>
+<td>v0</td>
+<td class="mono"><a href="https://fathom-lab.github.io/styxx/ledger/red/ledger.jsonl">https://fathom-lab.github.io/styxx/ledger/red/ledger.jsonl</a></td>
+<td>the ledger&#39;s own page on the lab&#39;s github pages site; the lab can edit it, so it is not a place outside the lab<br><code>https://fathom-lab.github.io/styxx/ledger/red/</code></td>
+<td>2026-11-09T06:19:51Z<br><a href="reports/reads/red/2026-11-09T06-19-51Z.json">reports/reads/red/2026-11-09T06-19-51Z.json</a><br><span class="dim">sha256</span> <span class="mono">2b0e03672c7251013b8203c6cd29f5837f49e3950d774b30f0f9540a1d2b1688</span><br><span class="dim">shelf edf8651b69ab63d009e993d07473f91a1cec7fc9 (uncommitted changes present)</span></td>
+<td>274193<br><span class="mono"><span title="c999b33fc2a4d409b91a4824dc3fcd83693297ce4b2775cb89d5264ebff17976">c999b33fc2a4d409</span></span></td>
+<td>107</td>
+<td class="mono"><span title="95194d08c31ea102fa0bb109e57c2ddda3383740adb8c6ea5340cb2067c33d91">95194d08c31ea102</span></td>
+<td><b class="ok">yes</b></td>
+<td>1 of 1</td>
+<td>2026-11-08 seq 106<br>text sha256 <span class="mono"><span title="f03ab11d15f7f79418adad312999b3bd96959c2f7ff7dc7a94ea7dbc8fa3da11">f03ab11d15f7f794</span></span><br>place: <b class="ok">found</b> (http 200)</td>
+<td><a href="outside.html#red">re-derive now in your browser</a></td>
+</tr>
+</table></div>
+<p class="dim">these reports are written when the lab runs <code>node shelf_read.cjs --row &lt;name&gt;</code> by hand; the nightly workflow runs shelf.mjs and does not write them. every read is kept at reports/reads/&lt;row&gt;/&lt;read_at&gt;.json and never rewritten; reports/&lt;row&gt;.json is the latest and is replaced by the next read. the census template's section 15 line (<code>shelf read: &lt;url&gt; sha256 &lt;64 hex&gt; at &lt;read_at&gt;</code>) names the kept copy. the report's fields: <a href="outside_report_schema.json">outside_report_schema.json</a>. the browser page fetches the ledger from its url and runs the same code (shelf_core.js and the verifiers below); it can read a host that allows a cross-origin read (github pages hosts do).</p>
+<p>v1 rows run the kit's verifier as copied from styxx-ledger commit <code>838a003</code> (838a003fa4f65d8efdb185c88a951f74ac2366c9, <a href="https://github.com/fathom-lab/styxx-ledger">https://github.com/fathom-lab/styxx-ledger</a>), 5 files, none changed (<a href="v1/VENDORED.json">v1/VENDORED.json</a>):</p>
+<table><tr><th>file</th><th>kit path</th><th>sha256</th></tr><tr><td><a href="v1/verify.js">verify.js</a></td><td>js/lib/verify.js</td><td class="mono">72b2d988d5bce1a2c0332928c283ec1c0509f6b58a31f5d9d5b1e65a06d2fa32</td></tr><tr><td><a href="v1/chain.js">chain.js</a></td><td>js/lib/chain.js</td><td class="mono">9f2abfd11597458553f0387a67004b3dd2c138de5819068d9f9ad5c805c2b516</td></tr><tr><td><a href="v1/jcs.js">jcs.js</a></td><td>js/lib/jcs.js</td><td class="mono">abeddd50d3f09ad8f222c1d7bf3ebe0f64b1c458c3df25d4cad5b8f8c1a6fabb</td></tr><tr><td><a href="v1/day.js">day.js</a></td><td>js/lib/day.js</td><td class="mono">c4e19c8bba96b6f8e122caba33835c6d3188ec2d39ea1c0c8500ce63e9aa3deb</td></tr><tr><td><a href="v1/LICENSE">LICENSE</a></td><td>LICENSE</td><td class="mono">562ab2caa6477ecc385d6b85e5e18798dbe5b35ac1d302674173a9827d83b2a9</td></tr></table>
+<p>v0 rows run the shelf's pinned tools/verify.js (sha256 <span class="mono">6bb1b6c4642d6251153d0a3bc6a30ac3fee9c6529cc0540291dbb38f983eba46</span>), served to the browser as <a href="v0/verify.js">v0/verify.js</a>.</p>
 </section>

@@ -1,0 +1,71 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "styxx-shelf outside ledger report (shelf_read.cjs)",
+ "description": "the per-ledger report docs/reports/<name>.json and docs/reports/reads/<name>/<read_at>.json. written from what the census scorer (styxx-ledger python/src/styxx_ledger/census.py, _shelf, read in the kit checkout on 2026-11-09) checks of it: the report's bytes hash to the sha256 the operator pasted (report_sha256); the body names the registered ledger_url verbatim (names_ledger_url, a substring test); the body names the registered earliest_anchor text verbatim, which carries the head (names_earliest_anchor_and_its_head, a substring test); the read time `at` of the section 15 line falls after the anchor's day ended and before 00:00 d0 (read_at is that time, YYYY-MM-DDTHH:MM:SSZ, the form the scorer's parse_timestamp reads). the scorer re-checks the earliest anchor on the chain itself (earliest_anchor_holds); the report's holds is the shelf's answer beside it.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["shelf_commit", "read_at", "ledger_url", "bytes", "sha256", "protocol", "lines", "head", "rederives", "implementations", "anchors"],
+ "properties": {
+  "shelf_commit": { "type": "string", "pattern": "^([0-9a-f]{40}( \\(uncommitted changes present\\))?|unknown .+)$" },
+  "read_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$" },
+  "ledger_url": { "type": "string", "pattern": "^https?://\\S+$" },
+  "bytes": { "type": "integer", "minimum": 0 },
+  "sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+  "protocol": { "enum": ["v0", "v1"] },
+  "lines": { "type": ["integer", "null"], "minimum": 0 },
+  "head": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+  "rederives": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["ok", "problem_codes", "problems"],
+   "properties": {
+    "ok": { "type": "boolean" },
+    "problem_codes": { "type": "array", "items": { "type": "string", "pattern": "^[a-z_]+$" } },
+    "problems": { "type": "integer", "minimum": 0 },
+    "withheld_lines": { "type": "integer", "minimum": 0 },
+    "http_status": { "type": ["integer", "null"] }
+   }
+  },
+  "implementations": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["javascript", "python"],
+   "properties": {
+    "javascript": { "type": "string" },
+    "python": { "const": "not run by the shelf" }
+   }
+  },
+  "anchors": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["count", "holding", "earliest"],
+   "properties": {
+    "count": { "type": "integer", "minimum": 0 },
+    "holding": { "type": "integer", "minimum": 0 },
+    "earliest": {
+     "type": ["object", "null"],
+     "additionalProperties": false,
+     "required": ["date", "seq", "text", "text_sha256", "holds", "place_check"],
+     "properties": {
+      "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+      "seq": { "type": "integer", "minimum": 0 },
+      "text": { "type": "string", "pattern": "^[a-z0-9_-]{1,32} anchor \\d{4}-\\d{2}-\\d{2} head [0-9a-f]{64} seq (0|[1-9][0-9]*)$" },
+      "text_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+      "holds": { "type": "boolean" },
+      "place_check": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": ["result", "url", "http_status"],
+       "properties": {
+        "result": { "enum": ["found", "not_found", "could_not_read", "not_checked"] },
+        "url": { "type": ["string", "null"] },
+        "http_status": { "type": ["integer", "null"] },
+        "why": { "type": "string" }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

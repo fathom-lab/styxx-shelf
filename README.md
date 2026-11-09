@@ -109,6 +109,76 @@ hash of today's leading bytes; `anchor_changes`), `checks.self_stamps` (earlier 
 `commands`, `notes`, `problems`, `ok`, `exit_code`, `rerun`. with `--stamp-self`, `<date>.json.ots` beside it and
 `stamps.json` (tonight's stamp and the earlier ones).
 
+## ledgers read by url (shelf_read.cjs)
+
+a second, smaller reader for ledgers the lab does not publish in the exhibit's shape: one url per ledger, protocol
+v0 (`darkflobi.gate/*/v0`) or v1 (`styxx.ledger/*/v1`, the kit's protocol). the shelf is the lab's: a ledger read
+here, whoever wrote it, is read by the lab's shelf with the lab's copy of the verifier. reproducible, not independent
+of the lab. a report says whether the bytes at the url re-derive and where the earliest anchor that holds was looked
+for; nothing about the agent behind the ledger, or whether a line records what happened.
+
+    node shelf_read.cjs --row <name>                     # a register row; writes docs/reports/<name>.json
+    node shelf_read.cjs --url <url> --protocol v1 [--withheld-url <url>] [--place-url <url>]   # a dry run, to stdout
+    node shelf.mjs --page-only                           # rewrite docs/index.html from the reports on disk
+
+**the register** is `docs/outside_ledgers.json`: rows `{name, protocol, ledger_url, withheld_url, anchor_place:
+{kind, url} | null, written_by, added_at, added_by, note}`. `written_by` is `lab` (the lab's own agents and examples) or
+`outside` (an operator outside the lab); every heading counts both. append-only: a row is added at the end, by the lab
+(that it lands in a dated commit is lab practice, not something the tests check);
+a row is never edited or removed; a row taken off gets `withdrawn_at` (and may get `withdrawn_why`) and stays, and
+shelf_read refuses it. `docs/shelf_core.js` (`checkRegister`, `checkRegisterAppendOnly`) states the rule and the
+tests hold the register to it across every commit of the file (each consecutive pair in `git log`, then the last
+commit against the working copy). today: 2 rows, 2 of 2 the lab's own v0 ledgers (darkflobi, red); outside ledgers
+read: 0; v1 rows 0 of 2. **a v1 row is added by the lab, with a dated commit, when an outside operator publishes a v1 ledger
+and asks.** an anchor place url may carry `{date}`, replaced by the earliest anchor's date (darkflobi's anchors are
+posted to a telegram supergroup that needs an account; its row names the exhibit's `anchors/<date>.txt` copy and
+says so; red's names its own page, which the lab can edit).
+
+**the v1 verifier** is the kit's (`https://github.com/fathom-lab/styxx-ledger`), copied from commit `838a003` with
+`git show 838a003:js/lib/<file>` into `docs/v1/` (verify.js, chain.js, jcs.js, day.js, and the kit's LICENSE),
+unchanged; `docs/v1/VENDORED.json` carries each file's sha256 and the tests hold them equal. node loads them with
+`require`; the browser loads them through `docs/v1/load.js`, the shelf's own loader, which refuses a file whose sha256
+is not the recorded one and hands chain.js a javascript sha256 where `node:crypto` would be. v0 rows run the pinned
+`tools/verify.js` (served to the browser as `docs/v0/verify.js`, the same bytes).
+
+**what shelf_read does:** fetches the ledger (node http/https, 30 s, up to 5 redirects; and withheld.json when the row
+names one), records sha256 and byte count, re-derives the chain, composes each of the ledger's own anchor entries'
+text (v1 `<agent> anchor <date> head <hex> seq <n>`, v0 `gate anchor ...`) and checks it with the verifier's
+`checkAnchor` and against the entry's `anchor_text_sha256`, takes the earliest that holds, and fetches the row's
+anchor place to say whether that text is there: `found`, `not_found` or `could_not_read`, with the http status
+(`not_checked` when the row names no place url). exit 0 when the chain re-derives, 1 when not or the ledger did not
+answer, 2 on usage.
+
+**the report** (`docs/outside_report_schema.json`): `shelf_commit` (git HEAD of this checkout, marked "(uncommitted
+changes present)" when so), `read_at`, `ledger_url`, `bytes`, `sha256`, `protocol`, `lines` (entries after the
+header), `head`, `rederives` (`ok`, `problem_codes` in the kit's code vocabulary, v0 sentences mapped onto it,
+`problems`, `withheld_lines`), `implementations` (`javascript`: what ran; `python`: "not run by the shelf"),
+`anchors` (`count`, `holding`, `earliest`: `date`, `seq`, `text`, `text_sha256`, `holds`, `place_check`). counts and
+digests only; the one text is the earliest anchor's, public by design, which the census scorer looks for verbatim.
+deterministic for fixed bytes except `read_at` and `shelf_commit`. every read is written twice: `docs/reports/<name>.json`
+(the latest, replaced by the next read) and `docs/reports/reads/<name>/<read_at>.json` (kept, never rewritten). the
+census template's section 15 line names the kept copy:
+
+    shelf read: https://fathom-lab.github.io/styxx-shelf/reports/reads/<name>/<read_at>.json sha256 <64 hex of that file> at <read_at>
+
+**until a styxx-ledger commit sets `census.SHELF_HAS_V1_ROW`, the census scorer prints condition (c) as "stated,
+unverified" and no window opens**: a section 15 line pasted today is printed back by the scorer, not fetched and not
+checked (styxx-ledger `python/src/styxx_ledger/census.py` lines 73-75 and 1166-1168 at commit 9cf0dda). once the kit
+flips it, the census scorer (`census.py`, `_shelf`) is written to fetch that url, check the sha256 of its bytes, that the body
+name the registered `ledger_url` and `earliest_anchor` (the text, which carries the head), that the anchor holds on
+the chain, and that `read_at` falls after the anchor's day ended and before d0; the shelf's tests emulate those checks. these reports are written when the lab
+runs shelf_read by hand; the nightly workflow runs shelf.mjs and does not write them. the page: a "ledgers read by url"
+section on `docs/index.html` (static, written by shelf.mjs) and `docs/outside.html`, which fetches each ledger from its
+url and runs the same code in the browser (a host that allows a cross-origin read; github pages hosts do).
+
+withheld.json may be a bare array or `{"withheld": [...]}`, as the kit's `loadWithheld` and the census scorer accept.
+
+tests: `npm test` runs `node --test test/test_shelf_read.mjs` and then `node test/test_shelf.mjs` (each also alone:
+`npm run test:read`, `npm run test:shelf`). test_shelf.mjs runs the shelf with its clock set to the fixture's night,
+2026-11-08 20:00z (`test/clock_fixture.mjs`), so its counts do not depend on the day it runs. test_shelf_read.mjs:
+(local http server, no network; the v1 fixtures are the kit's vectors
+at 838a003, see `test/fixtures/v1/FIXTURES.json`).
+
 ## the operator's setup
 
 the lab's github token cannot push a branch that touches `.github/`, so the operator creates and pushes this

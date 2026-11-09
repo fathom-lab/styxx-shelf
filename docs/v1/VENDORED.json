@@ -1,0 +1,40 @@
+{
+ "kit_repo": "https://github.com/fathom-lab/styxx-ledger",
+ "kit_commit": "838a003",
+ "kit_commit_full": "838a003fa4f65d8efdb185c88a951f74ac2366c9",
+ "copied_at": "2026-11-09",
+ "copied_with": "git -C <kit checkout> show 838a003:<kit_path> > docs/v1/<path> (from the commit, never the working tree)",
+ "changes": "none: every file is the commit blob byte for byte. node loads them with require (docs/package.json says commonjs); the browser loads them through docs/v1/load.js, the shelf's own loader, which checks each file against the sha256 below before it runs it and hands chain.js a sha256 written in javascript where node:crypto would be",
+ "files": [
+  {
+   "path": "verify.js",
+   "kit_path": "js/lib/verify.js",
+   "bytes": 6215,
+   "sha256": "72b2d988d5bce1a2c0332928c283ec1c0509f6b58a31f5d9d5b1e65a06d2fa32"
+  },
+  {
+   "path": "chain.js",
+   "kit_path": "js/lib/chain.js",
+   "bytes": 15644,
+   "sha256": "9f2abfd11597458553f0387a67004b3dd2c138de5819068d9f9ad5c805c2b516"
+  },
+  {
+   "path": "jcs.js",
+   "kit_path": "js/lib/jcs.js",
+   "bytes": 5467,
+   "sha256": "abeddd50d3f09ad8f222c1d7bf3ebe0f64b1c458c3df25d4cad5b8f8c1a6fabb"
+  },
+  {
+   "path": "day.js",
+   "kit_path": "js/lib/day.js",
+   "bytes": 5438,
+   "sha256": "c4e19c8bba96b6f8e122caba33835c6d3188ec2d39ea1c0c8500ce63e9aa3deb"
+  },
+  {
+   "path": "LICENSE",
+   "kit_path": "LICENSE",
+   "bytes": 1076,
+   "sha256": "562ab2caa6477ecc385d6b85e5e18798dbe5b35ac1d302674173a9827d83b2a9"
+  }
+ ]
+}

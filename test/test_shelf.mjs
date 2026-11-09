@@ -28,7 +28,7 @@ import path from "node:path";
 import http from "node:http";
 import crypto from "node:crypto";
 import { spawn } from "node:child_process";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -39,6 +39,8 @@ const require = createRequire(import.meta.url);
 const V = require(path.join(REPO, "tools", "verify.js"));
 const OTS = require(path.join(REPO, "node_modules", "opentimestamps", "index.js"));
 const DATE = "2026-11-08";   // fixed run date: the fixture's earliest anchor is 2026-10-24, so coverage is 10-24 .. 11-07 and 2026-11-06 is the one gap
+const CLOCK = path.join(HERE, "clock_fixture.mjs");   // the shelf child runs with its clock at DATE 20:00z (see that file)
+const NOW = DATE + "T20:00:00Z";
 
 const results = [];
 let current = null;
@@ -117,7 +119,7 @@ function runShelf(port, siteDir, out, extra = [], cfgExtra = {}) {
   fs.writeFileSync(cfgPath, JSON.stringify(cfg));
   const args = [path.join(REPO, "shelf.mjs"), "--config", cfgPath, "--out", out, ...(extra.includes("--date") ? [] : ["--date", DATE]), ...extra];
   return new Promise((resolve) => {
-    const ch = spawn(process.execPath, args, { stdio: ["ignore", "pipe", "pipe"] });
+    const ch = spawn(process.execPath, ["--import", pathToFileURL(CLOCK).href, ...args], { stdio: ["ignore", "pipe", "pipe"], env: { ...process.env, SHELF_TEST_NOW: NOW } });
     let stdout = "", stderr = "";
     ch.stdout.on("data", d => { stdout += d; }); ch.stderr.on("data", d => { stderr += d; });
     ch.on("close", (code) => {

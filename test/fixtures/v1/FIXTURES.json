@@ -1,0 +1,24 @@
+{
+ "source": "styxx-ledger (https://github.com/fathom-lab/styxx-ledger) commit 838a003, vectors/base_v1.jsonl and vectors/vectors_v1.json, taken with git show 838a003:<path> on 2026-11-09",
+ "files": {
+  "ledger.jsonl": {
+   "vector": "anchor-present",
+   "how": "vectors/base_v1.jsonl byte for byte (the vector's transform is identity)",
+   "sha256": "09fcf1d7f46f9c8c84beeed38e83721e56553a37dea6626143b32ac59c4fa8e4",
+   "expect": { "lines": 59, "head": "cb0ec566b5de51517fd647d033b23d7d32fdd216866f892c0bc67501d2fe203a", "ok": true, "anchors_ok": 5 },
+   "anchor_texts": [
+    "kitbot anchor 2026-10-31 head e4e61d531f964e1a94b2ed260ea3ade9ed0c041801197f41cc46e19d1a4d0495 seq 9",
+    "kitbot anchor 2026-11-01 head 8d19a85bb63dbb5a5105c15d3a519921a43f491466c77b0513b075bccf8a221d seq 23",
+    "kitbot anchor 2026-11-02 head 7640180c82d1550c6fbd51f2136183b612f238218deaab215204c833d3e946e8 seq 29",
+    "kitbot anchor 2026-12-31 head c0538b01ef1b49d3a33d7658294d78594b02931f5a7c0e422f382e9cad4d094a seq 39",
+    "kitbot anchor 2027-01-01 head 178bd12806e9686f2fee077e21629eae299c504f35336b7bddac3fe9e4f3dad2 seq 57"
+   ]
+  },
+  "ledger_broken.jsonl": {
+   "vector": "rewrite-one-field",
+   "how": "the base with seq 20's field note set to \"rewritten\" and the line re-dumped (transform set_field), written with the vendored dump",
+   "sha256": "1b8e6b713246e7d2ee5953b5bc2b0ed10db03665d96f73b729ad42342a2d6f42",
+   "expect": { "ok": false, "problem_codes": ["entry_id"], "problem_seqs": [20], "head": "cb0ec566b5de51517fd647d033b23d7d32fdd216866f892c0bc67501d2fe203a" }
+  }
+ }
+}

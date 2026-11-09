@@ -5,10 +5,15 @@
   "type": "module",
   "private": true,
   "license": "MIT",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "shelf": "node shelf.mjs --out ./docs",
-    "test": "node test/test_shelf.mjs"
+    "read": "node shelf_read.cjs",
+    "test:read": "node --test test/test_shelf_read.mjs",
+    "test:shelf": "node test/test_shelf.mjs",
+    "test": "node --test test/test_shelf_read.mjs && node test/test_shelf.mjs"
   },
   "dependencies": {
     "opentimestamps": "0.4.9"

@@ -1,0 +1,34 @@
+{
+ "schema": "styxx-shelf/outside_ledgers/v0",
+ "rules": "the register of ledgers the shelf reads with shelf_read.cjs. append-only: a row is added at the end, by the lab (that it lands in a dated commit is lab practice; the tests check append-only across every commit of this file); a row is never edited or removed; a row taken off the shelf gets withdrawn_at (and may get withdrawn_why) and stays. a v1 row for an outside operator's ledger is added when that operator has published one and asks. the shelf is the lab's: a row here is read by the lab's shelf.",
+ "rows": [
+  {
+   "name": "darkflobi",
+   "protocol": "v0",
+   "ledger_url": "https://fathom-lab.github.io/styxx/ledger/ledger.jsonl",
+   "withheld_url": "https://fathom-lab.github.io/styxx/ledger/withheld.json",
+   "anchor_place": {
+    "kind": "the lab's exhibit copy of each day's anchor text (anchors/<date>.txt); the telegram post itself needs an account to read, so the shelf reads the lab's copy, not the post",
+    "url": "https://fathom-lab.github.io/styxx/ledger/anchors/{date}.txt"
+   },
+   "written_by": "lab",
+   "added_at": "2026-11-09",
+   "added_by": "fathom lab (shelf v1 build)",
+   "note": "the lab's own agent; the same ledger url the nightly row (shelf.config.json) reads. the nightly run also checks every anchor's opentimestamps proof against two explorers; shelf_read checks the chain and the earliest anchor only."
+  },
+  {
+   "name": "red",
+   "protocol": "v0",
+   "ledger_url": "https://fathom-lab.github.io/styxx/ledger/red/ledger.jsonl",
+   "withheld_url": null,
+   "anchor_place": {
+    "kind": "the ledger's own page on the lab's github pages site; the lab can edit it, so it is not a place outside the lab",
+    "url": "https://fathom-lab.github.io/styxx/ledger/red/"
+   },
+   "written_by": "lab",
+   "added_at": "2026-11-09",
+   "added_by": "fathom lab (shelf v1 build)",
+   "note": "the lab's own example ledger for the census template (PREREG_census_EXAMPLE_red.md); it publishes no withheld.json (404 on 2026-11-09)."
+  }
+ ]
+}
