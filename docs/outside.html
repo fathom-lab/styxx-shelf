@@ -21,6 +21,7 @@ button:disabled{color:#6a9;cursor:default}
 .wrap{overflow-x:auto}
 </style>
 <h1>styxx shelf — ledgers read by url, re-derived in your browser</h1>
+<p id="what">what you can check here: press a row's button and this browser fetches that ledger from its url and re-derives its chain and its anchors with the verifier listed below, nothing to install; or, in a clone of this repository, run <code>node shelf_read.cjs --row &lt;name&gt;</code>.</p>
 <p id="counts" class="dim">counting the register…</p>
 <p>the shelf is the lab's. each row of the register (<a href="outside_ledgers.json">outside_ledgers.json</a>) is a ledger the lab's shelf reads with <code>shelf_read.cjs</code>; the committed report for it is shown below, and the button fetches the ledger from its url and runs the same verifier in this page. a ledger written by someone outside the lab and listed here is read by the lab's shelf, with the lab's verifier copy and the lab's code: reproducible, not independent of the lab. nothing here says anything about the agent behind a ledger, or whether what a line records is so: the shelf re-derives digests.</p>
 <p>until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as "stated, unverified" and no window opens: a section 15 line pasted today is printed back by the scorer, not fetched and not checked.</p>
@@ -40,6 +41,8 @@ button:disabled{color:#6a9;cursor:default}
   // the section 15 line names the published copy, whatever host this page was opened from
   var SHELF_HOME = "https://fathom-lab.github.io/styxx-shelf/";
   var COULD_NOT_READ = "could not read: the host did not allow a cross-origin read, or it is offline (github pages hosts allow it)";
+  // this page has no build step: a committed read's age is counted against the time this browser opened the page
+  var OPENED = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
   async function shaHex(u8) {
     if (window.crypto && crypto.subtle) { var d = await crypto.subtle.digest("SHA-256", u8); return Array.from(new Uint8Array(d)).map(function (b) { return (b < 16 ? "0" : "") + b.toString(16); }).join(""); }
     return ShelfV1.sha256Hex(u8);
@@ -68,10 +71,19 @@ button:disabled{color:#6a9;cursor:default}
     var a = rep.anchors && rep.anchors.earliest;
     return "read " + esc(rep.read_at) + " by shelf " + esc(rep.shelf_commit) + "<br>" + esc(rep.bytes) + " bytes, sha256 <code>" + esc(rep.sha256) + "</code><br>" + esc(rep.lines) + " lines, head <code>" + esc(rep.head) + "</code><br>re-derives " +
       (rep.rederives.ok ? '<b class="ok">yes</b>' : '<b class="bad">no</b> (' + esc(rep.rederives.problem_codes.join(", ")) + ")") + "; anchors holding " + esc(rep.anchors.holding) + " of " + esc(rep.anchors.count) +
-      (a ? "; earliest " + esc(a.date) + " seq " + esc(a.seq) + ", place " + esc(a.place_check.result) + (a.place_check.http_status !== null ? " (http " + esc(a.place_check.http_status) + ")" : "") : "");
+      (a ? "; earliest " + esc(a.date) + " seq " + esc(a.seq) + ", place " + esc(a.place_check.result) + (a.place_check.http_status !== null ? " (http " + esc(a.place_check.http_status) + ")" : "") : "") +
+      "<br>" + staleness(rep);
+  }
+  function staleness(rep) {
+    var age = ShelfCore.ageText(rep.read_at, OPENED);
+    return "how old: read " + esc(rep.read_at) + ", " + (age === null ? "age unknown (this browser's clock is before the read)" : esc(age) + " before this page was opened (" + esc(OPENED) + ", this browser's clock)") +
+      "; the ledger may have grown since, the button reads it now" +
+      (/uncommitted changes present/.test(String(rep.shelf_commit)) ? '; <b class="bad">read from a shelf checkout with uncommitted changes</b> (its shelf_commit says so)' : "");
   }
 
   async function rederive(row, rep, out, btn) {
+    var refusal = ShelfCore.protocolRefusal(row.protocol);
+    if (refusal) { out.textContent = refusal; return; }
     btn.disabled = true; out.textContent = "fetching " + row.ledger_url + " …";
     try {
       var f = await getBytes(row.ledger_url);
@@ -84,7 +96,7 @@ button:disabled{color:#6a9;cursor:default}
         if (u.code) { out.textContent = "the ledger answered; withheld.json is not a list of withheld lines, nor an object with one (" + u.code + ")"; return; }
         withheld = u.list;
       }
-      var verifier = row.protocol === "v1" ? (await v1ready, v1 && v1.verify) : window.LedgerVerify;
+      var verifier = row.protocol === "v1" ? (await v1ready, v1 && v1.verify) : row.protocol === "v0" ? window.LedgerVerify : null;
       if (!verifier) { out.textContent = "the " + row.protocol + " verifier did not load"; return; }
       var r = await ShelfCore.readLedger({ protocol: row.protocol, bytes: f.bytes, withheld: withheld, verifier: verifier });
       var sha = await shaHex(f.bytes), e = ShelfCore.earliestAnchor(r.anchors.list);
@@ -114,6 +126,12 @@ button:disabled{color:#6a9;cursor:default}
       var row = reg.rows[i];
       var sec = document.createElement("section");
       sec.id = row.name;
+      var refused = ShelfCore.protocolRefusal(row.protocol);
+      if (refused) {
+        sec.innerHTML = "<h3>" + esc(row.name) + ' <span class="dim">protocol ' + esc(row.protocol) + '</span></h3><p class="bad">' + esc(refused) + "</p>";
+        el.appendChild(sec);
+        continue;
+      }
       var rb = await getBytes("reports/" + row.name + ".json"), rep = null, repSha = null;
       if (rb.bytes) { try { rep = JSON.parse(new TextDecoder().decode(rb.bytes)); repSha = await shaHex(rb.bytes); } catch (e) { rep = null; } }
       var onceRel = rep ? "reports/reads/" + row.name + "/" + rep.read_at.replace(/:/g, "-") + ".json" : null, onceUrl = onceRel ? SHELF_HOME + onceRel : null;

@@ -564,6 +564,36 @@ function readStamps(outDir, row) {
   try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch (e) { return null; }
 }
 
+/* where the reports on this page ran: every dated nightly report on disk (docs/reports/<row>/<date>.json), how many
+   say "github actions", and whether the workflow file is in this checkout. the page's opening sentence is built from
+   these counts, so it says "built to run nightly" until a report from the action is on disk. */
+function whereRan(outDir) {
+  const repRoot = path.join(outDir, "reports");
+  const nightly = [];
+  if (fs.existsSync(repRoot)) for (const d of fs.readdirSync(repRoot)) {
+    const dir = path.join(repRoot, d);
+    if (d === "reads" || !fs.statSync(dir).isDirectory()) continue;
+    for (const f of fs.readdirSync(dir)) if (/^\d{4}-\d{2}-\d{2}\.json$/.test(f)) { const r = readJson(path.join(dir, f)); if (r) nightly.push(r); }
+  }
+  const readsRoot = path.join(repRoot, "reads");
+  let reads = 0;
+  if (fs.existsSync(readsRoot)) for (const d of fs.readdirSync(readsRoot)) { const dir = path.join(readsRoot, d); if (fs.statSync(dir).isDirectory()) reads += fs.readdirSync(dir).filter(f => /\.json$/.test(f)).length; }
+  return {
+    nightly: nightly.length,
+    action: nightly.filter(r => r.ran_on?.where === "github actions").length,
+    reads,
+    workflow_in_checkout: fs.existsSync(path.join(HERE, ".github", "workflows", "shelf.yml"))
+  };
+}
+function openingSentence(w, written) {
+  const what = "fetch each row's published ledger, re-derive its chain with the shelf's own pinned copy of the verifier, run the row's conformance vectors, check every anchor the row's index lists against the chain and its opentimestamps proof against the bitcoin block header as two explorers return it, count the days with no anchor, and compare the bytes with the previous night's fetch";
+  const local = w.nightly - w.action;
+  if (w.action === 0) {
+    return `built to ${what}, every night, as a github action. as of ${esc(String(written).slice(0, 10))} no report here came from that action: ${w.workflow_in_checkout ? "the workflow file is in this repository but has not written a report yet" : "the workflow is not in this repository yet (the operator adds it)"}, and every report so far is a local run from the lab's box — ${esc(local)} of ${esc(w.nightly)} nightly report${w.nightly === 1 ? " says" : "s say"} "not the action (a local run)", and the ${esc(w.reads)} read${w.reads === 1 ? "" : "s"} by url kept under reports/reads/ ${w.reads === 1 ? "was" : "were"} run by hand. each report is dated; this page is written by shelf.mjs from the reports on disk and loads nothing.`;
+  }
+  return `a github action runs every night to ${what}. of the ${esc(w.nightly)} nightly report${w.nightly === 1 ? "" : "s"} on disk, ${esc(w.action)} ran in the action and ${esc(local)} were local runs from the lab's box. this page is written by shelf.mjs from the reports on disk; it loads nothing. each row says where its run ran: a run marked "not the action (a local run)" was made on a lab machine, not by the workflow.`;
+}
+
 function renderIndex(reports, cfg, written, outDir) {
   const ledgerKey = (r) => Object.keys(r.fetched).find(k => /ledger\.jsonl$/.test(k));
   const rows = reports.map(r => {
@@ -651,6 +681,9 @@ ${fetched}
 </section>`;
   }).join("\n");
 
+  const where = whereRan(outDir);
+  const reg0 = readJson(path.join(outDir, "outside_ledgers.json"));
+  const regRows = reg0 && Array.isArray(reg0.rows) ? reg0.rows.length : 0;
   const after0 = reports.length === 1 ? reports[0].checks?.outside_pin?.lines_after_last_attested_head : null;
   const lines0 = reports.length === 1 ? reports[0].checks?.chain?.lines : null;
   return `<!doctype html>
@@ -673,9 +706,9 @@ pre{padding:8px;overflow:auto}
 section{border-top:1px solid #063;margin-top:2em}
 .wrap{overflow-x:auto}
 </style>
-<h1>styxx shelf — the re-derivation runs somewhere that is not the box</h1>
-<p>every night a github action fetches each row's published ledger, re-derives its chain with the shelf's own pinned copy of the verifier, runs the row's conformance vectors, checks every anchor the row's index lists against the chain and its opentimestamps proof against the bitcoin block header as two explorers return it, counts the days with no anchor, and compares the bytes with the previous night's fetch. this page is written by that run; it loads nothing. each row says where its run ran: a run marked "not the action (a local run)" was made on a lab machine, not by the workflow.</p>
-<p>written ${esc(written)} · ${esc(reports.length)} row${reports.length === 1 ? "" : "s"} · schedule ${esc(cfg.schedule_utc)} utc · explorers ${(cfg.explorers || []).map(esc).join(", ")}</p>
+<h1>styxx shelf — a re-derivation built to run somewhere that is not the box</h1>
+<p>${openingSentence(where, written)}</p>
+<p>written ${esc(written)} · ${esc(reports.length)} nightly row${reports.length === 1 ? "" : "s"} · ${esc(regRows)} row${regRows === 1 ? "" : "s"} read by url · schedule ${esc(cfg.schedule_utc)} utc · explorers ${(cfg.explorers || []).map(esc).join(", ")}</p>
 <div class="wrap"><table>
 <tr><th>row</th><th>fetched at / where</th><th>ledger sha256</th><th>lines</th><th>head</th><th>chain re-derives</th><th>vectors</th><th>anchors verified</th><th>gaps</th><th>append-only</th><th>verifier drift</th><th>lines after last attested head</th><th>exit</th></tr>
 ${rows}
@@ -694,19 +727,48 @@ ${rows}
 <pre>git clone https://github.com/fathom-lab/styxx-shelf &amp;&amp; cd styxx-shelf &amp;&amp; npm ci &amp;&amp; node shelf.mjs --row darkflobi --out ./docs</pre>
 <p class="dim">node 20+. compare your docs/reports/&lt;row&gt;/&lt;date&gt;.json with the one here: the sha256 of every fetched file, the head, the per-anchor merkle roots and the block headers should agree when the url served the same bytes. each row's "rerun" line below carries the --date and --through of the recorded run.</p>
 ${details}
-${renderOutside(outDir)}
+${renderOutside(outDir, written, reports, where)}
 `;
 }
 
 // ---- the outside ledgers section: the register (outside_ledgers.json) and the reports shelf_read.cjs wrote
 function readJson(p) { try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch (e) { return null; } }
-function renderOutside(outDir) {
+/* the staleness line: each committed read's read_at against the time this page was written, its line count against
+   the nightly row that reads the same url (when one does), and a read made from a checkout with uncommitted changes */
+function stalenessLine(row, rep, written, reports) {
+  if (!rep) return `${esc(row.name)}: no committed read.`;
+  const age = CORE.ageText(rep.read_at, written);
+  let s = `${esc(row.name)}: read ${esc(rep.read_at)}, ${age === null ? "age unknown" : esc(age) + " before this page was written"}, ${esc(rep.lines ?? "-")} lines`;
+  const ledgerKey = (r) => Object.keys(r.fetched || {}).find(k => /ledger\.jsonl$/.test(k));
+  const nightly = reports.find(r => ledgerKey(r) && (r.base + ledgerKey(r)) === row.ledger_url);
+  if (nightly && typeof nightly.checks?.chain?.lines === "number" && typeof rep.lines === "number") {
+    const after = Date.parse(rep.read_at) >= Date.parse(nightly.run_started_at);
+    const gap = after ? CORE.ageText(nightly.run_started_at, rep.read_at) : CORE.ageText(rep.read_at, nightly.run_started_at);
+    // later count minus earlier count: growth explains only a delta >= 0; fewer lines at the later time is what the shelf exists to show
+    const delta = after ? rep.lines - nightly.checks.chain.lines : nightly.checks.chain.lines - rep.lines;
+    s += `; the nightly row ${esc(nightly.row)} read the same url at ${esc(nightly.run_started_at)} and counted ${esc(nightly.checks.chain.lines)} lines, ${esc(gap ?? "?")} ${after ? "before" : "after"} this read `;
+    s += delta >= 0
+      ? `(${esc(signed(delta))} lines from the earlier count to the later: the ledger grows, so the two counts are two times, not two answers)`
+      : `(<b class="bad">fewer lines at the later time (${esc(signed(delta))} from the earlier count): growth does not explain it</b>)`;
+  }
+  if (/uncommitted changes present/.test(String(rep.shelf_commit))) s += `; <b class="bad">read from a shelf checkout with uncommitted changes</b> (its shelf_commit says so)`;
+  return s + ".";
+}
+function renderOutside(outDir, written = isoNow(), reports = [], where = null) {
   const reg = readJson(path.join(outDir, "outside_ledgers.json"));
   if (!reg || !Array.isArray(reg.rows)) return `<section id="outside"><h2>ledgers read by url</h2><p class="dim">no register (outside_ledgers.json) in this output folder.</p></section>`;
   const vend = readJson(path.join(outDir, "v1", "VENDORED.json"));
   const pinned = readJson(TOOLS.pinned);
   const cnt = CORE.registerCounts(reg);
   const rows = reg.rows.map(row => {
+    // a protocol the shelf does not know: refused in the row's place, never shown with a guessed verifier
+    const refusal = CORE.protocolRefusal(row.protocol);
+    if (refusal) return `<tr id="outside-${esc(row.name)}">
+<td>${esc(row.name)}</td>
+<td>${esc(row.protocol)}</td>
+<td class="mono">${esc(row.ledger_url)}</td>
+<td colspan="9"><b class="bad">${esc(refusal)}</b></td>
+</tr>`;
     const rep = readJson(path.join(outDir, "reports", row.name + ".json"));
     const onceRel = rep ? `reports/reads/${row.name}/${String(rep.read_at).replace(/:/g, "-")}.json` : null;
     const oncePath = onceRel ? path.join(outDir, ...onceRel.split("/")) : null;
@@ -739,7 +801,8 @@ function renderOutside(outDir) {
 <tr><th>row</th><th>protocol</th><th>ledger url</th><th>anchor place</th><th>committed report (kept copy, its sha256)</th><th>bytes / sha256</th><th>lines</th><th>head</th><th>re-derives</th><th>anchors holding</th><th>earliest anchor that holds</th><th>in your browser</th></tr>
 ${rows}
 </table></div>
-<p class="dim">these reports are written when the lab runs <code>node shelf_read.cjs --row &lt;name&gt;</code> by hand; the nightly workflow runs shelf.mjs and does not write them. every read is kept at reports/reads/&lt;row&gt;/&lt;read_at&gt;.json and never rewritten; reports/&lt;row&gt;.json is the latest and is replaced by the next read. the census template's section 15 line (<code>shelf read: &lt;url&gt; sha256 &lt;64 hex&gt; at &lt;read_at&gt;</code>) names the kept copy. the report's fields: <a href="outside_report_schema.json">outside_report_schema.json</a>. the browser page fetches the ledger from its url and runs the same code (shelf_core.js and the verifiers below); it can read a host that allows a cross-origin read (github pages hosts do).</p>
+<p>how old each read is: ${reg.rows.filter(r => !CORE.protocolRefusal(r.protocol)).map(r => stalenessLine(r, readJson(path.join(outDir, "reports", r.name + ".json")), written, reports)).join(" ")}</p>
+<p class="dim">${where && where.action ? "a read is written by the workflow each night, or when the lab runs <code>node shelf_read.cjs --row &lt;name&gt;</code> by hand." : `every read here so far was written when the lab ran <code>node shelf_read.cjs --row &lt;name&gt;</code> by hand on its box; the workflow written for this repository runs it for every register row each night once the operator adds it${where && where.workflow_in_checkout ? "" : ` (not in this repository as of ${esc(String(written).slice(0, 10))})`}.`} every read is kept at reports/reads/&lt;row&gt;/&lt;read_at&gt;.json and never rewritten; reports/&lt;row&gt;.json is the latest and is replaced by the next read. the census template's section 15 line (<code>shelf read: &lt;url&gt; sha256 &lt;64 hex&gt; at &lt;read_at&gt;</code>) names the kept copy. the report's fields: <a href="outside_report_schema.json">outside_report_schema.json</a>. the browser page fetches the ledger from its url and runs the same code (shelf_core.js and the verifiers below); it can read a host that allows a cross-origin read (github pages hosts do).</p>
 ${vt}
 ${v0t}
 </section>`;

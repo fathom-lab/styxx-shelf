@@ -1,6 +1,11 @@
 # styxx-shelf
 
-the re-derivation runs somewhere that is not the box. every night a github action fetches each row's published
+built to run the re-derivation somewhere that is not the box. **as of 2026-11-09 the workflow is not in this
+repository and every report so far is a local run from the lab's box**: the one nightly report
+(`docs/reports/darkflobi/2026-11-08.json`) says "not the action (a local run)", and the 6 reads by url under
+`docs/reports/reads/` (2026-11-09) were run by hand. the workflow waits for the operator (see "the operator's setup": the file, the write permission, one run by hand);
+the page's opening sentence is built from the reports on disk and says "built to run" until a report from the action
+is there. once added, the github action, every night, fetches each row's published
 `darkflobi.gate/entry/v0` ledger (ledger.jsonl, withheld.json, the vectors, the anchors and their opentimestamps
 proofs), re-derives the chain with the shelf's own pinned copy of the verifier, runs the row's conformance vectors
 (10 today), checks every anchor the row's index lists against the chain and its proof against the bitcoin block
@@ -157,7 +162,10 @@ header), `head`, `rederives` (`ok`, `problem_codes` in the kit's code vocabulary
 digests only; the one text is the earliest anchor's, public by design, which the census scorer looks for verbatim.
 deterministic for fixed bytes except `read_at` and `shelf_commit`. every read is written twice: `docs/reports/<name>.json`
 (the latest, replaced by the next read) and `docs/reports/reads/<name>/<read_at>.json` (kept, never rewritten). the
-census template's section 15 line names the kept copy:
+census template's section 15 line names the kept copy. the page prints how old each read is (its `read_at`
+against the time the page was written, and on `outside.html` against the time the browser opened it), the line count
+of the nightly row that reads the same url beside it, and marks a read made from a checkout with uncommitted
+changes:
 
     shelf read: https://fathom-lab.github.io/styxx-shelf/reports/reads/<name>/<read_at>.json sha256 <64 hex of that file> at <read_at>
 
@@ -166,8 +174,12 @@ unverified" and no window opens**: a section 15 line pasted today is printed bac
 checked (styxx-ledger `python/src/styxx_ledger/census.py` lines 73-75 and 1166-1168 at commit 9cf0dda). once the kit
 flips it, the census scorer (`census.py`, `_shelf`) is written to fetch that url, check the sha256 of its bytes, that the body
 name the registered `ledger_url` and `earliest_anchor` (the text, which carries the head), that the anchor holds on
-the chain, and that `read_at` falls after the anchor's day ended and before d0; the shelf's tests emulate those checks. these reports are written when the lab
-runs shelf_read by hand; the nightly workflow runs shelf.mjs and does not write them. the page: a "ledgers read by url"
+the chain, and that `read_at` falls after the anchor's day ended and before d0; the shelf's tests emulate those checks. every
+report so far was written when the lab ran shelf_read by hand on its box; the workflow written for this repository
+(not in it as of 2026-11-09) runs `npm test`, then `shelf_read.cjs --row` for every register row not withdrawn, then
+shelf.mjs, each night. a register row whose protocol is not v0 or v1 is never read with a guessed verifier: shelf_read refuses the whole
+register (exit 2 for every row's read, since the register no longer holds its own rules), while the page and
+outside.html refuse only that row, in its place. the page: a "ledgers read by url"
 section on `docs/index.html` (static, written by shelf.mjs) and `docs/outside.html`, which fetches each ledger from its
 url and runs the same code in the browser (a host that allows a cross-origin read; github pages hosts do).
 
@@ -181,14 +193,18 @@ at 838a003, see `test/fixtures/v1/FIXTURES.json`).
 
 ## the operator's setup
 
-the lab's github token cannot push a branch that touches `.github/`, so the operator creates and pushes this
-repository himself. the steps, from the folder that holds this README:
+done by the lab on 2026-11-08: this repository was created and pushed to `main` (everything but `.github/`), and
+pages serve `main` /docs at https://fathom-lab.github.io/styxx-shelf/. what remains is the operator's, because the
+lab's github token cannot write `.github/workflows/`:
 
-1. create the repository: `gh repo create fathom-lab/styxx-shelf --public --description "nightly re-derivation of published darkflobi.gate ledgers"` (or the web ui).
-2. `git init -b main && git add . && git commit -m "shelf v0: one row (darkflobi)" && git remote add origin https://github.com/fathom-lab/styxx-shelf.git && git push -u origin main`
-   (`node_modules/` is ignored; `docs/` holds a local run's report, marked "not the action (a local run)" on the page;
-   the workflow's own run replaces it).
-3. settings → pages → source "deploy from a branch", branch `main`, folder `/docs`.
-4. settings → actions → general → workflow permissions → "read and write permissions" (the action commits `docs/` back).
-5. actions → shelf → run workflow (once by hand; the cron then runs at 07:00 utc).
-6. the report appears at https://fathom-lab.github.io/styxx-shelf/ a minute or two after the commit.
+1. the workflow file: add `.github/workflows/shelf.yml` to `main` (on the web: add file → create new file), with
+   the contents the lab keeps outside this repository, in its working folder for the shelf, under
+   `github_for_operator/shelf_dot_github/workflows/shelf.yml`.
+2. write permission for workflows, at the organization (github.com/organizations/fathom-lab/settings/actions →
+   workflow permissions → read and write; as of 2026-11-08 it is disabled there) and then at the repository (settings →
+   actions → general → workflow permissions → "read and write permissions"). without both, the nightly commit of
+   `docs/` fails and the report is only in the job log.
+3. actions → shelf → run workflow, once by hand; the cron then runs at 07:00 utc. that run runs `npm test` (a red
+   suite turns the job red and nothing is read or committed), the reads (an exit of 2 or more turns the job red; the
+   shelf still runs), shelf.mjs (exit 2 turns it red), and the commit of `docs/`. the report appears at
+   https://fathom-lab.github.io/styxx-shelf/ a minute or two after the commit.

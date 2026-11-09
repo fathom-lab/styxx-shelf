@@ -105,6 +105,11 @@ function shelfCommit() {
 /* the report, in its fixed key order (CORE.REPORT_KEYS) */
 async function read(row) {
   const readAt = isoNow();
+  // a protocol the shelf does not know is refused before anything is fetched, never read with a guessed verifier.
+  // unreachable from the cli today: --row is refused earlier by CORE.checkRegister (which refuses the whole register),
+  // and --url already requires v0 or v1 in parseArgs. kept as a guard if read() gets another caller.
+  const refusal = CORE.protocolRefusal(row.protocol);
+  if (refusal) usage("row " + row.name + ": " + refusal);
   const verifier = row.protocol === "v1" ? V1 : V0;
   const f = await fetchBytes(row.ledger_url);
   let withheld = [], withheldNote = null;

@@ -512,3 +512,195 @@ describe("the page", () => {
     assert.ok(!/provably|no one|nobody|breakthrough|\bfirst\b/i.test(h));
   });
 });
+
+// ---- the 2026-11-09 improvement sweep: the page's sentence on where reports ran (rank 1), the staleness line
+// (rank 34), outside.html's opening sentence (rank 40), and the refusal of a protocol the shelf does not know (rank 58)
+describe("2026-11-09: where reports ran, how old a read is, a plain opening, an unknown protocol refused", () => {
+  const pageOnly = (out) => spawnSync(process.execPath, [path.join(REPO, "shelf.mjs"), "--page-only", "--out", out], { encoding: "utf8" });
+  const flat = (h) => h.replace(/\s+/g, " ");
+  const v2row = { name: "vtwo", protocol: "v2", ledger_url: "https://example.org/vtwo/ledger.jsonl", withheld_url: null, anchor_place: null, written_by: "outside", added_at: "2026-11-09", added_by: "test", note: "a protocol the shelf does not know" };
+
+  test("protocolRefusal: null for v0 and v1; a refusal sentence for anything else, and readLedger throws it", async () => {
+    assert.equal(CORE.protocolRefusal("v0"), null);
+    assert.equal(CORE.protocolRefusal("v1"), null);
+    for (const p of ["v2", "V1", "", null, undefined, 1]) assert.match(CORE.protocolRefusal(p), /^refused: protocol .* is not v0 or v1; the shelf reads no row whose protocol it does not know, and guesses no verifier for it$/, String(p));
+    await assert.rejects(CORE.readLedger({ protocol: "v2", bytes: new Uint8Array(0), withheld: [], verifier: V0 }), /refused: protocol "v2"/);
+  });
+
+  test("ageText: minutes, hours, days; null when unreadable or backwards", () => {
+    assert.equal(CORE.ageText("2026-11-08T21:27:15Z", "2026-11-09T06:26:01Z"), "8 h 58 min");
+    assert.equal(CORE.ageText("2026-11-09T06:26:01Z", "2026-11-09T06:30:59Z"), "4 min");
+    assert.equal(CORE.ageText("2026-11-07T06:00:00Z", "2026-11-09T07:05:00Z"), "2 d 1 h 5 min");
+    assert.equal(CORE.ageText("2026-11-09T06:00:00Z", "2026-11-09T05:00:00Z"), null);
+    assert.equal(CORE.ageText("not a time", "2026-11-09T05:00:00Z"), null);
+  });
+
+  // the refusal is CORE.checkRegister's rule: one unknown-protocol row refuses the whole register, so every row's read
+  // fails (exit 2), the v0 rows too. read()'s own guard in shelf_read.cjs is not reachable from the cli.
+  test("shelf_read refuses the whole register when one row has an unknown protocol (exit 2 for that row and for a v0 row), writes nothing", async () => {
+    const reg = JSON.parse(fs.readFileSync(path.join(DOCS, "outside_ledgers.json"), "utf8"));
+    reg.rows.push(v2row);
+    const p = path.join(tmp, "register-v2.json"); fs.writeFileSync(p, JSON.stringify(reg));
+    for (const name of ["vtwo", "red"]) {
+      const out = path.join(tmp, "out-v2-" + name);
+      const r = await run(["--row", name, "--register", p, "--out", out]);
+      assert.equal(r.code, 2, name);
+      assert.match(r.stderr, /the register does not hold its own rules: .*protocol is not v0 or v1/, name);
+      assert.ok(!fs.existsSync(out), "nothing written for " + name);
+    }
+  });
+
+  test("the page refuses an unknown protocol row in its place: no report, no browser link, not in the staleness line", () => {
+    const out = path.join(tmp, "page-v2");
+    fs.cpSync(DOCS, out, { recursive: true });
+    const reg = JSON.parse(fs.readFileSync(path.join(out, "outside_ledgers.json"), "utf8"));
+    reg.rows.push(v2row);
+    fs.writeFileSync(path.join(out, "outside_ledgers.json"), JSON.stringify(reg));
+    // a report file under that name must not be shown: the view refuses the row, it does not guess a verifier for it
+    fs.writeFileSync(path.join(out, "reports", "vtwo.json"), fs.readFileSync(path.join(out, "reports", "red.json")));
+    const r = pageOnly(out);
+    assert.equal(r.status, 0, r.stderr);
+    const html = fs.readFileSync(path.join(out, "index.html"), "utf8");
+    const tr = html.slice(html.indexOf('<tr id="outside-vtwo">'), html.indexOf("</tr>", html.indexOf('<tr id="outside-vtwo">')));
+    assert.ok(tr.length > 0);
+    assert.ok(tr.includes("refused: protocol &quot;v2&quot; is not v0 or v1"), tr);
+    assert.ok(!tr.includes("outside.html#vtwo") && !tr.includes("re-derives") && !tr.includes("reports/reads/vtwo"), tr);
+    const how = html.slice(html.indexOf("<p>how old each read is:"), html.indexOf("</p>", html.indexOf("<p>how old each read is:")));
+    assert.ok(how.includes("darkflobi: read") && !how.includes("vtwo"), how);
+  });
+
+  test("outside.html refuses an unknown protocol row (run in a stub page): refusal text, no button; a v0 row keeps its button", async () => {
+    const h = fs.readFileSync(path.join(DOCS, "outside.html"), "utf8");
+    assert.ok(!/: window\.LedgerVerify;/.test(h), "the verifier choice must not fall through to v0 for any protocol");
+    const js = h.slice(h.lastIndexOf("<script>") + "<script>".length, h.lastIndexOf("</script>"));
+    const reg = JSON.parse(fs.readFileSync(path.join(DOCS, "outside_ledgers.json"), "utf8"));
+    const twoRows = { ...reg, rows: [reg.rows[0], v2row] };
+    const served = { "outside_ledgers.json": Buffer.from(JSON.stringify(twoRows)) };
+    const fakeFetch = async (url) => {
+      const rel = String(url);
+      let b = served[rel];
+      if (!b && !/^https?:/.test(rel) && fs.existsSync(path.join(DOCS, rel))) b = fs.readFileSync(path.join(DOCS, rel));
+      if (!b) return { ok: false, status: 404 };
+      return { ok: true, status: 200, arrayBuffer: async () => b.buffer.slice(b.byteOffset, b.byteOffset + b.length) };
+    };
+    const stub = () => ({ innerHTML: "", textContent: "", children: [], appendChild(c) { this.children.push(c); }, addEventListener() {}, querySelector(q) { return this["q:" + q] || (this["q:" + q] = stub()); } });
+    const els = { counts: stub(), vendored: stub(), rows: stub() };
+    const document = { getElementById: (id) => els[id], createElement: () => stub() };
+    const ShelfV1 = { load: () => Promise.reject(new Error("not loaded in this test")), sha256Hex: () => "" };
+    new Function("window", "document", "fetch", "ShelfCore", "ShelfV1", js)({ crypto: globalThis.crypto, LedgerVerify: V0 }, document, fakeFetch, CORE, ShelfV1);
+    for (let i = 0; i < 300 && els.rows.children.length < 2; i++) await new Promise(r => setTimeout(r, 10));
+    assert.equal(els.rows.children.length, 2);
+    const [v0sec, v2sec] = els.rows.children;
+    assert.equal(v2sec.id, "vtwo");
+    assert.match(v2sec.innerHTML, /refused: protocol &quot;v2&quot; is not v0 or v1/);
+    assert.ok(!/<button>/.test(v2sec.innerHTML), "no button on a refused row");
+    assert.ok(/<button>/.test(v0sec.innerHTML), "the v0 row keeps its button");
+    assert.match(v0sec.innerHTML, /how old: read \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z, (\d+ d )?(\d+ h )?\d+ min before this page was opened \(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z, this browser's clock\)/);
+  });
+
+  test("index.html: the opening says built to run nightly, the workflow is not here, every report a local run, with counts from disk", () => {
+    const out = path.join(tmp, "page-where");
+    fs.cpSync(DOCS, out, { recursive: true });
+    const r = pageOnly(out);
+    assert.equal(r.status, 0, r.stderr);
+    const html = flat(fs.readFileSync(path.join(out, "index.html"), "utf8"));
+    assert.ok(html.includes("<h1>styxx shelf — a re-derivation built to run somewhere that is not the box</h1>"));
+    assert.ok(!html.includes("every night a github action fetches"), "the old sentence");
+    assert.ok(!html.includes("the re-derivation runs somewhere that is not the box"), "the old heading");
+    const nightly = fs.readdirSync(path.join(out, "reports")).filter(d => d !== "reads" && fs.statSync(path.join(out, "reports", d)).isDirectory())
+      .flatMap(d => fs.readdirSync(path.join(out, "reports", d)).filter(f => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)));
+    const reads = fs.readdirSync(path.join(out, "reports", "reads")).flatMap(d => fs.readdirSync(path.join(out, "reports", "reads", d)));
+    const wf = fs.existsSync(path.join(REPO, ".github", "workflows", "shelf.yml"));
+    assert.match(html, /as of \d{4}-\d{2}-\d{2} no report here came from that action/);
+    if (!wf) assert.ok(html.includes("the workflow is not in this repository yet (the operator adds it)"));
+    assert.ok(html.includes(`every report so far is a local run from the lab's box — ${nightly.length} of ${nightly.length} nightly report`), "counts from disk");
+    assert.ok(html.includes(`the ${reads.length} read${reads.length === 1 ? "" : "s"} by url kept under reports/reads/`));
+    const reg = JSON.parse(fs.readFileSync(path.join(out, "outside_ledgers.json"), "utf8"));
+    assert.ok(html.includes(` · 1 nightly row · ${reg.rows.length} rows read by url · `), "the header names both kinds of row");
+    assert.ok(html.includes("every read here so far was written when the lab ran"));
+  });
+
+  test("index.html: once a report from the action is on disk, the opening says so with the count", () => {
+    const out = path.join(tmp, "page-action");
+    fs.cpSync(DOCS, out, { recursive: true });
+    const rep = JSON.parse(fs.readFileSync(path.join(out, "reports", "darkflobi", "2026-11-08.json"), "utf8"));
+    rep.date = "2026-11-09"; rep.ran_on = { where: "github actions", run_url: "https://github.com/fathom-lab/styxx-shelf/actions/runs/1", run_id: "1", run_attempt: "1", sha: "0".repeat(40), runner_os: "Linux" };
+    fs.writeFileSync(path.join(out, "reports", "darkflobi", "2026-11-09.json"), JSON.stringify(rep));
+    const r = pageOnly(out);
+    assert.equal(r.status, 0, r.stderr);
+    const html = flat(fs.readFileSync(path.join(out, "index.html"), "utf8"));
+    assert.ok(html.includes("a github action runs every night to fetch each row"));
+    assert.ok(html.includes("of the 2 nightly reports on disk, 1 ran in the action and 1 were local runs from the lab's box"));
+    assert.ok(!html.includes("no report here came from that action"));
+  });
+
+  test("index.html: how old each read is, against the page's written time and the nightly row's count, and a dirty-tree read marked", () => {
+    const out = path.join(tmp, "page-age");
+    fs.cpSync(DOCS, out, { recursive: true });
+    const r = pageOnly(out);
+    assert.equal(r.status, 0, r.stderr);
+    const html = flat(fs.readFileSync(path.join(out, "index.html"), "utf8"));
+    const written = html.match(/<p>written (\S+) · /)[1];
+    const night = JSON.parse(fs.readFileSync(path.join(out, "reports", "darkflobi", "latest.json"), "utf8"));
+    const reg = JSON.parse(fs.readFileSync(path.join(out, "outside_ledgers.json"), "utf8"));
+    for (const row of reg.rows) {
+      const rep = JSON.parse(fs.readFileSync(path.join(out, "reports", row.name + ".json"), "utf8"));
+      let s = `${row.name}: read ${rep.read_at}, ${CORE.ageText(rep.read_at, written)} before this page was written, ${rep.lines} lines`;
+      if (row.ledger_url === night.base + "ledger.jsonl") s += `; the nightly row darkflobi read the same url at ${night.run_started_at} and counted ${night.checks.chain.lines} lines, ${CORE.ageText(night.run_started_at, rep.read_at)} before this read (+${rep.lines - night.checks.chain.lines} lines from the earlier count to the later: the ledger grows`;
+      assert.ok(html.includes(s), s);
+      const dirty = /uncommitted changes present/.test(rep.shelf_commit);
+      const after = html.slice(html.indexOf(s) + s.length, html.indexOf(s) + s.length + 400).split(/\. [a-z]+: read /)[0];
+      assert.equal(after.includes("read from a shelf checkout with uncommitted changes"), dirty, row.name);
+    }
+  });
+
+  test("index.html: a later read with fewer lines than the earlier nightly count is a red line, never 'the ledger grows'", () => {
+    const out = path.join(tmp, "page-fewer");
+    fs.cpSync(DOCS, out, { recursive: true });
+    const rep = JSON.parse(fs.readFileSync(path.join(out, "reports", "darkflobi.json"), "utf8"));
+    const lp = path.join(out, "reports", "darkflobi", "latest.json");
+    const night = JSON.parse(fs.readFileSync(lp, "utf8"));
+    assert.ok(Date.parse(rep.read_at) > Date.parse(night.run_started_at), "fixture: the read is later than the nightly run");
+    night.checks.chain.lines = rep.lines + 113;
+    fs.writeFileSync(lp, JSON.stringify(night, null, 1));
+    const r = pageOnly(out);
+    assert.equal(r.status, 0, r.stderr);
+    const html = flat(fs.readFileSync(path.join(out, "index.html"), "utf8"));
+    assert.ok(html.includes(`counted ${rep.lines + 113} lines`));
+    assert.ok(html.includes('(<b class="bad">fewer lines at the later time (-113 from the earlier count): growth does not explain it</b>)'));
+    assert.ok(!html.includes("the ledger grows"));
+    // equal counts still read as growth (zero lines added)
+    night.checks.chain.lines = rep.lines;
+    fs.writeFileSync(lp, JSON.stringify(night, null, 1));
+    assert.equal(pageOnly(out).status, 0);
+    const h2 = flat(fs.readFileSync(path.join(out, "index.html"), "utf8"));
+    assert.ok(h2.includes("(+0 lines from the earlier count to the later: the ledger grows"));
+    assert.ok(!h2.includes("fewer lines at the later time"));
+  });
+
+  test("outside.html opens with a plain sentence of what a reader can check, before anything else", () => {
+    const h = fs.readFileSync(path.join(DOCS, "outside.html"), "utf8");
+    const afterH1 = h.slice(h.indexOf("</h1>") + 5).trimStart();
+    assert.ok(afterH1.startsWith(`<p id="what">what you can check here: press a row's button`), afterH1.slice(0, 120));
+    assert.ok(afterH1.includes("<code>node shelf_read.cjs --row &lt;name&gt;</code>"));
+  });
+
+  test("the readme says the workflow is not in the repository and every report so far is a local run, dated", () => {
+    const r = fs.readFileSync(path.join(REPO, "README.md"), "utf8").replace(/\s+/g, " ");
+    assert.ok(r.includes("**as of 2026-11-09 the workflow is not in this repository and every report so far is a local run from the lab's box**"));
+    assert.ok(!r.includes("the re-derivation runs somewhere that is not the box. every night a github action"));
+    assert.ok(!r.includes("the nightly workflow runs shelf.mjs and does not write them"));
+  });
+
+  test("the readme's operator setup lists only what remains (no repo create or push) and says shelf_read refuses the whole register", () => {
+    const r = fs.readFileSync(path.join(REPO, "README.md"), "utf8");
+    const setup = r.slice(r.indexOf("## the operator's setup")).replace(/\s+/g, " ");
+    assert.ok(setup.startsWith("## the operator's setup done by the lab on 2026-11-08: this repository was created and pushed"));
+    assert.ok(!setup.includes("gh repo create") && !setup.includes("git init") && !setup.includes("git push"));
+    assert.ok(setup.includes("github_for_operator/shelf_dot_github/workflows/shelf.yml"));
+    assert.ok(setup.includes("github.com/organizations/fathom-lab/settings/actions"));
+    const flatR = r.replace(/\s+/g, " ");
+    assert.ok(flatR.includes("shelf_read refuses the whole register (exit 2 for every row's read"));
+    assert.ok(!flatR.includes("is refused by shelf_read (exit 2), by the page"));
+  });
+});

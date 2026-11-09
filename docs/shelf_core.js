@@ -54,7 +54,7 @@
 
   async function readLedger(o) {
     var V = o.verifier, protocol = o.protocol, withheld = Array.isArray(o.withheld) ? o.withheld : [];
-    if (protocol !== "v0" && protocol !== "v1") throw new Error("protocol must be v0 or v1");
+    if (protocolRefusal(protocol)) throw new Error(protocolRefusal(protocol));
     var r = protocol === "v1" ? V.verifyBytesSync(o.bytes, { withheld: withheld }) : await V.verifyBytes(o.bytes, { withheld: withheld });
     var agent = protocol === "v1" && r.header && typeof r.header.agent === "string" ? r.header.agent : null;
     var list = [];
@@ -162,6 +162,21 @@
      unverified" and no window opens: said on the readme, the shelf page and outside.html */
   var SCORER_GATE = "until a styxx-ledger commit sets census.SHELF_HAS_V1_ROW, the census scorer prints condition (c) as \"stated, unverified\" and no window opens: a section 15 line pasted today is printed back by the scorer, not fetched and not checked.";
 
+  /* a row whose protocol the shelf does not know is refused, never read with a guessed verifier: -> null when the
+     protocol is v0 or v1, else the sentence every view prints in the row's place */
+  var PROTOCOLS = ["v0", "v1"];
+  function protocolRefusal(protocol) {
+    if (PROTOCOLS.indexOf(protocol) >= 0) return null;
+    return "refused: protocol " + JSON.stringify(protocol === undefined ? null : protocol) + " is not v0 or v1; the shelf reads no row whose protocol it does not know, and guesses no verifier for it";
+  }
+  /* "2 h 13 min" between two iso times (to - from); null when either is unreadable or to is before from */
+  function ageText(fromIso, toIso) {
+    var a = Date.parse(fromIso), b = Date.parse(toIso);
+    if (!isFinite(a) || !isFinite(b) || b < a) return null;
+    var m = Math.floor((b - a) / 60000), d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mm = m % 60;
+    return (d ? d + " d " : "") + (d || h ? h + " h " : "") + mm + " min";
+  }
+
   /* next may only append rows, and add withdrawn_at / withdrawn_why to a row that has none */
   function checkRegisterAppendOnly(prev, next) {
     var bad = [];
@@ -184,7 +199,7 @@
     REGISTER_SCHEMA: REGISTER_SCHEMA, REPORT_KEYS: REPORT_KEYS, ROW_KEYS: ROW_KEYS, WRITERS: WRITERS, SCORER_GATE: SCORER_GATE,
     registerCounts: registerCounts, registerHeading: registerHeading, unwrapWithheld: unwrapWithheld,
     readLedger: readLedger, earliestAnchor: earliestAnchor, problemCodes: problemCodes, v0Code: v0Code,
-    placeUrl: placeUrl, placeVerdict: placeVerdict,
+    placeUrl: placeUrl, placeVerdict: placeVerdict, PROTOCOLS: PROTOCOLS, protocolRefusal: protocolRefusal, ageText: ageText,
     checkRegister: checkRegister, checkRegisterAppendOnly: checkRegisterAppendOnly
   };
 });
