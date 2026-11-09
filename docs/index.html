@@ -20,7 +20,7 @@ section{border-top:1px solid #063;margin-top:2em}
 </style>
 <h1>styxx shelf — the re-derivation runs somewhere that is not the box</h1>
 <p>every night a github action fetches each row's published ledger, re-derives its chain with the shelf's own pinned copy of the verifier, runs the row's conformance vectors, checks every anchor the row's index lists against the chain and its opentimestamps proof against the bitcoin block header as two explorers return it, counts the days with no anchor, and compares the bytes with the previous night's fetch. this page is written by that run; it loads nothing. each row says where its run ran: a run marked "not the action (a local run)" was made on a lab machine, not by the workflow.</p>
-<p>written 2026-11-09T06:19:52Z · 1 row · schedule 07:00 utc · explorers https://blockstream.info/api, https://mempool.space/api</p>
+<p>written 2026-11-09T06:26:03Z · 1 row · schedule 07:00 utc · explorers https://blockstream.info/api, https://mempool.space/api</p>
 <div class="wrap"><table>
 <tr><th>row</th><th>fetched at / where</th><th>ledger sha256</th><th>lines</th><th>head</th><th>chain re-derives</th><th>vectors</th><th>anchors verified</th><th>gaps</th><th>append-only</th><th>verifier drift</th><th>lines after last attested head</th><th>exit</th></tr>
 <tr>
@@ -244,7 +244,7 @@ ok   flip-and-rechain
 <td>v0</td>
 <td class="mono"><a href="https://fathom-lab.github.io/styxx/ledger/ledger.jsonl">https://fathom-lab.github.io/styxx/ledger/ledger.jsonl</a></td>
 <td>the lab&#39;s exhibit copy of each day&#39;s anchor text (anchors/&lt;date&gt;.txt); the telegram post itself needs an account to read, so the shelf reads the lab&#39;s copy, not the post<br><code>https://fathom-lab.github.io/styxx/ledger/anchors/{date}.txt</code></td>
-<td>2026-11-09T06:19:50Z<br><a href="reports/reads/darkflobi/2026-11-09T06-19-50Z.json">reports/reads/darkflobi/2026-11-09T06-19-50Z.json</a><br><span class="dim">sha256</span> <span class="mono">9163580ba0e3ccba4ca41441f83a3c07d7fb9ab99194a91b23666329fba84eb4</span><br><span class="dim">shelf edf8651b69ab63d009e993d07473f91a1cec7fc9 (uncommitted changes present)</span></td>
+<td>2026-11-09T06:26:01Z<br><a href="reports/reads/darkflobi/2026-11-09T06-26-01Z.json">reports/reads/darkflobi/2026-11-09T06-26-01Z.json</a><br><span class="dim">sha256</span> <span class="mono">415e06e91c3d57868d957d7e08c81c02b75ee2a81a8e250846700a8471f9ac60</span><br><span class="dim">shelf aabe6bf89cd3689ca2edf95838740f6c4e282c5b</span></td>
 <td>1341750<br><span class="mono"><span title="20f6d62058a3c1950052271f2b3dc24f3b59a49cbf85693810148225e3514b69">20f6d62058a3c195</span></span></td>
 <td>787</td>
 <td class="mono"><span title="3f9fe35a1b276ed34933b75cc0cd075383b8bd5e89ea93aec603cc62f116cf3b">3f9fe35a1b276ed3</span></td>
@@ -258,7 +258,7 @@ ok   flip-and-rechain
 <td>v0</td>
 <td class="mono"><a href="https://fathom-lab.github.io/styxx/ledger/red/ledger.jsonl">https://fathom-lab.github.io/styxx/ledger/red/ledger.jsonl</a></td>
 <td>the ledger&#39;s own page on the lab&#39;s github pages site; the lab can edit it, so it is not a place outside the lab<br><code>https://fathom-lab.github.io/styxx/ledger/red/</code></td>
-<td>2026-11-09T06:19:51Z<br><a href="reports/reads/red/2026-11-09T06-19-51Z.json">reports/reads/red/2026-11-09T06-19-51Z.json</a><br><span class="dim">sha256</span> <span class="mono">2b0e03672c7251013b8203c6cd29f5837f49e3950d774b30f0f9540a1d2b1688</span><br><span class="dim">shelf edf8651b69ab63d009e993d07473f91a1cec7fc9 (uncommitted changes present)</span></td>
+<td>2026-11-09T06:26:02Z<br><a href="reports/reads/red/2026-11-09T06-26-02Z.json">reports/reads/red/2026-11-09T06-26-02Z.json</a><br><span class="dim">sha256</span> <span class="mono">9d8f3c33f95772ed4895a877b8e45992c8ca28cca81721224c14fe37692bf6bc</span><br><span class="dim">shelf aabe6bf89cd3689ca2edf95838740f6c4e282c5b (uncommitted changes present)</span></td>
 <td>274193<br><span class="mono"><span title="c999b33fc2a4d409b91a4824dc3fcd83693297ce4b2775cb89d5264ebff17976">c999b33fc2a4d409</span></span></td>
 <td>107</td>
 <td class="mono"><span title="95194d08c31ea102fa0bb109e57c2ddda3383740adb8c6ea5340cb2067c33d91">95194d08c31ea102</span></td>
