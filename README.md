@@ -2,7 +2,7 @@
 
 built to run the re-derivation somewhere that is not the box. **as of 2026-11-09 the workflow is not in this
 repository and every report so far is a local run from the lab's box**: the one nightly report
-(`docs/reports/darkflobi/2026-11-08.json`) says "not the action (a local run)", and the 6 reads by url under
+(`docs/reports/darkflobi/2026-11-08.json`) says "not the action (a local run)", and the 8 reads by url under
 `docs/reports/reads/` (2026-11-09) were run by hand. the workflow waits for the operator (see "the operator's setup": the file, the write permission, one run by hand);
 the page's opening sentence is built from the reports on disk and says "built to run" until a report from the action
 is there. once added, the github action, every night, fetches each row's published
